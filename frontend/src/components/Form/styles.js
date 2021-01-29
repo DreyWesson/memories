@@ -20,6 +20,8 @@ export default makeStyles((theme) => ({
   },
   buttonSubmit: {
     marginBottom: 10,
+    backgroundColor: "rgb(91, 93, 94)",
+    color: "white",
   },
   margin: {
     margin: theme.spacing(1),

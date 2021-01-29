@@ -21,9 +21,13 @@ export const postsSlice = createSlice({
       state.loading = false;
       state.hasErrors = true;
     },
-    addPost: (state, action) => state.posts.push(action.payload),
-    editPost: (state, { payload }) =>
-      state.posts.map((post) => (post._id === payload._id ? payload : post)),
+    addPost: (state, action) => {
+      console.log("ADDPOST");
+      state.posts.push(action.payload);
+    },
+    editPost: (state, { payload }) => {
+      state.posts.map((post) => (post._id === payload._id ? payload : post));
+    },
   },
 });
 
@@ -59,8 +63,8 @@ export const createPost = createAsyncThunk(
     try {
       const { data } = await api.createPost(payload);
       console.log(data);
-      // dispatch(addPost(data));
-      // console.log("Yellow");
+      dispatch(addPost(data));
+      console.log("Yellow");
       return;
     } catch (error) {
       return console.log("Failed");

@@ -132,9 +132,7 @@ export const Form = ({ currentId, setCurrentId }) => {
           </div>
           <Button
             className={classes.buttonSubmit}
-            style={{ backgroundColor: "dodgerblue" }}
             variant="contained"
-            color="primary"
             size="large"
             type="submit"
             fullWidth
@@ -143,11 +141,10 @@ export const Form = ({ currentId, setCurrentId }) => {
           </Button>
           <Button
             variant="contained"
-            color="primary"
             size="small"
             onClick={clear}
             fullWidth
-            style={{ backgroundColor: "orange" }}
+            style={{ backgroundColor: "lightgray", color: "black" }}
           >
             Clear
           </Button>

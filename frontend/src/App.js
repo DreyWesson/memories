@@ -5,7 +5,6 @@ import { ErrorPage, Loader, Posts } from "./components";
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPosts, fetchPosts } from "./features/post/postsSlice";
-import { selectModal } from "./features/post/modalSlice";
 
 function App() {
   const classes = useStyles();
@@ -15,14 +14,8 @@ function App() {
   useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch]);
-  const state = useSelector(selectModal);
-  console.log(state);
-  const { posts, loading, hasErrors } = useSelector(selectPosts);
-  const { open } = useSelector(selectModal);
-  console.log("POSTS: ", posts);
-  console.log("LOADING", loading);
-  console.log("HASERROR: ", hasErrors);
-  console.log("OPEN: ", open);
+
+  const { loading, hasErrors } = useSelector(selectPosts);
 
   if (loading) {
     return <Loader />;

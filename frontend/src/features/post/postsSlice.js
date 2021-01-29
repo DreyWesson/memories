@@ -9,9 +9,6 @@ export const postsSlice = createSlice({
     hasErrors: false,
   },
   reducers: {
-    setModal: (state) => {
-      state.open ? (state.open = false) : (state.open = true);
-    },
     getPosts: (state) => {
       state.loading = true;
     },
@@ -29,9 +26,11 @@ export const postsSlice = createSlice({
       state.posts.push(action.payload);
     },
     editPost: (state, { payload }) => {
-      return state.posts.map((post) =>
-        post._id === payload._id ? payload : post
-      );
+      // console.log(payload);
+      return state.posts.map((post) => {
+        console.log(post.title);
+        return post._id === payload._id ? payload : post;
+      });
     },
   },
 });
@@ -77,18 +76,28 @@ export const createPost = createAsyncThunk(
   }
 );
 
-export const updatePost = createAsyncThunk(
-  "posts/updatePost",
-  async (payload, thunkAPI) => {
-    console.log(payload);
-    try {
-      const { data } = await api.updatePost(payload);
-      thunkAPI.dispatch(editPost(data));
-    } catch (error) {
-      return console.log("Failed: ", error.message);
-    }
+// export const updatePost = createAsyncThunk(
+//   "posts/updatePost",
+//   async ({ id, post }, thunkAPI) => {
+//     // console.log(payload);
+
+//     try {
+//       const { data } = await api.updatePost(id, post);
+//       thunkAPI.dispatch(editPost(data));
+//     } catch (error) {
+//       return console.log("Failed: ", error.message);
+//     }
+//   }
+// );
+
+export const updatePost = (id, post) => async (dispatch) => {
+  try {
+    await api.updatePost(id, post).then(({ data }) => dispatch(editPost(data)));
+  } catch (e) {
+    console.log("ERROR");
+    return console.error(e.message);
   }
-);
+};
 
 export const selectPosts = (state) => state.posts;
 export default postsSlice.reducer;

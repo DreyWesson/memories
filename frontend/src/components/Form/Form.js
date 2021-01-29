@@ -27,7 +27,7 @@ export const Form = ({ currentId, setCurrentId }) => {
 
   const { posts } = useSelector(selectPosts);
   const post = currentId
-    ? posts.find((message) => message._id === currentId)
+    ? posts?.find((message) => message._id === currentId)
     : null;
 
   const dispatch = useDispatch();
@@ -55,15 +55,6 @@ export const Form = ({ currentId, setCurrentId }) => {
     } else {
       dispatch(createPost(postData));
     }
-
-    // if (currentId === 0) {
-    // dispatch(createPost(postData));
-    // clear();
-    // }
-    // else {
-    //   dispatch(updatePost(currentId, postData));
-    //   clear();
-    // }
   };
 
   const theme = createMuiTheme({
@@ -83,7 +74,7 @@ export const Form = ({ currentId, setCurrentId }) => {
         onSubmit={handleSubmit}
       >
         <Typography variant="h6">
-          {currentId ? `Editing "${post.title}"` : "Creating a Memory"}
+          {currentId ? `Editing "${post?.title}"` : "Creating a Memory"}
         </Typography>
         <ThemeProvider theme={theme}>
           <TextField

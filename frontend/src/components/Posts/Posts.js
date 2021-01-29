@@ -42,7 +42,10 @@ export const Posts = ({ currentId, setCurrentId }) => {
       </div>
       <Modal
         open={open}
-        onClose={() => dispatch(setModal(false))}
+        onClose={() => {
+          dispatch(setModal(false));
+          setCurrentId(null);
+        }}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >

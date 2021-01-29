@@ -11,6 +11,7 @@ const getPosts = async (req, res, next) => {
 };
 const createPost = async (req, res, next) => {
   const post = req.body;
+  console.log(post, "  :POSTS CREATE");
   const newPost = new Post(post);
   try {
     await newPost.save();
@@ -22,11 +23,19 @@ const createPost = async (req, res, next) => {
 const updatePost = async (req, res, next) => {
   const { id: _id } = req.params;
   const post = req.body;
+  console.log(post, ":   REQUEST BODY");
+
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send("There's no post with that ID");
 
-  const updatedPost = Post.findByIdAndUpdate(_id, post, { new: true });
-  res.json(updatedPost);
+  try {
+    let updatedPost = await Post.findByIdAndUpdate(_id, post, {
+      new: true,
+    });
+    res.json(updatedPost);
+  } catch (error) {
+    console.log("UPDATE ERROR: ", error);
+  }
 };
 
 export { getPosts, createPost, updatePost };

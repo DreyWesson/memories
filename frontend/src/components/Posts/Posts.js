@@ -5,13 +5,15 @@ import { Post } from "./Post/Post";
 import { MonochromePhotosOutlined } from "@material-ui/icons/";
 import useStyles, { getModalStyle } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPosts, setModal } from "../../features/post/postsSlice";
+import { selectPosts } from "../../features/post/postsSlice";
+import { selectModal, setModal } from "../../features/post/modalSlice";
 
 export const Posts = ({ currentId, setCurrentId }) => {
   const dispatch = useDispatch();
   const [modalStyle] = useState(getModalStyle);
   const classes = useStyles();
-  const { posts, open } = useSelector(selectPosts);
+  const { posts } = useSelector(selectPosts);
+  const { open } = useSelector(selectModal);
 
   return (
     <>

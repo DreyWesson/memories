@@ -7,7 +7,6 @@ export const postsSlice = createSlice({
     loading: false,
     posts: [],
     hasErrors: false,
-    open: false,
   },
   reducers: {
     setModal: (state) => {
@@ -43,7 +42,6 @@ export const {
   getPostsFailure,
   addPost,
   editPost,
-  setModal,
 } = postsSlice.actions;
 
 export const fetchPosts = createAsyncThunk(

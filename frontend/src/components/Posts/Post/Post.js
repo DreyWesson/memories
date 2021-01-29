@@ -14,8 +14,8 @@ import {
   MoreHorizOutlined,
   ThumbUpAltOutlined,
 } from "@material-ui/icons";
-import { setModal } from "../../../features/post/postsSlice";
 import { useDispatch } from "react-redux";
+import { setModal } from "../../../features/post/modalSlice";
 
 export const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();

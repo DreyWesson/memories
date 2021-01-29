@@ -9,7 +9,11 @@ import {
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import FileBase from "react-file-base64";
-import { createPost, selectPosts } from "../../features/post/postsSlice";
+import {
+  createPost,
+  selectPosts,
+  updatePost,
+} from "../../features/post/postsSlice";
 import useStyles from "./styles";
 
 export const Form = ({ currentId, setCurrentId }) => {
@@ -20,6 +24,7 @@ export const Form = ({ currentId, setCurrentId }) => {
     tags: "",
     selectedFile: "",
   });
+
   const { posts } = useSelector(selectPosts);
   const post = currentId
     ? posts.find((message) => message._id === currentId)
@@ -45,8 +50,14 @@ export const Form = ({ currentId, setCurrentId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    } else {
+      dispatch(createPost(postData));
+    }
+
     // if (currentId === 0) {
-    dispatch(createPost(postData));
+    // dispatch(createPost(postData));
     // clear();
     // }
     // else {

@@ -4,17 +4,14 @@ import { Form, Loader } from "..";
 import { Post } from "./Post/Post";
 import { MonochromePhotosOutlined } from "@material-ui/icons/";
 import useStyles, { getModalStyle } from "./styles";
-import { useSelector } from "react-redux";
-import { selectPosts } from "../../features/post/postsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectPosts, setModal } from "../../features/post/postsSlice";
 
-export const Posts = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+export const Posts = ({ currentId, setCurrentId }) => {
+  const dispatch = useDispatch();
   const [modalStyle] = useState(getModalStyle);
   const classes = useStyles();
-
-  const { posts } = useSelector(selectPosts);
+  const { posts, open } = useSelector(selectPosts);
 
   return (
     <>
@@ -29,7 +26,7 @@ export const Posts = () => {
         >
           {posts?.map((post) => (
             <Grid key={post._id} item xs={12} sm={4} md={4}>
-              <Post post={post} />
+              <Post post={post} setCurrentId={setCurrentId} />
             </Grid>
           ))}
         </Grid>
@@ -38,17 +35,17 @@ export const Posts = () => {
       <div className={classes.postsContainer}>
         <MonochromePhotosOutlined
           className={classes.postsCreateBtn}
-          onClick={handleOpen}
+          onClick={() => dispatch(setModal(true))}
         />
       </div>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={() => dispatch(setModal(false))}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paper}>
-          <Form />
+          <Form currentId={currentId} setCurrentId={setCurrentId} />
         </div>
       </Modal>
       {/* </div> */}

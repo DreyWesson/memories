@@ -7,8 +7,12 @@ export const postsSlice = createSlice({
     loading: false,
     posts: [],
     hasErrors: false,
+    open: false,
   },
   reducers: {
+    setModal: (state) => {
+      state.open ? (state.open = false) : (state.open = true);
+    },
     getPosts: (state) => {
       state.loading = true;
     },
@@ -26,7 +30,9 @@ export const postsSlice = createSlice({
       state.posts.push(action.payload);
     },
     editPost: (state, { payload }) => {
-      state.posts.map((post) => (post._id === payload._id ? payload : post));
+      return state.posts.map((post) =>
+        post._id === payload._id ? payload : post
+      );
     },
   },
 });
@@ -36,7 +42,8 @@ export const {
   getPostsSuccess,
   getPostsFailure,
   addPost,
-  edit,
+  editPost,
+  setModal,
 } = postsSlice.actions;
 
 export const fetchPosts = createAsyncThunk(
@@ -67,7 +74,7 @@ export const createPost = createAsyncThunk(
       console.log("Yellow");
       return;
     } catch (error) {
-      return console.log("Failed");
+      return console.log("Failed: ", error.message);
     }
   }
 );
@@ -78,9 +85,9 @@ export const updatePost = createAsyncThunk(
     console.log(payload);
     try {
       const { data } = await api.updatePost(payload);
-      thunkAPI.dispatch(edit(data));
+      thunkAPI.dispatch(editPost(data));
     } catch (error) {
-      thunkAPI.dispatch(getPostsFailure());
+      return console.log("Failed: ", error.message);
     }
   }
 );

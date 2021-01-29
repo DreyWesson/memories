@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AppBar, Container, Grid, Grow, Typography } from "@material-ui/core";
 import memories from "./images/memories.png";
 import { ErrorPage, Loader, Posts } from "./components";
@@ -8,16 +8,18 @@ import { selectPosts, fetchPosts } from "./features/post/postsSlice";
 
 function App() {
   const classes = useStyles();
-
   const dispatch = useDispatch();
+  const [currentId, setCurrentId] = useState(null);
+
   useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch]);
 
-  const { posts, loading, hasErrors } = useSelector(selectPosts);
+  const { posts, loading, hasErrors, open } = useSelector(selectPosts);
   console.log("POSTS: ", posts);
   console.log("LOADING", loading);
   console.log("HASERROR: ", hasErrors);
+  console.log("OPEN: ", open);
 
   if (loading) {
     return <Loader />;
@@ -51,7 +53,7 @@ function App() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <Posts />
+            <Posts currentId={currentId} setCurrentId={setCurrentId} />
           </Grid>
         </Grid>
         {/* </Container> */}

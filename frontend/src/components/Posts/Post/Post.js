@@ -14,9 +14,16 @@ import {
   MoreHorizOutlined,
   ThumbUpAltOutlined,
 } from "@material-ui/icons";
+import { setModal } from "../../../features/post/postsSlice";
+import { useDispatch } from "react-redux";
 
-export const Post = ({ post }) => {
+export const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const postEdit = () => {
+    setCurrentId(post._id);
+    dispatch(setModal(true));
+  };
 
   return (
     <Card className={classes.card}>
@@ -35,7 +42,7 @@ export const Post = ({ post }) => {
         </Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button style={{ color: "white" }} size="small" onClick={() => {}}>
+        <Button style={{ color: "white" }} size="small" onClick={postEdit}>
           <MoreHorizOutlined fontSize="default" />
         </Button>
       </div>
@@ -60,7 +67,6 @@ export const Post = ({ post }) => {
       <CardActions className={classes.cardActions}>
         <Button
           size="small"
-          // color="secondary"
           className={classes.btnColor}
           // onClick={() => dispatch(likePost(post._id))}
         >
@@ -68,7 +74,6 @@ export const Post = ({ post }) => {
         </Button>
         <Button
           size="small"
-          // color="secondary"
           className={classes.btnColor}
           // onClick={() => dispatch(deletePost(post._id))}
         >

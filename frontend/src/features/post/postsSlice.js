@@ -26,11 +26,9 @@ export const postsSlice = createSlice({
       state.posts.push(action.payload);
     },
     editPost: (state, { payload }) => {
-      // console.log(payload);
-      return state.posts.map((post) => {
-        console.log(post.title);
-        return post._id === payload._id ? payload : post;
-      });
+      state.posts.forEach((post) =>
+        post._id === payload._id ? payload : post
+      );
     },
   },
 });
@@ -92,7 +90,9 @@ export const createPost = createAsyncThunk(
 
 export const updatePost = (id, post) => async (dispatch) => {
   try {
-    await api.updatePost(id, post).then(({ data }) => dispatch(editPost(data)));
+    const { data } = await api.updatePost(id, post);
+    dispatch(editPost(data));
+    console.log(data);
   } catch (e) {
     console.log("ERROR");
     return console.error(e.message);

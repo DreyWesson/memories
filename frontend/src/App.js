@@ -15,7 +15,10 @@ function App() {
     dispatch(fetchPosts());
   }, [dispatch]);
 
-  const { loading, hasErrors } = useSelector(selectPosts);
+  const { loading, hasErrors, posts } = useSelector(selectPosts);
+  console.log(loading);
+  console.log(hasErrors);
+  console.log(posts);
 
   if (loading) {
     return <Loader />;

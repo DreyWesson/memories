@@ -22,7 +22,6 @@ export const postsSlice = createSlice({
       state.hasErrors = true;
     },
     addPost: (state, action) => {
-      console.log("ADDPOST");
       state.posts.push(action.payload);
     },
     editPost: (state, { payload }) => {

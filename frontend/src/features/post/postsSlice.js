@@ -43,33 +43,17 @@ export const {
 export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
   async (payload, { dispatch }) => {
-    // Set the loading state to true
     dispatch(getPosts());
-    try {
-      const { data } = await api.fetchPosts();
-      // Set the data
-      return dispatch(getPostsSuccess(data));
-    } catch (error) {
-      console.log("Error");
-      // Set any errors while trying to fetch
-      return dispatch(getPostsFailure());
-    }
+    const { data } = await api.fetchPosts();
+    return dispatch(getPostsSuccess(data));
   }
 );
 
 export const createPost = createAsyncThunk(
   "posts/createPost",
   async (payload, { dispatch }) => {
-    console.log(dispatch);
-    try {
-      const { data } = await api.createPost(payload);
-      console.log(data);
-      dispatch(addPost(data));
-      console.log("Yellow");
-      return;
-    } catch (error) {
-      return console.log("Failed: ", error.message);
-    }
+    const { data } = await api.createPost(payload);
+    return dispatch(addPost(data));
   }
 );
 
@@ -88,14 +72,8 @@ export const createPost = createAsyncThunk(
 // );
 
 export const updatePost = (id, post) => async (dispatch) => {
-  try {
-    const { data } = await api.updatePost(id, post);
-    dispatch(editPost(data));
-    console.log(data);
-  } catch (e) {
-    console.log("ERROR");
-    return console.error(e.message);
-  }
+  const { data } = await api.updatePost(id, post);
+  return dispatch(editPost(data));
 };
 
 export const selectPosts = (state) => state.posts;

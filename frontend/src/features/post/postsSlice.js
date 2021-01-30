@@ -7,6 +7,7 @@ export const postsSlice = createSlice({
     loading: false,
     posts: [],
     hasErrors: false,
+    currentId: null,
   },
   reducers: {
     getPosts: (state) => {
@@ -29,6 +30,9 @@ export const postsSlice = createSlice({
         post._id === payload._id ? payload : post
       );
     },
+    setCurrentId: (state, { payload }) => {
+      state.currentId = payload;
+    },
   },
 });
 
@@ -38,6 +42,7 @@ export const {
   getPostsFailure,
   addPost,
   editPost,
+  setCurrentId,
 } = postsSlice.actions;
 
 export const fetchPosts = createAsyncThunk(
@@ -51,8 +56,8 @@ export const fetchPosts = createAsyncThunk(
 
 export const createPost = createAsyncThunk(
   "posts/createPost",
-  async (payload, { dispatch }) => {
-    const { data } = await api.createPost(payload);
+  async ({ postData }, { dispatch }) => {
+    const { data } = await api.createPost(postData);
     return dispatch(addPost(data));
   }
 );

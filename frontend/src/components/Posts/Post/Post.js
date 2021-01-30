@@ -16,12 +16,13 @@ import {
 } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 import { setModal } from "../../../features/post/modalSlice";
+import { setCurrentId } from "../../../features/post/postsSlice";
 
-export const Post = ({ post, setCurrentId }) => {
+export const Post = ({ post }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const postEdit = () => {
-    setCurrentId(post._id);
+    dispatch(setCurrentId(post._id));
     dispatch(setModal(true));
   };
 
@@ -70,7 +71,9 @@ export const Post = ({ post, setCurrentId }) => {
           className={classes.btnColor}
           // onClick={() => dispatch(likePost(post._id))}
         >
-          <ThumbUpAltOutlined fontSize="small" /> Like {post.likeCount}
+          <ThumbUpAltOutlined fontSize="small" />
+          {"  "}Like{"  "}
+          {post.likeCount}
         </Button>
         <Button
           size="small"

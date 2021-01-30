@@ -16,7 +16,7 @@ import {
 } from "../../features/post/postsSlice";
 import useStyles from "./styles";
 
-export const Form = ({ currentId, setCurrentId }) => {
+export const Form = () => {
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -24,12 +24,10 @@ export const Form = ({ currentId, setCurrentId }) => {
     tags: "",
     selectedFile: "",
   });
-
-  const { posts } = useSelector(selectPosts);
+  const { posts, currentId } = useSelector(selectPosts);
   const post = currentId
     ? posts?.find((message) => message._id === currentId)
     : null;
-
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -53,7 +51,7 @@ export const Form = ({ currentId, setCurrentId }) => {
     if (currentId) {
       return dispatch(updatePost({ currentId, postData }));
     } else {
-      dispatch(createPost(postData));
+      dispatch(createPost({ postData }));
     }
   };
 

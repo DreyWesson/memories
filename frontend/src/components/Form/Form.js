@@ -51,7 +51,7 @@ export const Form = ({ currentId, setCurrentId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentId) {
-      return dispatch(updatePost(currentId, postData));
+      return dispatch(updatePost({ currentId, postData }));
     } else {
       dispatch(createPost(postData));
     }

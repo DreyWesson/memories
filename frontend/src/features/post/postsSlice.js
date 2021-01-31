@@ -10,33 +10,34 @@ export const postsSlice = createSlice({
     currentId: null,
   },
   reducers: {
-    getPosts: (state) => {
-      state.loading = true;
+    getPosts: ({ loading }) => {
+      loading = true;
     },
-    getPostsSuccess: (state, { payload }) => {
-      state.posts = payload;
-      state.loading = false;
-      state.hasErrors = false;
+    getPostsSuccess: ({ posts, loading, hasErrors }, { payload }) => {
+      posts = payload;
+      loading = false;
+      hasErrors = false;
     },
-    getPostsFailure: (state, action) => {
-      state.loading = false;
-      state.hasErrors = true;
+    getPostsFailure: ({ loading, hasErrors }, action) => {
+      loading = false;
+      hasErrors = true;
     },
-    addPost: (state, action) => {
-      state.posts.push(action.payload);
+    addPost: ({ posts }, { payload }) => {
+      posts.push(payload);
     },
-    editPost: (state, { payload }) => {
-      state.posts.forEach((post) =>
-        post._id === payload._id ? payload : post
-      );
+    editPost: ({ posts }, { payload }) => {
+      posts.forEach((post) => (post._id === payload._id ? payload : post));
     },
-    setCurrentId: (state, { payload }) => {
-      state.currentId = payload;
+    setCurrentId: ({ currentId }, { payload }) => {
+      currentId = payload;
     },
     removePost: ({ posts }, { payload }) => {
       // const index = posts.findIndex(post => post._id === action.payload)
       // if (index !== -1) posts.splice(index,1)
       return posts.filter((post) => post._id === action.payload);
+    },
+    favPost: ({ posts }, { payload }) => {
+      posts.forEach((post) => (post._id === payload._id ? payload : post));
     },
   },
 });
@@ -49,6 +50,7 @@ export const {
   editPost,
   setCurrentId,
   removePost,
+  favPost,
 } = postsSlice.actions;
 
 export const fetchPosts = createAsyncThunk(
@@ -75,6 +77,10 @@ export const updatePost = createAsyncThunk(
     dispatch(editPost(data));
   }
 );
+// export const updatePost = (id, post) => async (dispatch) => {
+//   const { data } = await api.updatePost(id, post);
+//   return dispatch(editPost(data));
+// };
 
 export const deletePost = createAsyncThunk(
   "posts/deletePost",
@@ -84,10 +90,13 @@ export const deletePost = createAsyncThunk(
   }
 );
 
-// export const updatePost = (id, post) => async (dispatch) => {
-//   const { data } = await api.updatePost(id, post);
-//   return dispatch(editPost(data));
-// };
+export const likePost = createAsyncThunk(
+  "posts/likePost",
+  async ({ id }, { dispatch }) => {
+    const { data } = await api.likePost(id);
+    dispatch(favPost(data));
+  }
+);
 
 export const selectPosts = (state) => state.posts;
 export default postsSlice.reducer;

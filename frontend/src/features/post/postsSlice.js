@@ -33,6 +33,11 @@ export const postsSlice = createSlice({
     setCurrentId: (state, { payload }) => {
       state.currentId = payload;
     },
+    removePost: ({ posts }, { payload }) => {
+      // const index = posts.findIndex(post => post._id === action.payload)
+      // if (index !== -1) posts.splice(index,1)
+      return posts.filter((post) => post._id === action.payload);
+    },
   },
 });
 
@@ -43,6 +48,7 @@ export const {
   addPost,
   editPost,
   setCurrentId,
+  removePost,
 } = postsSlice.actions;
 
 export const fetchPosts = createAsyncThunk(
@@ -67,6 +73,14 @@ export const updatePost = createAsyncThunk(
   async ({ currentId, postData }, { dispatch }) => {
     const { data } = await api.updatePost(currentId, postData);
     dispatch(editPost(data));
+  }
+);
+
+export const deletePost = createAsyncThunk(
+  "posts/deletePost",
+  async ({ id }, { dispatch }) => {
+    await api.deletePost(id);
+    dispatch(removePost());
   }
 );
 

@@ -16,7 +16,7 @@ import {
 } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 import { setModal } from "../../../features/post/modalSlice";
-import { setCurrentId } from "../../../features/post/postsSlice";
+import { deletePost, setCurrentId } from "../../../features/post/postsSlice";
 
 export const Post = ({ post }) => {
   const classes = useStyles();
@@ -78,7 +78,7 @@ export const Post = ({ post }) => {
         <Button
           size="small"
           className={classes.btnColor}
-          // onClick={() => dispatch(deletePost(post._id))}
+          onClick={() => dispatch(deletePost(post._id))}
         >
           <DeleteOutlined fontSize="small" /> Delete
         </Button>

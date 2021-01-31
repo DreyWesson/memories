@@ -78,7 +78,7 @@ export const Post = ({ post }) => {
         <Button
           size="small"
           className={classes.btnColor}
-          onClick={() => dispatch(deletePost(post._id))}
+          onClick={() => dispatch(deletePost({ id: post._id }))}
         >
           <DeleteOutlined fontSize="small" /> Delete
         </Button>

@@ -34,9 +34,7 @@ export const postsSlice = createSlice({
       state.currentId = payload;
     },
     removePost: ({ posts }, { payload }) => {
-      // const index = posts.findIndex(post => post._id === action.payload)
-      // if (index !== -1) posts.splice(index,1)
-      return posts.filter((post) => post._id === action.payload);
+      posts.filter((post) => post._id === payload);
     },
   },
 });
@@ -80,7 +78,7 @@ export const deletePost = createAsyncThunk(
   "posts/deletePost",
   async ({ id }, { dispatch }) => {
     await api.deletePost(id);
-    dispatch(removePost());
+    return dispatch(removePost());
   }
 );
 

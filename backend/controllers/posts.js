@@ -42,7 +42,7 @@ const updatePost = async (req, res, next) => {
 };
 const deletePost = async (req, res, next) => {
   const { id } = req.params;
-
+  console.log("POST ID: ", id);
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send("There's no post with that ID");
 

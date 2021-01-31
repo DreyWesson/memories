@@ -25,34 +25,26 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    // Pusher.logToConsole = true;
-
-    let pusher = new Pusher("4f051944159df55f7c75", {
+    Pusher.logToConsole = true;
+    const pusher = new Pusher("4f051944159df55f7c75", {
       cluster: "eu",
     });
+    const pusherAction = (data) => {
+      console.log("Data: ", data);
+      dispatch(fetchPosts());
+    };
 
-    let channel = pusher.subscribe("posts");
-    channel.bind("inserted", (data) => {
-      console.log("Data received ", data);
-      dispatch(fetchPosts());
-    });
-    let del = pusher.subscribe("posts");
-    del.bind("deleted", (data) => {
-      console.log("Data deleted ", data);
-      dispatch(fetchPosts());
-    });
-    let updated = pusher.subscribe("posts");
-    updated.bind("deleted", (data) => {
-      console.log("Data updated ", data);
-      dispatch(fetchPosts());
-    });
+    const pushPost = pusher.subscribe("posts");
+    pushPost.bind("inserted", pusherAction);
+    pushPost.bind("deleted", pusherAction);
+    pushPost.bind("updated", pusherAction);
   }, [dispatch]);
 
-  if (loading) {
-    return <Loader />;
-  } else if (hasErrors) {
-    return <ErrorPage />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // } else if (hasErrors) {
+  //   return <ErrorPage />;
+  // }
 
   return (
     <Container maxWidth="lg">

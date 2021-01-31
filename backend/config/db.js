@@ -41,7 +41,7 @@ export const connectDB = () => {
       } else if (change.operationType === "delete") {
         pusher.trigger("posts", "deleted", change._id);
       } else if (change.operationType === "update") {
-        pusher.trigger("posts", "deleted", change._id);
+        pusher.trigger("posts", "updated", change._id);
       } else {
         console.log("Unknown trigger from pusher");
       }

@@ -76,7 +76,7 @@ export const Post = ({ post }) => {
           onClick={() => dispatch(likePost(post._id))}
         >
           <ThumbUpAltOutlined fontSize="small" />
-          {"  "}Like{"  "}
+          &nbsp; Like{"  "}
           {post.likeCount}
         </Button>
         <Button

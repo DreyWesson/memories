@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { createMuiTheme, makeStyles } from "@material-ui/core";
 
 export default makeStyles((theme) => ({
   root: {
@@ -27,3 +27,11 @@ export default makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
 }));
+
+export const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#1e90ff",
+    },
+  },
+});

@@ -3,6 +3,7 @@ import Post from "../models/postSchema.js";
 
 const getPosts = async (req, res, next) => {
   try {
+    // const posts = await Post.find().sort({"timestamp":-1});
     const posts = await Post.find();
     res.status(200).json(posts);
   } catch (error) {

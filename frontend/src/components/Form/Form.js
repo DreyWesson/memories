@@ -4,7 +4,6 @@ import {
   Button,
   Typography,
   Paper,
-  createMuiTheme,
   ThemeProvider,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +14,7 @@ import {
   updatePost,
   setCurrentId,
 } from "../../features/post/postsSlice";
-import useStyles from "./styles";
+import useStyles, { theme } from "./styles";
 import { setModal } from "../../features/post/modalSlice";
 
 export const Form = () => {
@@ -58,14 +57,6 @@ export const Form = () => {
     }
     clear();
   };
-
-  const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: "#1e90ff",
-      },
-    },
-  });
 
   return (
     <Paper className={classes.paper}>

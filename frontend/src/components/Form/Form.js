@@ -13,8 +13,10 @@ import {
   createPost,
   selectPosts,
   updatePost,
+  setCurrentId,
 } from "../../features/post/postsSlice";
 import useStyles from "./styles";
+import { setModal } from "../../features/post/modalSlice";
 
 export const Form = () => {
   const [postData, setPostData] = useState({
@@ -36,7 +38,7 @@ export const Form = () => {
   }, [post]);
 
   const clear = () => {
-    // setCurrentId(0);
+    setCurrentId(null);
     setPostData({
       creator: "",
       title: "",
@@ -49,10 +51,12 @@ export const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentId) {
-      return dispatch(updatePost({ currentId, postData }));
+      dispatch(updatePost({ currentId, postData }));
     } else {
       dispatch(createPost({ postData }));
+      dispatch(setModal(false));
     }
+    clear();
   };
 
   const theme = createMuiTheme({

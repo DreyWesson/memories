@@ -5,16 +5,23 @@ import { ErrorPage, Loader, Posts } from "./components";
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPosts, fetchPosts } from "./features/post/postsSlice";
+import { selectModal } from "./features/post/modalSlice";
 
 function App() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { loading, hasErrors, currentId, posts } = useSelector(selectPosts);
+  const { open } = useSelector(selectModal);
+
+  console.log("LOADING: ", loading);
+  console.log("hasErrors: ", hasErrors);
+  console.log("currentId: ", currentId);
+  console.log("posts: ", posts);
+  console.log("open: ", open);
 
   useEffect(() => {
     dispatch(fetchPosts());
-  }, [dispatch]);
-
-  const { loading, hasErrors } = useSelector(selectPosts);
+  }, [currentId, dispatch]);
 
   if (loading) {
     return <Loader />;

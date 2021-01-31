@@ -28,9 +28,13 @@ const updatePost = async (req, res, next) => {
     return res.status(404).send("There's no post with that ID");
 
   try {
-    let updatedPost = await Post.findByIdAndUpdate(_id, post, {
-      new: true,
-    });
+    let updatedPost = await Post.findByIdAndUpdate(
+      _id,
+      { ...post, _id },
+      {
+        new: true,
+      }
+    );
     res.json(updatedPost);
   } catch (error) {
     console.log("UPDATE ERROR: ", error);

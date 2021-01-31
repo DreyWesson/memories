@@ -22,8 +22,8 @@ export const Post = ({ post }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const postEdit = () => {
-    dispatch(setCurrentId(post._id));
     dispatch(setModal(true));
+    dispatch(setCurrentId(post._id));
   };
 
   return (

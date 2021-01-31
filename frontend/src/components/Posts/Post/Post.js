@@ -16,7 +16,11 @@ import {
 } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 import { setModal } from "../../../features/post/modalSlice";
-import { deletePost, setCurrentId } from "../../../features/post/postsSlice";
+import {
+  deletePost,
+  likePost,
+  setCurrentId,
+} from "../../../features/post/postsSlice";
 
 export const Post = ({ post }) => {
   const classes = useStyles();
@@ -69,7 +73,7 @@ export const Post = ({ post }) => {
         <Button
           size="small"
           className={classes.btnColor}
-          // onClick={() => dispatch(likePost(post._id))}
+          onClick={() => dispatch(likePost({ id: post._id }))}
         >
           <ThumbUpAltOutlined fontSize="small" />
           {"  "}Like{"  "}

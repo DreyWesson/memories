@@ -53,51 +53,43 @@ export const {
   favPost,
 } = postsSlice.actions;
 
-export const fetchPosts = createAsyncThunk(
-  "posts/fetchPosts",
-  async (payload, { dispatch }) => {
-    dispatch(getPosts());
-    const { data } = await api.fetchPosts();
-    return dispatch(getPostsSuccess(data));
-  }
-);
-
-export const createPost = createAsyncThunk(
-  "posts/createPost",
-  async ({ postData }, { dispatch }) => {
-    const { data } = await api.createPost(postData);
-    return dispatch(addPost(data));
-  }
-);
-
-export const updatePost = createAsyncThunk(
-  "posts/updatePost",
-  async ({ currentId, postData }, { dispatch }) => {
-    const { data } = await api.updatePost(currentId, postData);
-    dispatch(editPost(data));
-  }
-);
-
-export const deletePost = createAsyncThunk(
-  "posts/deletePost",
-  async ({ id }, { dispatch }) => {
-    await api.deletePost(id);
-    return dispatch(removePost());
-  }
-);
-
-export const likePost = createAsyncThunk(
-  "posts/likePost",
-  async ({ id }, { dispatch }) => {
-    const { data } = await api.likePost(id);
-    dispatch(favPost(data));
-  }
-);
-
-// export const updatePost = (id, post) => async (dispatch) => {
-//   const { data } = await api.updatePost(id, post);
-//   return dispatch(editPost(data));
-// };
+const fetchPosts = createAsyncThunk(
+    "posts/fetchPosts",
+    async (payload, { dispatch }) => {
+      dispatch(getPosts());
+      const { data } = await api.fetchPosts();
+      return dispatch(getPostsSuccess(data));
+    }
+  ),
+  createPost = createAsyncThunk(
+    "posts/createPost",
+    async ({ postData }, { dispatch }) => {
+      const { data } = await api.createPost(postData);
+      return dispatch(addPost(data));
+    }
+  ),
+  updatePost = createAsyncThunk(
+    "posts/updatePost",
+    async ({ currentId, postData }, { dispatch }) => {
+      const { data } = await api.updatePost(currentId, postData);
+      dispatch(editPost(data));
+    }
+  ),
+  deletePost = createAsyncThunk(
+    "posts/deletePost",
+    async ({ id }, { dispatch }) => {
+      await api.deletePost(id);
+      return dispatch(removePost());
+    }
+  ),
+  likePost = createAsyncThunk(
+    "posts/likePost",
+    async ({ id }, { dispatch }) => {
+      const { data } = await api.likePost(id);
+      dispatch(favPost(data));
+    }
+  );
+export { fetchPosts, createPost, updatePost, deletePost, likePost };
 
 export const selectPosts = (state) => state.posts;
 export default postsSlice.reducer;

@@ -6,6 +6,7 @@ import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPosts, fetchPosts } from "./features/post/postsSlice";
 import { selectModal } from "./features/post/modalSlice";
+import Pusher from "pusher-js";
 
 function App() {
   const classes = useStyles();
@@ -21,7 +22,31 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchPosts());
-  }, [currentId, dispatch]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    // Pusher.logToConsole = true;
+
+    let pusher = new Pusher("4f051944159df55f7c75", {
+      cluster: "eu",
+    });
+
+    let channel = pusher.subscribe("posts");
+    channel.bind("inserted", (data) => {
+      console.log("Data received ", data);
+      dispatch(fetchPosts());
+    });
+    let del = pusher.subscribe("posts");
+    del.bind("deleted", (data) => {
+      console.log("Data deleted ", data);
+      dispatch(fetchPosts());
+    });
+    let updated = pusher.subscribe("posts");
+    updated.bind("deleted", (data) => {
+      console.log("Data updated ", data);
+      dispatch(fetchPosts());
+    });
+  }, [dispatch]);
 
   if (loading) {
     return <Loader />;

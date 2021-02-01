@@ -60,7 +60,19 @@ function App() {
           variant={window.innerWidth < 576 ? "h4" : "h3"}
           align="center"
         >
-          Memories
+          <span
+            style={
+              {
+                // border: "2px solid rgb(91, 93, 94)",
+                // borderRight: "none",
+                // borderRadius: "25px 0 0 25px ",
+                // padding: "0px 2px 0px 10px",
+              }
+            }
+          >
+            Mem
+          </span>
+          <span className={classes.capsule}>ories</span>
         </Typography>
       </AppBar>
       <Grow in>

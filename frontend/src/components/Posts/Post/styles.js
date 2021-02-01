@@ -52,4 +52,8 @@ export default makeStyles({
   btnColor: {
     color: "#ff6c5f",
   },
+  spa: {
+    backgroundColor: "dodgerblue",
+    color: "red",
+  },
 });

@@ -18,8 +18,8 @@ import { useDispatch } from "react-redux";
 import { setModal } from "../../../features/post/modalSlice";
 import {
   deletePost,
-  setCurrentId,
   likePost,
+  setCurrentId,
 } from "../../../features/post/postsSlice";
 
 export const Post = ({ post }) => {

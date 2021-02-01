@@ -36,6 +36,12 @@ export default makeStyles((theme) => ({
       right: "1em",
     },
   },
+  container: {
+    scrollbarWidth: "none",
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
 }));
 
 export function getModalStyle() {
@@ -47,3 +53,15 @@ export function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`,
   };
 }
+
+// .post__comments {
+//   max-height: 250px;
+//   overflow: scroll;
+//   /* Hide scrollbar for IE, Edge and Firefox */
+//   -ms-overflow-style: none; /* IE and Edge */
+//   scrollbar-width: none; /* Firefox */
+// }
+// /* Hide scrollbar for Chrome, Safari and Opera */
+// .post__comments::-webkit-scrollbar {
+//   display: none;
+// }

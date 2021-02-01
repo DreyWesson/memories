@@ -64,7 +64,6 @@ function App() {
         </Typography>
       </AppBar>
       <Grow in>
-        {/* <Container> */}
         <Grid
           container
           justify="space-between"
@@ -75,7 +74,6 @@ function App() {
             <Posts />
           </Grid>
         </Grid>
-        {/* </Container> */}
       </Grow>
     </Container>
   );

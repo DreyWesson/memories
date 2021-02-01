@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   loaderContainer: {
     display: "grid",
     placeItems: "center",
-    height: "100vh",
+    height: "80vh",
   },
   loader: {
     border: "0.7rem solid #f8f9fa",

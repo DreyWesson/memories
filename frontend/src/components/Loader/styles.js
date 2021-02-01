@@ -9,8 +9,8 @@ export default makeStyles((theme) => ({
   loader: {
     border: "0.7rem solid #f8f9fa",
     borderRadius: "50%",
-    background: "#e7e8f5",
-    borderTop: "0.7rem solid #5e6be0",
+    background: "#fde6ec",
+    borderTop: "0.7rem solid #fe3d71",
     width: "5rem",
     height: "5rem",
     animation: `$spin 2s linear infinite`,

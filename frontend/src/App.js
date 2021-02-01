@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { AppBar, Container, Grid, Grow, Typography } from "@material-ui/core";
 import memories from "./images/memories.png";
-import { ErrorPage, Loader, Posts } from "./components";
+import { Posts } from "./components";
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPosts, fetchPosts } from "./features/post/postsSlice";

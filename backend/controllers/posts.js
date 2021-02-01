@@ -3,7 +3,7 @@ import Post from "../models/postSchema.js";
 
 const getPosts = async (req, res, next) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().sort({ _id: -1 });
     res.status(200).json(posts);
   } catch (error) {
     res.status(404).json({ message: error.message });

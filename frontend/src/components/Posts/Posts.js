@@ -1,6 +1,6 @@
 import { Grid, Modal } from "@material-ui/core";
 import React, { useState } from "react";
-import { Form, Loader } from "..";
+import { ErrorPage, Form, Loader } from "..";
 import { Post } from "./Post/Post";
 import { MonochromePhotosOutlined } from "@material-ui/icons/";
 import useStyles, { getModalStyle } from "./styles";
@@ -12,12 +12,14 @@ export const Posts = () => {
   const dispatch = useDispatch();
   const [modalStyle] = useState(getModalStyle);
   const classes = useStyles();
-  const { posts } = useSelector(selectPosts);
+  const { posts, hasErrors } = useSelector(selectPosts);
   const { open } = useSelector(selectModal);
 
   return (
     <>
-      {!posts?.length ? (
+      {hasErrors ? (
+        <ErrorPage />
+      ) : !posts?.length ? (
         <Loader />
       ) : (
         <Grid

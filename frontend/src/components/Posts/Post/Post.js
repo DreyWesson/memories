@@ -11,8 +11,8 @@ import moment from "moment";
 import useStyles from "./styles";
 import {
   DeleteOutlined,
+  FavoriteBorderOutlined,
   MoreHorizOutlined,
-  ThumbUpAltOutlined,
 } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 import { setModal } from "../../../features/post/modalSlice";
@@ -75,9 +75,8 @@ export const Post = ({ post }) => {
           className={classes.btnColor}
           onClick={() => dispatch(likePost({ id: post._id }))}
         >
-          <ThumbUpAltOutlined fontSize="small" />
-          {"  "}Like{"  "}
-          {post.likeCount}
+          <FavoriteBorderOutlined fontSize="small" />
+          &nbsp; {post.likeCount}
         </Button>
         <Button
           size="small"

@@ -10,28 +10,26 @@ export const postsSlice = createSlice({
     currentId: null,
   },
   reducers: {
-    getPosts: (state) => {
-      state.loading = true;
+    getPosts: ({ loading }) => {
+      loading = true;
     },
-    getPostsSuccess: (state, { payload }) => {
-      state.posts = payload;
-      state.loading = false;
-      state.hasErrors = false;
+    getPostsSuccess: ({ posts, loading, hasErrors }, { payload }) => {
+      posts = payload;
+      loading = false;
+      hasErrors = false;
     },
-    getPostsFailure: (state, action) => {
-      state.loading = false;
-      state.hasErrors = true;
+    getPostsFailure: ({ loading, hasErrors }, action) => {
+      loading = false;
+      hasErrors = true;
     },
-    addPost: (state, action) => {
-      state.posts.push(action.payload);
+    addPost: ({ posts }, { payload }) => {
+      posts.push(payload);
     },
-    editPost: (state, { payload }) => {
-      state.posts.forEach((post) =>
-        post._id === payload._id ? payload : post
-      );
+    editPost: ({ posts }, { payload }) => {
+      posts.forEach((post) => (post._id === payload._id ? payload : post));
     },
-    setCurrentId: (state, { payload }) => {
-      state.currentId = payload;
+    setCurrentId: ({ currentId }, { payload }) => {
+      currentId = payload;
     },
     removePost: ({ posts }, { payload }) => {
       posts.filter((post) => post._id === payload);
@@ -39,6 +37,9 @@ export const postsSlice = createSlice({
     favPost: ({ posts }, { payload }) => {
       posts.forEach((post) => (post._id === payload._id ? payload : post));
     },
+    // favPost: ({ posts }, { payload }) => {
+    //   posts.forEach((post) => (post._id === payload._id ? payload : post));
+    // },
   },
 });
 

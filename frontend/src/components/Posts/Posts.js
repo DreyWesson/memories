@@ -14,6 +14,7 @@ export const Posts = () => {
   const classes = useStyles();
   const { posts, hasErrors } = useSelector(selectPosts);
   const { open } = useSelector(selectModal);
+  console.log(posts);
 
   return (
     <>

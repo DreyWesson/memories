@@ -25,17 +25,12 @@ export const Form = () => {
     tags: "",
     selectedFile: "",
   });
-  const { posts, currentId } = useSelector(selectPosts);
-  const post = currentId
-    ? posts?.find((message) => message._id === currentId)
-    : null;
-  const dispatch = useDispatch();
-  const classes = useStyles();
-
-  useEffect(() => {
-    post && setPostData(post);
-  }, [post]);
-
+  const { posts, currentId } = useSelector(selectPosts),
+    post = currentId
+      ? posts?.find((message) => message._id === currentId)
+      : null,
+    dispatch = useDispatch(),
+    classes = useStyles();
   const clear = () => {
     setCurrentId(null);
     setPostData({
@@ -57,6 +52,10 @@ export const Form = () => {
     clear();
     dispatch(setModal(false));
   };
+
+  useEffect(() => {
+    post && setPostData(post);
+  }, [post]);
 
   return (
     <Paper className={classes.paper}>

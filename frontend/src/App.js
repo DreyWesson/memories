@@ -8,8 +8,8 @@ import { fetchPosts } from "./features/post/postsSlice";
 import Pusher from "pusher-js";
 
 function App() {
-  const classes = useStyles();
-  const dispatch = useDispatch();
+  const classes = useStyles(),
+    dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchPosts());

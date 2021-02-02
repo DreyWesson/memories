@@ -23,8 +23,8 @@ import {
 } from "../../../features/post/postsSlice";
 
 export const Post = ({ post }) => {
-  const classes = useStyles();
-  const dispatch = useDispatch();
+  const classes = useStyles(),
+    dispatch = useDispatch();
   const postEdit = () => {
     dispatch(setModal(true));
     dispatch(setCurrentId(post._id));

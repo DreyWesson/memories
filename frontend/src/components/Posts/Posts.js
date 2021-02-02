@@ -9,12 +9,11 @@ import { selectPosts, setCurrentId } from "../../features/post/postsSlice";
 import { selectModal, setModal } from "../../features/post/modalSlice";
 
 export const Posts = () => {
-  const dispatch = useDispatch();
-  const [modalStyle] = useState(getModalStyle);
-  const classes = useStyles();
-  const { posts, hasErrors } = useSelector(selectPosts);
-  const { open } = useSelector(selectModal);
-  console.log(posts);
+  const dispatch = useDispatch(),
+    [modalStyle] = useState(getModalStyle),
+    classes = useStyles(),
+    { posts, hasErrors } = useSelector(selectPosts),
+    { open } = useSelector(selectModal);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "./axios";
 
 const fetchPosts = () => axios.get("/"),
   createPost = (newPost) => axios.post("/", newPost),

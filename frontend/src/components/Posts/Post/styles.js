@@ -53,7 +53,7 @@ export default makeStyles({
     justifyContent: "space-between",
   },
   btnColor: {
-    color: "#ec2413",
+    color: "#7f0f05",
   },
   spa: {
     backgroundColor: "dodgerblue",

@@ -14,11 +14,11 @@ function App() {
   const { loading, hasErrors, currentId, posts } = useSelector(selectPosts);
   const { open } = useSelector(selectModal);
 
-  console.log("LOADING: ", loading);
-  console.log("hasErrors: ", hasErrors);
-  console.log("currentId: ", currentId);
-  console.log("posts: ", posts);
-  console.log("open: ", open);
+  // console.log("LOADING: ", loading);
+  // console.log("hasErrors: ", hasErrors);
+  // console.log("currentId: ", currentId);
+  // console.log("posts: ", posts);
+  // console.log("open: ", open);
 
   useEffect(() => {
     dispatch(fetchPosts());

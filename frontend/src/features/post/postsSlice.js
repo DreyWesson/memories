@@ -15,7 +15,6 @@ export const postsSlice = createSlice({
       console.log("FETCH POSTS reducer");
     },
     getPostsSuccess: (state, { payload }) => {
-      console.log(payload);
       state.posts = payload;
       state.loading = false;
       state.hasErrors = false;

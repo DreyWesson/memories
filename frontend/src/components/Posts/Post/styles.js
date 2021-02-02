@@ -7,6 +7,9 @@ export default makeStyles({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     backgroundBlendMode: "darken",
   },
+  smallHeading: {
+    fontSize: "30px",
+  },
   border: {
     border: "solid",
   },
@@ -50,7 +53,7 @@ export default makeStyles({
     justifyContent: "space-between",
   },
   btnColor: {
-    color: "#ff6c5f",
+    color: "#ec2413",
   },
   spa: {
     backgroundColor: "dodgerblue",

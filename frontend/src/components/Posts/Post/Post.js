@@ -41,7 +41,9 @@ export const Post = ({ post }) => {
         title={post.title}
       />
       <div className={classes.overlay}>
-        <Typography variant="h6">{post.creator}</Typography>
+        <Typography variant="h2" className={classes.smallHeading}>
+          {post.creator}
+        </Typography>
         <Typography variant="body2">
           {moment(post.createdAt).fromNow()}
         </Typography>
@@ -76,7 +78,7 @@ export const Post = ({ post }) => {
           onClick={() => dispatch(likePost({ id: post._id }))}
         >
           <FavoriteBorderOutlined fontSize="small" />
-          &nbsp; {post.likeCount}
+          &nbsp; Like &nbsp;{post.likeCount}
         </Button>
         <Button
           size="small"

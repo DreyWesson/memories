@@ -25,7 +25,7 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    Pusher.logToConsole = true;
+    // Pusher.logToConsole = true;
     const pusher = new Pusher("4f051944159df55f7c75", {
       cluster: "eu",
     });

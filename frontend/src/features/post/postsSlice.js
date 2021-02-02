@@ -12,8 +12,10 @@ export const postsSlice = createSlice({
   reducers: {
     getPosts: (state) => {
       state.loading = true;
+      console.log("FETCH POSTS reducer");
     },
     getPostsSuccess: (state, { payload }) => {
+      console.log(payload);
       state.posts = payload;
       state.loading = false;
       state.hasErrors = false;
@@ -62,8 +64,9 @@ const fetchPosts = createAsyncThunk(
     "posts/fetchPosts",
     async (payload, { dispatch }) => {
       dispatch(getPosts());
+      console.log("FETCH POSTS thunk");
       const { data } = await api.fetchPosts();
-      return dispatch(getPostsSuccess(data));
+      dispatch(getPostsSuccess(data));
     }
   ),
   createPost = createAsyncThunk(

@@ -6,7 +6,8 @@ const getPosts = async (req, res, next) => {
     const posts = await Post.find().sort({ _id: -1 });
     res.status(200).json(posts);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    console.log(error);
+    res.status(404).json({ message: error });
   }
 };
 const createPost = async (req, res, next) => {

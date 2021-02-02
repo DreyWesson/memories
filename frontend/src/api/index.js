@@ -1,11 +1,9 @@
-import axios from "axios";
+import axios from "../axios";
 
-const url = "https://insta-memories.herokuapp.com/posts";
-
-const fetchPosts = () => axios.get(url),
-  createPost = (newPost) => axios.post(url, newPost),
-  updatePost = (id, updatedData) => axios.patch(`${url}/${id}`, updatedData),
-  deletePost = (id) => axios.delete(`${url}/${id}`),
-  likePost = (id) => axios.patch(`${url}/${id}/likePost`);
+const fetchPosts = () => axios.get("/"),
+  createPost = (newPost) => axios.post("/", newPost),
+  updatePost = (id, updatedData) => axios.patch(`/${id}`, updatedData),
+  deletePost = (id) => axios.delete(`/${id}`),
+  likePost = (id) => axios.patch(`/${id}/likePost`);
 
 export { fetchPosts, createPost, updatePost, deletePost, likePost };

@@ -3,22 +3,13 @@ import { AppBar, Container, Grid, Grow, Typography } from "@material-ui/core";
 import memories from "./images/memories.png";
 import { Posts } from "./components";
 import useStyles from "./styles";
-import { useDispatch, useSelector } from "react-redux";
-import { selectPosts, fetchPosts } from "./features/post/postsSlice";
-import { selectModal } from "./features/post/modalSlice";
+import { useDispatch } from "react-redux";
+import { fetchPosts } from "./features/post/postsSlice";
 import Pusher from "pusher-js";
 
 function App() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { loading, hasErrors, currentId, posts } = useSelector(selectPosts);
-  const { open } = useSelector(selectModal);
-
-  // console.log("LOADING: ", loading);
-  // console.log("hasErrors: ", hasErrors);
-  // console.log("currentId: ", currentId);
-  // console.log("posts: ", posts);
-  // console.log("open: ", open);
 
   useEffect(() => {
     dispatch(fetchPosts());
@@ -30,7 +21,6 @@ function App() {
       cluster: "eu",
     });
     const pusherAction = (data) => {
-      console.log("Data: ", data);
       dispatch(fetchPosts());
     };
 
@@ -39,12 +29,6 @@ function App() {
     pushPost.bind("deleted", pusherAction);
     pushPost.bind("updated", pusherAction);
   }, [dispatch]);
-
-  // if (loading) {
-  //   return <Loader />;
-  // } else if (hasErrors) {
-  //   return <ErrorPage />;
-  // }
 
   return (
     <Container maxWidth="lg">

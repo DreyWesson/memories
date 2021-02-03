@@ -1,48 +1,20 @@
-import React, { useEffect } from "react";
-import { Container, Grid, Grow } from "@material-ui/core";
-import { Navbar, Posts } from "./components";
-import { useDispatch } from "react-redux";
-import { fetchPosts } from "./features/post/postsSlice";
-import Pusher from "pusher-js";
+import { Container } from "@material-ui/core";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import { Auth, Home, Navbar } from "./components";
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchPosts());
-  }, [dispatch]);
-
-  useEffect(() => {
-    // Pusher.logToConsole = true;
-    const pusher = new Pusher("4f051944159df55f7c75", {
-      cluster: "eu",
-    });
-    const pusherAction = (data) => {
-      dispatch(fetchPosts());
-    };
-
-    const pushPost = pusher.subscribe("posts");
-    pushPost.bind("inserted", pusherAction);
-    pushPost.bind("deleted", pusherAction);
-    pushPost.bind("updated", pusherAction);
-  }, [dispatch]);
-
   return (
-    <Container maxWidth="lg">
-      <Navbar />
-      <Grow in>
-        <Grid
-          container
-          justify="space-between"
-          alignItems="stretch"
-          spacing={3}
-        >
-          <Grid item xs={12}>
-            <Posts />
-          </Grid>
-        </Grid>
-      </Grow>
-    </Container>
+    <Router>
+      <Container maxWidth="lg">
+        <Navbar />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/auth" exact component={Auth} />
+        </Switch>
+      </Container>
+    </Router>
   );
 }
 

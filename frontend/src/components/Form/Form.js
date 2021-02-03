@@ -126,6 +126,7 @@ export const Form = () => {
           </div>
           <Button
             className={classes.buttonSubmit}
+            color="secondary"
             variant="contained"
             size="large"
             type="submit"
@@ -138,7 +139,7 @@ export const Form = () => {
             size="small"
             onClick={clear}
             fullWidth
-            style={{ backgroundColor: "lightgray", color: "black" }}
+            className={classes.btnClear}
           >
             Clear
           </Button>

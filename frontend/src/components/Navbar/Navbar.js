@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import useStyles from "./styles";
 import memories from "../../images/memories.png";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Close } from "@material-ui/icons";
 
 export const Navbar = () => {
@@ -21,16 +21,19 @@ export const Navbar = () => {
     setOpen(false);
   };
 
+  // const snapBarSignInLogic = () => {};
+
   return (
     <AppBar className={classes.appBar} position="sticky" color="inherit">
       <div className={classes.brandContainer}>
         <img src={memories} alt="memories" height={45} />
         <Typography
-          // component={Link}
-          // to="/"
+          component={Link}
+          to="/"
           className={classes.heading}
           variant={window.innerWidth < 576 ? "h4" : "h3"}
           align="center"
+          style={{ textDecoration: "none" }}
         >
           Mem
           <span className={classes.capsule}>ories</span>
@@ -45,7 +48,7 @@ export const Navbar = () => {
             horizontal: "center",
           }}
           open={open}
-          autoHideDuration={window.innerWidth > 576 ? 18000 : 6000}
+          autoHideDuration={window.innerWidth < 576 ? 6000 : null}
           onClose={handleClose}
           message={!user && "Sign in to Post"}
           action={
@@ -78,8 +81,8 @@ export const Navbar = () => {
                 </div>
               ) : (
                 <Button
-                  // component={Link}
-                  // to="/auth"
+                  component={Link}
+                  to="/auth"
                   variant="contained"
                   color="secondary"
                   size="small"

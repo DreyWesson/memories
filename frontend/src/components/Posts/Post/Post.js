@@ -50,9 +50,9 @@ export const Post = ({ post }) => {
         </Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button style={{ color: "white" }} size="small" onClick={postEdit}>
+        <Button size="small" onClick={postEdit}>
           <IconButton aria-label="edit">
-            <MoreHorizOutlined fontSize="default" />
+            <MoreHorizOutlined fontSize="default" style={{ color: "white" }} />
           </IconButton>
         </Button>
       </div>

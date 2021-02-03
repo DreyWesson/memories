@@ -35,7 +35,6 @@ export const Posts = () => {
           ))}
         </Grid>
       )}
-      {/* <div className={classes.posts}> */}
       <div className={classes.postsContainer}>
         <MonochromePhotosOutlined
           className={classes.postsCreateBtn}
@@ -55,7 +54,6 @@ export const Posts = () => {
           <Form />
         </div>
       </Modal>
-      {/* </div> */}
     </>
   );
 };

@@ -32,8 +32,6 @@ export default makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     width: "235px",
-    marginLeft: "0 !important",
-    padding: "0 !important",
     [theme.breakpoints.up("sm")]: {
       width: "400px",
     },

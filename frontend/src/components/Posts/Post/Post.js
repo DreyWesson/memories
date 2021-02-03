@@ -6,7 +6,7 @@ import {
   CardMedia,
   Button,
   Typography,
-  IconButton,
+  // IconButton,
 } from "@material-ui/core/";
 import moment from "moment";
 import useStyles from "./styles";
@@ -50,10 +50,13 @@ export const Post = ({ post }) => {
         </Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button style={{ color: "white" }} size="small" onClick={postEdit}>
-          <IconButton aria-label="edit">
-            <MoreHorizOutlined fontSize="default" />
-          </IconButton>
+        <Button
+          aria-label="edit"
+          style={{ color: "white" }}
+          size="small"
+          onClick={postEdit}
+        >
+          <MoreHorizOutlined fontSize="default" />
         </Button>
       </div>
       <div className={classes.details}>

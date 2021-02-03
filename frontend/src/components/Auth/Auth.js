@@ -8,7 +8,7 @@ import {
   Typography,
   Container,
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 
 import Icon from "./icon";
@@ -70,9 +70,10 @@ export const Auth = () => {
 
   // const handleChange = (e) =>
   //   setForm({ ...form, [e.target.name]: e.target.value });
+  const sm = () => (window.innerWidth < 576 ? true : false);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" disableGutters={sm && true}>
       <Paper className={classes.paper} elevation={3}>
         <Avatar className={classes.avatar}>
           <LockOutlined />
@@ -110,7 +111,7 @@ export const Auth = () => {
               label="Password"
               // handleChange={handleChange}
               type={showPassword ? "text" : "password"}
-              // handleShowPassword={handleShowPassword}
+              handleShowPassword={handleShowPassword}
             />
             {isSignup && (
               <Input

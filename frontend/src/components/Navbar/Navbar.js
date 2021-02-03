@@ -20,7 +20,7 @@ export const Navbar = () => {
   const handleClose = (event, reason) => {
     setOpen(false);
   };
-
+  const sm = () => (window.innerWidth < 576 ? true : false);
   // const snapBarSignInLogic = () => {};
 
   return (
@@ -31,7 +31,7 @@ export const Navbar = () => {
           component={Link}
           to="/"
           className={classes.heading}
-          variant={window.innerWidth < 576 ? "h4" : "h3"}
+          variant={sm ? "h4" : "h3"}
           align="center"
           style={{ textDecoration: "none" }}
         >
@@ -41,14 +41,14 @@ export const Navbar = () => {
       </div>
 
       <div>
-        <Button onClick={() => setOpen(true)}>Status</Button>
+        <Button onClick={() => setOpen(true)}>Profile</Button>
         <Snackbar
           anchorOrigin={{
             vertical: "top",
             horizontal: "center",
           }}
           open={open}
-          autoHideDuration={window.innerWidth < 576 ? 6000 : null}
+          autoHideDuration={sm ? 6000 : null}
           onClose={handleClose}
           message={!user && "Sign in to Post"}
           action={
@@ -63,7 +63,7 @@ export const Navbar = () => {
                   </Avatar>
                   <Typography
                     // className={classes.userName}
-                    variant={window.innerWidth > 576 && "h6"}
+                    variant={!sm > 576 && "h6"}
                   >
                     Drey Wesson
                     {/* {user?.result.name} */}

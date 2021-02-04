@@ -8,36 +8,48 @@ import {
   Snackbar,
   Typography,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import { setLogout } from "../../../features/authSlice";
+import { useDispatch } from "react-redux";
 
 export const SnackBar = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const { name, imageUrl } = user?.result;
-  const handleClose = (event, reason) => {
-    setOpen(false);
-  };
+  const location = useLocation();
+
+  console.log(user);
+  const handleClose = (event, reason) => setOpen(false);
+
   useEffect(() => {
     // const token = user?.token;
 
     // JWT
 
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, []);
+  }, [location]);
   const sm = () => (window.innerWidth < 576 ? true : false);
+  const logout = () => {
+    dispatch(setLogout());
+    history.push("/");
+    setUser(null);
+  };
 
   const snapBarMessage = () => {
-    return !user ? (
+    return user?.result ? (
       <div className={classes.profile}>
-        <Avatar alt={name} src={imageUrl}>
-          {name.charAt(0)}
+        <Avatar alt={user?.result.name} src={user?.result.imageUrl}>
+          {user?.result.name.charAt(0)}
         </Avatar>
-        <Typography className={classes.userName}>{name}</Typography>
+        <Typography className={classes.userName}>
+          {user?.result.name}
+        </Typography>
         <Button
           className={classes.btn}
           variant="contained"
-          // onClick={logout}
+          onClick={logout}
           color="secondary"
           size="small"
         >
@@ -72,7 +84,7 @@ export const SnackBar = () => {
         open={open}
         autoHideDuration={sm ? 12000 : null}
         onClose={handleClose}
-        message={!user ? "Sign in to Post" : snapBarMessage()}
+        message={snapBarMessage()}
         action={
           <Fragment>
             <IconButton

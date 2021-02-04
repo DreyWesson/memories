@@ -2,7 +2,7 @@ import { Home } from "./Home/Home";
 import { Auth } from "./Auth/Auth";
 import { Input } from "./Auth/Input";
 import { Navbar } from "./Navbar/Navbar";
-import { SnackBar } from "./SnackBar/SnackBar";
+import { SnackBar } from "./Navbar/SnackBar/SnackBar";
 import { Posts } from "./Posts/Posts";
 import { Post } from "./Posts/Post/Post";
 import { Form } from "./Form/Form";

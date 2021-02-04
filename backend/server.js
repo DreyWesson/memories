@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
 import postRoutes from "./routes/posts.js";
+import userRoutes from "./routes/users.js";
 import { connectDB } from "./config/db.js";
 import morgan from "morgan";
 
@@ -19,6 +20,8 @@ app.use(cors());
 
 // Routes
 app.use("/posts", postRoutes);
+app.use("/user", userRoutes);
+
 app.get("/", (req, res) => {
   res.send("Hello from Memories API");
 });

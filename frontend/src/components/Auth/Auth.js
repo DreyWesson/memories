@@ -15,18 +15,22 @@ import Icon from "./icon";
 import useStyles from "./styles";
 import { LockOutlined } from "@material-ui/icons";
 import { Input } from "..";
-import { setGoogleAuth } from "../../features/authSlice";
+import {
+  formSignin,
+  formSignup,
+  setGoogleAuth,
+} from "../../features/authSlice";
 
-// const initialState = {
-//   firstName: "",
-//   lastName: "",
-//   email: "",
-//   password: "",
-//   confirmPassword: "",
-// };
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 export const Auth = () => {
-  // const [form, setForm] = useState(initialState);
+  const [formData, setFormData] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -42,12 +46,14 @@ export const Auth = () => {
   };
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
-    // if (isSignup) {
-    //   dispatch(signup(form, history));
-    // } else {
-    //   dispatch(signin(form, history));
-    // }
+    e.preventDefault();
+    console.log(formData);
+    const data = { formData, history };
+    if (isSignup) {
+      dispatch(formSignup(data));
+    } else {
+      dispatch(formSignin(data));
+    }
   };
 
   const googleSuccess = async (res) => {
@@ -65,8 +71,9 @@ export const Auth = () => {
   const googleError = () => {
     alert("Google Sign In was unsuccessful. Try again later");
   };
-  // const handleChange = (e) =>
-  //   setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
   const sm = () => (window.innerWidth < 576 ? true : false);
 
   return (
@@ -85,14 +92,14 @@ export const Auth = () => {
                 <Input
                   name="firstName"
                   label="First Name"
-                  // handleChange={handleChange}
+                  handleChange={handleChange}
                   autoFocus
                   half
                 />
                 <Input
                   name="lastName"
                   label="Last Name"
-                  // handleChange={handleChange}
+                  handleChange={handleChange}
                   half
                 />
               </>
@@ -100,13 +107,13 @@ export const Auth = () => {
             <Input
               name="email"
               label="Email Address"
-              // handleChange={handleChange}
+              handleChange={handleChange}
               type="email"
             />
             <Input
               name="password"
               label="Password"
-              // handleChange={handleChange}
+              handleChange={handleChange}
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
@@ -114,7 +121,7 @@ export const Auth = () => {
               <Input
                 name="confirmPassword"
                 label="Repeat Password"
-                // handleChange={handleChange}
+                handleChange={handleChange}
                 type="password"
               />
             )}

@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import * as api from "../api";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -17,6 +18,19 @@ export const authSlice = createSlice({
   },
 });
 
+const formSignin = createAsyncThunk(
+  "auth/formSignin",
+  async ({ formData, history }, { dispatch }) => {
+    history.push("/");
+  }
+);
+const formSignup = createAsyncThunk(
+  "auth/formSignin",
+  async ({ formData, history }, { dispatch }) => {
+    history.push("/");
+  }
+);
+export { formSignin, formSignup };
 export const { setGoogleAuth, setLogout } = authSlice.actions;
 export const selectGoogleAuth = (state) => state.auth;
 export default authSlice.reducer;

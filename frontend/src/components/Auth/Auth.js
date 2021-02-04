@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   Avatar,
   Button,
@@ -8,16 +8,14 @@ import {
   Typography,
   Container,
 } from "@material-ui/core";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 
 import Icon from "./icon";
-// import { signin, signup } from "../../actions/auth";
-// import { AUTH } from "../../constants/actionTypes";
 import useStyles from "./styles";
-// import Input from "./Input";
 import { LockOutlined } from "@material-ui/icons";
 import { Input } from "..";
+import { setGoogleAuth } from "../../features/authSlice";
 
 // const initialState = {
 //   firstName: "",
@@ -30,8 +28,8 @@ import { Input } from "..";
 export const Auth = () => {
   // const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
-  // const dispatch = useDispatch();
-  // const history = useHistory();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const classes = useStyles();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -52,22 +50,21 @@ export const Auth = () => {
     // }
   };
 
-  // const googleSuccess = async (res) => {
-  //   const result = res?.profileObj;
-  //   const token = res?.tokenId;
+  const googleSuccess = async (res) => {
+    const result = await res?.profileObj;
+    const token = await res?.tokenId;
+    try {
+      const data = { result, token };
+      dispatch(setGoogleAuth(data));
+      history.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  //   try {
-  //     dispatch({ type: AUTH, data: { result, token } });
-
-  //     history.push("/");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const googleError = () =>
-  //   alert("Google Sign In was unsuccessful. Try again later");
-
+  const googleError = () => {
+    alert("Google Sign In was unsuccessful. Try again later");
+  };
   // const handleChange = (e) =>
   //   setForm({ ...form, [e.target.name]: e.target.value });
   const sm = () => (window.innerWidth < 576 ? true : false);
@@ -132,13 +129,17 @@ export const Auth = () => {
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>
           <GoogleLogin
-            clientId="564033717568-e5p23rhvcs4i6kffgsbci1d64r8hp6fn.apps.googleusercontent.com"
+            clientId="564842978452-tm3hgg3ff5m9k2olbtmvap0m2skag09e.apps.googleusercontent.com"
+            onSuccess={googleSuccess}
+            onFailure={googleError}
+            cookiePolicy="single_host_origin"
+            uxMode="popup"
             render={(renderProps) => (
               <Button
                 className={classes.googleButton}
                 color="primary"
                 fullWidth
-                // onClick={renderProps.onClick}
+                onClick={renderProps.onClick}
                 disabled={renderProps.disabled}
                 startIcon={<Icon />}
                 variant="contained"
@@ -146,9 +147,6 @@ export const Auth = () => {
                 Google Sign In
               </Button>
             )}
-            // onSuccess={googleSuccess}
-            // onFailure={googleError}
-            cookiePolicy="single_host_origin"
           />
           <Grid container justify="flex-end">
             <Grid item>

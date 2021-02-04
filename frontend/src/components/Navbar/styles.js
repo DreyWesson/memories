@@ -31,7 +31,7 @@ export default makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "235px",
+    width: "220px",
     [theme.breakpoints.up("sm")]: {
       width: "400px",
     },
@@ -40,14 +40,10 @@ export default makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
   },
-  btn: {
-    padding: "5px",
+  snackbar: {
+    paddingRight: "5px",
+    [theme.breakpoints.up("sm")]: {
+      paddingRight: "20px",
+    },
   },
-  close: {
-    paddingLeft: "10px",
-  },
-  // purple: {
-  //   color: theme.palette.getContrastText(deepPurple[500]),
-  //   backgroundColor: deepPurple[500],
-  // },
 }));

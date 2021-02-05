@@ -21,9 +21,9 @@ export const signin = async (req, res, next) => {
   } catch (error) {
     res.status(500).send({
       success: false,
-      error: error.message,
+      error: error,
     });
-    // next(error)
+    next(error);
   }
 };
 export const signup = async (req, res, next) => {

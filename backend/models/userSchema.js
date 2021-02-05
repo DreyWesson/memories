@@ -49,6 +49,7 @@ UserSchema.methods.matchPasswords = async function (password) {
 };
 // Store id information in the token
 UserSchema.methods.getSignedToken = function () {
+  // DOUBLE JEOPARDY
   return jwt.sign({ id: this._id, email: this.email }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });

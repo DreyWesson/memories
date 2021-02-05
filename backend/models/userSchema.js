@@ -32,7 +32,7 @@ const UserSchema = mongoose.Schema({
   // id: String,
 });
 
-// Hash password before signing user up
+// Hash password before saving and signing user up
 UserSchema.pre("save", async function (next) {
   !this.isModified("password") && next();
   const salt = await bcrypt.genSalt(10);

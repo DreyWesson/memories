@@ -1,3 +1,4 @@
+import e from "cors";
 import mongoose from "mongoose";
 import Post from "../models/postSchema.js";
 
@@ -58,12 +59,27 @@ const getPosts = async (req, res, next) => {
   },
   likePost = async (req, res, next) => {
     const { id } = req.params;
+    console.log("USERID from auth.middleware.js: ", req.userId);
+    console.log("USER from auth.middleware.js: ", req.user);
+
+    if (!req.userId) return res.json({ message: "Unauthenticated" });
+
     verifyID(id, res);
     try {
       const post = await Post.findById(id);
+
+      // Checks if user already liked the post
+      const index = post.likes.findIndex((id) => id === String(req.userId));
+      if (index === -1) {
+        post.likes.push(req.userId);
+      } else {
+        post.likes = post.likes.filter((id) => id !== String(req.userId));
+      }
+
       let updatedPost = await Post.findByIdAndUpdate(
         id,
-        { likeCount: post.likeCount + 1 },
+        // { likeCount: post.likeCount + 1 },
+        post,
         {
           new: true,
         }

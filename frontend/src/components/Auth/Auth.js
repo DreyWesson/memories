@@ -20,6 +20,9 @@ import {
   formSignup,
   setGoogleAuth,
 } from "../../features/authSlice";
+import { sm } from "../../utils/screenSize";
+import { useSnackbar } from "notistack";
+import { snackMessages } from "../../snackMessages";
 
 const initialState = {
   firstName: "",
@@ -35,6 +38,7 @@ export const Auth = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
@@ -51,8 +55,14 @@ export const Auth = () => {
     const data = { formData, history };
     if (isSignup) {
       dispatch(formSignup(data));
+      enqueueSnackbar(snackMessages.signin, {
+        variant: "success",
+      });
     } else {
       dispatch(formSignin(data));
+      enqueueSnackbar(snackMessages.signup, {
+        variant: "success",
+      });
     }
   };
 
@@ -63,18 +73,24 @@ export const Auth = () => {
       const data = { result, token };
       dispatch(setGoogleAuth(data));
       history.push("/");
+      enqueueSnackbar(snackMessages.googleSuccess, {
+        variant: "success",
+      });
     } catch (error) {
       console.log(error);
     }
   };
 
   const googleError = () => {
-    alert("Google Sign In was unsuccessful. Try again later");
+    enqueueSnackbar(snackMessages.googleError, {
+      variant: "error",
+    });
+    // alert("Google Sign In was unsuccessful. Try again later");
   };
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const sm = () => (window.innerWidth < 576 ? true : false);
+  // const sm = () => (window.innerWidth < 576 ? true : false);
 
   return (
     <Container component="main" maxWidth="xs" disableGutters={sm && true}>

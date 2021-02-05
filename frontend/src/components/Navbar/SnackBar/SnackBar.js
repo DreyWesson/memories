@@ -11,6 +11,9 @@ import {
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { setLogout } from "../../../features/authSlice";
 import { useDispatch } from "react-redux";
+import { sm } from "../../../utils/screenSize";
+import { snackMessages } from "../../../snackMessages";
+import { useSnackbar } from "notistack";
 
 export const SnackBar = () => {
   const classes = useStyles();
@@ -19,6 +22,7 @@ export const SnackBar = () => {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const location = useLocation();
+  const { enqueueSnackbar } = useSnackbar();
 
   console.log(user);
   const handleClose = (event, reason) => setOpen(false);
@@ -30,13 +34,16 @@ export const SnackBar = () => {
 
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
-  const sm = () => (window.innerWidth < 576 ? true : false);
+  // const sm = () => (window.innerWidth < 576 ? true : false);
   const logout = () => {
     dispatch(setLogout());
     history.push("/");
     setUser(null);
+    enqueueSnackbar(snackMessages.logout, {
+      variant: "warning",
+    });
   };
-
+  const openSnack = () => setOpen(true);
   const snapBarMessage = () => {
     return user?.result ? (
       <div className={classes.profile}>
@@ -72,9 +79,17 @@ export const SnackBar = () => {
       </div>
     );
   };
+
   return (
     <div>
-      <Button onClick={() => setOpen(true)}>Profile</Button>
+      {user?.result ? (
+        <div style={{ display: "flex" }} onClick={openSnack}>
+          {window.innerWidth > 576 && <Button>Your Profile</Button>}
+          <Avatar alt={user?.result.name} src={user?.result.imageUrl}></Avatar>
+        </div>
+      ) : (
+        <Button onClick={openSnack}>Profile</Button>
+      )}
       <Snackbar
         className={classes.root}
         anchorOrigin={{

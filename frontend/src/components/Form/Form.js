@@ -16,8 +16,11 @@ import {
 } from "../../features/post/postsSlice";
 import useStyles, { theme } from "./styles";
 import { setModal } from "../../features/post/modalSlice";
+import { useSnackbar } from "notistack";
+import { snackMessages } from "../../snackMessages";
 
 export const Form = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -46,8 +49,14 @@ export const Form = () => {
     e.preventDefault();
     if (currentId) {
       dispatch(updatePost({ currentId, postData }));
+      enqueueSnackbar(snackMessages.updatePost, {
+        variant: "info",
+      });
     } else {
       dispatch(createPost({ postData }));
+      enqueueSnackbar(snackMessages.createPost, {
+        variant: "info",
+      });
     }
     clear();
     dispatch(setModal(false));

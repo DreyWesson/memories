@@ -28,8 +28,9 @@ const getPosts = async (req, res, next) => {
   },
   updatePost = async (req, res, next) => {
     const { id: _id } = req.params;
+    console.log(_id);
     const post = req.body;
-    verifyID(id, res);
+    verifyID(_id, res);
     try {
       let updatedPost = await Post.findByIdAndUpdate(
         _id,
@@ -38,6 +39,7 @@ const getPosts = async (req, res, next) => {
           new: true,
         }
       );
+      console.log("UPDATED: ", updatedPost);
       res.json(updatedPost);
     } catch (error) {
       console.log("UPDATE ERROR: ", error);

@@ -43,10 +43,10 @@ UserSchema.pre("save", async function (next) {
 UserSchema.virtual("fullName").get(function () {
   return `${this.firstname} ${this.lastname}`;
 });
-// Hash password before saving
-// UserSchema.methods.matchPasswords = async function (password) {
-//   return await bcrypt.compare(password, this.password);
-// };
+// compare password before Signing in
+UserSchema.methods.matchPasswords = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 // Store id information in the token
 UserSchema.methods.getSignedToken = function () {
   return jwt.sign({ id: this._id, email: this.email }, process.env.JWT_SECRET, {

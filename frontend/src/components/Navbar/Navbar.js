@@ -4,13 +4,18 @@ import useStyles from "./styles";
 import memories from "../../images/memories.png";
 import { Link } from "react-router-dom";
 import { SnackBar } from "..";
+import { sm } from "../../utils/screenSize";
 
 export const Navbar = () => {
   const classes = useStyles();
-  const sm = () => (window.innerWidth < 576 ? true : false);
+  // const sm = () => (window.innerWidth < 576 ? true : false);
 
   return (
-    <AppBar className={classes.appBar} position="sticky" color="inherit">
+    <AppBar
+      className={`${classes.appBar} ${classes.root}`}
+      position="sticky"
+      color="inherit"
+    >
       <div className={classes.brandContainer}>
         <img src={memories} alt="memories" height={45} />
         <Typography

@@ -3,27 +3,28 @@ import jwt from "jsonwebtoken";
 import User from "../models/userSchema.js";
 import ErrorHandler from "../utils/errorHandler.js";
 
-export const signin = async (req, res, ne) => {
-  // const { email, password } = req.body;
-  // if (!email || !password) {
-  //   return next(new ErrorHandler("Please provide Email and Password", 400));
-  // }
-  // try {
-  //   const existingUser = await User.findOne({ email }).select("password");
-  //   if (!existingUser) {
-  //     return next(new ErrorHandler("Invalid Credentials", 401));
-  //   }
-  //   const matchPsw = await existingUser.matchPasswords(password);
-  //   if (!matchPsw) {
-  //     return next(new ErrorHandler("Invalid Credentials", 401));
-  //   }
-  //   sendToken(existingUser, 200, res);
-  // } catch (error) {
-  //   res.status(500).send({
-  //     success: false,
-  //     error: error.message,
-  //   });
-  // }
+export const signin = async (req, res, next) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return next(new ErrorHandler("Please provide Email and Password", 400));
+  }
+  try {
+    const existingUser = await User.findOne({ email }).select("+password");
+    if (!existingUser) {
+      return next(new ErrorHandler("User doesn't exist", 401));
+    }
+    const matchPsw = await existingUser.matchPasswords(password);
+    if (!matchPsw) {
+      return next(new ErrorHandler("Invalid Credentials", 401));
+    }
+    sendToken(existingUser, 200, res);
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      error: error.message,
+    });
+    // next(error)
+  }
 };
 export const signup = async (req, res, next) => {
   console.log("got here");

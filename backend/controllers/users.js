@@ -28,8 +28,9 @@ export const signin = async (req, res, next) => {
 };
 export const signup = async (req, res, next) => {
   console.log("got here");
-  const { lastname, firstname, email, password, confirmPassword } = req.body;
-
+  const { lastName, firstName, email, password, confirmPassword } = req.body;
+  console.log("REQBODY: ", req.body);
+  // console.log(lastName, firstName, email, password, confirmPassword);
   const existingUser = await User.findOne({ email }).select("password");
   if (existingUser) return next(new ErrorHandler("User already exist", 400));
 
@@ -38,8 +39,8 @@ export const signup = async (req, res, next) => {
 
   try {
     const user = await User.create({
-      lastname,
-      firstname,
+      lastName,
+      firstName,
       email,
       password,
     });

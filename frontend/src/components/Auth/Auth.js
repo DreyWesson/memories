@@ -51,7 +51,6 @@ export const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     const data = { formData, history };
     if (isSignup) {
       dispatch(formSignup(data));

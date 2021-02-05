@@ -24,7 +24,7 @@ export const SnackBar = () => {
   const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
 
-  console.log(user);
+  // console.log(user);
   const handleClose = (event, reason) => setOpen(false);
 
   useEffect(() => {

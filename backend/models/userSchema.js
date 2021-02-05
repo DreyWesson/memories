@@ -4,11 +4,11 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 
 const UserSchema = mongoose.Schema({
-  firstname: {
+  firstName: {
     type: String,
     trim: true,
   },
-  lastname: {
+  lastName: {
     type: String,
     trim: true,
   },

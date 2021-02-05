@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-// import { deepPurple } from "@material-ui/core/colors";
+import { deepPurple } from "@material-ui/core/colors";
 
 export default makeStyles((theme) => ({
   profile: {
@@ -34,8 +34,8 @@ export default makeStyles((theme) => ({
       },
     },
   },
-  // purple: {
-  //   color: theme.palette.getContrastText(deepPurple[500]),
-  //   backgroundColor: deepPurple[500],
-  // },
+  purple: {
+    color: theme.palette.getContrastText(deepPurple[500]),
+    backgroundColor: deepPurple[500],
+  },
 }));

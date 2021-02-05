@@ -16,10 +16,10 @@ export const shield = async (req, res, next) => {
 
   // Check if its google token or our custom token
   const isCustomAuth = token.length < 500;
-
+  let decoded;
   try {
-    if (isCustomAuth) {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (token && isCustomAuth) {
       // DOUBLE JEOPARDY
       const user = await User.findById(decoded.id);
       const email = await User.findOne({ email: decoded.email });
@@ -30,7 +30,7 @@ export const shield = async (req, res, next) => {
       req.userId = decoded?.id;
       req.user = user;
     } else {
-      const decoded = jwt.verify(token);
+      decoded = jwt.verify(token);
       req.userId = decoded?.sub;
       req.user = decoded?.sub;
     }

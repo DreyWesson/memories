@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { sm } from "../../../utils/screenSize";
 import { snackMessages } from "../../../snackMessages";
 import { useSnackbar } from "notistack";
+import decode from "jwt-decode";
 
 export const SnackBar = () => {
   const classes = useStyles();
@@ -24,13 +25,18 @@ export const SnackBar = () => {
   const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
 
-  // console.log(user);
+  console.log(user);
   const handleClose = (event, reason) => setOpen(false);
 
   useEffect(() => {
-    // const token = user?.token;
-
+    const token = user?.token;
     // JWT
+    if (token) {
+      const decodedToken = decode(token);
+      console.log(decodedToken);
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
 
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
@@ -47,7 +53,11 @@ export const SnackBar = () => {
   const snapBarMessage = () => {
     return user?.result ? (
       <div className={classes.profile}>
-        <Avatar alt={user?.result.name} src={user?.result.imageUrl}>
+        <Avatar
+          className={classes.purple}
+          alt={user?.result.name}
+          src={user?.result.imageUrl}
+        >
           {user?.result.name.charAt(0)}
         </Avatar>
         <Typography className={classes.userName}>

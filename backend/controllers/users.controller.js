@@ -42,16 +42,17 @@ export const signup = async (req, res, next) => {
       password,
     });
     sendToken(user, 201, res);
-    console.log("I got here");
   } catch (error) {
     console.log(error);
     next(error);
   }
 };
 
-// Figure out how to turn user to user.result
+// Figure out how to turn user to user.result // Done. ln 54
 const sendToken = (user, statusCode, res) => {
   const token = user.getSignedToken();
-  console.log(user);
+  user = { ...user, name: user.name };
+
+  console.log("FULLNAME: ", user);
   res.status(statusCode).json({ result: user, success: true, token });
 };

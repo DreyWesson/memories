@@ -40,8 +40,8 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 // Combine firstname and lastname
-UserSchema.virtual("fullName").get(function () {
-  return `${this.firstname} ${this.lastname}`;
+UserSchema.virtual("name").get(function () {
+  return `${this.firstName} ${this.lastName}`;
 });
 // compare password before Signing in
 UserSchema.methods.matchPasswords = async function (password) {

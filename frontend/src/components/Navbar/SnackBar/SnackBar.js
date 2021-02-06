@@ -30,6 +30,7 @@ export const SnackBar = () => {
 
   useEffect(() => {
     const token = user?.token;
+    console.log(token);
     // JWT
     // if (token) {
     //   const decodedToken = decode(token);
@@ -57,7 +58,7 @@ export const SnackBar = () => {
           alt={user?.result.name}
           src={user?.result.imageUrl}
         >
-          {user?.result.name.charAt(0)}
+          {/* {user?.result.name.charAt(0)} */}
         </Avatar>
         <Typography className={classes.userName}>
           {user?.result.name}

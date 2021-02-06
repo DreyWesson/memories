@@ -35,7 +35,7 @@ const UserSchema = mongoose.Schema({
 // Hash password before saving and signing user up
 UserSchema.pre("save", async function (next) {
   !this.isModified("password") && next();
-  const salt = await bcrypt.genSalt(10);
+  const salt = await bcrypt.genSalt(12);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
@@ -50,6 +50,14 @@ UserSchema.methods.matchPasswords = async function (password) {
 // Store id information in the token
 UserSchema.methods.getSignedToken = function () {
   // DOUBLE JEOPARDY
+  // *** The BUG is here ***
+  // return jwt.sign(
+  //   { id: this.result._id, email: this.result.email },
+  //   process.env.JWT_SECRET,
+  //   {
+  //     expiresIn: process.env.JWT_EXPIRE,
+  //   }
+  // );
   return jwt.sign({ id: this._id, email: this.email }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });

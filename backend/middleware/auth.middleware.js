@@ -4,7 +4,7 @@ import ErrorHandler from "../utils/errorHandler.js";
 
 // This auth middleware can be used to protect a route
 // Sample need auth to createPost, deletePost or likePost
-export const shield = async (req, res, next) => {
+export const auth = async (req, res, next) => {
   let token;
   const { authorization } = req.headers;
   if (authorization && authorization.startsWith("Bearer")) {

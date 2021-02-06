@@ -68,6 +68,8 @@ export const Auth = () => {
   const googleSuccess = async (res) => {
     const result = await res?.profileObj;
     const token = await res?.tokenId;
+    // console.log(result);
+    // console.log(token);
     try {
       const data = { result, token };
       dispatch(setGoogleAuth(data));

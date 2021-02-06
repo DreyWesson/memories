@@ -1,4 +1,4 @@
-import e from "cors";
+// import e from "cors";
 import mongoose from "mongoose";
 import Post from "../models/postSchema.js";
 
@@ -21,8 +21,8 @@ const getPosts = async (req, res, next) => {
 
     const newPost = new Post({
       ...post,
-      creator: req.userId,
-      createdAt: new Date().toISOString(),
+      // creator: req.userId,
+      // createdAt: new Date().toISOString(),
     });
     try {
       await newPost.save();

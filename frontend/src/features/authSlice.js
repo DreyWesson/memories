@@ -17,6 +17,7 @@ export const authSlice = createSlice({
       state.authData = null;
     },
     authFormData: (state, { payload }) => {
+      // console.log(payload);
       localStorage.setItem("profile", JSON.stringify({ ...payload }));
       state.authFormData = payload;
     },
@@ -34,9 +35,8 @@ const formSignin = createAsyncThunk(
 const formSignup = createAsyncThunk(
   "auth/formSignup",
   async ({ formData, history }, { dispatch }) => {
-    console.log("Got HERE CREATE ASYNC");
+    // console.log(formData);
     const { data } = await api.signup(formData);
-    console.log("DATA: ", data);
     dispatch(authFormData(data));
     history.push("/");
   }

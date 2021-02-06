@@ -8,7 +8,6 @@ import { sm } from "../../utils/screenSize";
 
 export const Navbar = () => {
   const classes = useStyles();
-  // const sm = () => (window.innerWidth < 576 ? true : false);
 
   return (
     <AppBar

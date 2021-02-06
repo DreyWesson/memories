@@ -84,12 +84,9 @@ export const Auth = () => {
     enqueueSnackbar(snackMessages.googleError, {
       variant: "error",
     });
-    // alert("Google Sign In was unsuccessful. Try again later");
   };
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  // const sm = () => (window.innerWidth < 576 ? true : false);
 
   return (
     <Container component="main" maxWidth="xs" disableGutters={sm && true}>

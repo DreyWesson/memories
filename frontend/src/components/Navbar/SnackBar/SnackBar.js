@@ -31,16 +31,15 @@ export const SnackBar = () => {
   useEffect(() => {
     const token = user?.token;
     // JWT
-    if (token) {
-      const decodedToken = decode(token);
-      console.log(decodedToken);
+    // if (token) {
+    //   const decodedToken = decode(token);
+    //   console.log(decodedToken);
 
-      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
-    }
+    //   if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    // }
 
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
-  // const sm = () => (window.innerWidth < 576 ? true : false);
   const logout = () => {
     dispatch(setLogout());
     history.push("/");

@@ -18,12 +18,14 @@ const getPosts = async (req, res, next) => {
   },
   createPost = async (req, res, next) => {
     const post = req.body;
+    console.log("POST: ", post);
 
     const newPost = new Post({
       ...post,
-      // creator: req.userId,
-      // createdAt: new Date().toISOString(),
+      creator: req.userId,
+      createdAt: new Date().toISOString(),
     });
+    console.log("NEW POST: ", newPost);
     try {
       await newPost.save();
       res.status(200).json(newPost);

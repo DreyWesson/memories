@@ -22,7 +22,7 @@ import { snackMessages } from "../../snackMessages";
 export const Form = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [postData, setPostData] = useState({
-    creator: "",
+    // creator: "",
     title: "",
     message: "",
     tags: "",
@@ -34,10 +34,14 @@ export const Form = () => {
       : null,
     dispatch = useDispatch(),
     classes = useStyles();
+
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  console.log(user);
+
   const clear = () => {
     setCurrentId(null);
     setPostData({
-      creator: "",
+      // creator: "",
       title: "",
       message: "",
       tags: "",
@@ -48,16 +52,14 @@ export const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentId) {
-      dispatch(updatePost({ currentId, postData }));
-      // dispatch(
-      //   updatePost(currentId, { ...postData, name: user?.result?.name })
-      // );
+      dispatch(
+        updatePost({ ...postData, currentId, name: user?.result?.name })
+      );
       enqueueSnackbar(snackMessages.updatePost, {
         variant: "info",
       });
     } else {
-      dispatch(createPost({ postData }));
-      // dispatch(createPost({ ...postData, name: user?.result?.name }));
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
       enqueueSnackbar(snackMessages.createPost, {
         variant: "info",
       });
@@ -70,15 +72,15 @@ export const Form = () => {
     post && setPostData(post);
   }, [post]);
 
-  // if (!user?.result?.name) {
-  //   return (
-  //     <Paper className={classes.paper}>
-  //       <Typography variant="h6" align="center">
-  //         Please Sign In to create your own memories and like other's memories.
-  //       </Typography>
-  //     </Paper>
-  //   );
-  // }
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please Sign In to create your own memories and like other's memories.
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -92,7 +94,7 @@ export const Form = () => {
           {currentId ? `Editing "${post?.title}"` : "Creating a Memory"}
         </Typography>
         <ThemeProvider theme={theme}>
-          <TextField
+          {/* <TextField
             className={classes.margin}
             name="creator"
             variant="outlined"
@@ -102,7 +104,7 @@ export const Form = () => {
             onChange={(e) =>
               setPostData({ ...postData, creator: e.target.value })
             }
-          />
+          /> */}
           <TextField
             className={classes.margin}
             name="title"

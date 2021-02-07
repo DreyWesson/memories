@@ -68,9 +68,8 @@ const fetchPosts = createAsyncThunk(
   ),
   createPost = createAsyncThunk(
     "posts/createPost",
-    async ({ postData }, { dispatch }) => {
-      console.log(postData);
-      const { data } = await api.createPost(postData);
+    async (payload, { dispatch }) => {
+      const { data } = await api.createPost(payload);
       console.log(data);
       return dispatch(addPost(data));
     }

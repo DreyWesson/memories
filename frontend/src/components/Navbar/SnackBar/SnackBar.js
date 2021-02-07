@@ -27,6 +27,8 @@ export const SnackBar = () => {
     handleClose = (event, reason) => setOpen(false),
     openSnack = () => setOpen(true);
 
+  console.log(user);
+
   useEffect(() => {
     // const token = user?.token;
     // console.log(token);

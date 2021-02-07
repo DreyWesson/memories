@@ -43,7 +43,7 @@ export const Post = ({ post }) => {
       />
       <div className={classes.overlay}>
         <Typography variant="h2" className={classes.smallHeading}>
-          {post.creator}
+          {post.name}
         </Typography>
         <Typography variant="body2">
           {moment(post.createdAt).fromNow()}

@@ -52,7 +52,5 @@ export const signup = async (req, res, next) => {
 const sendToken = (user, statusCode, res) => {
   const token = user.getSignedToken();
   user = { ...user, name: user.name };
-
-  console.log("FULLNAME: ", user);
   res.status(statusCode).json({ result: user, success: true, token });
 };

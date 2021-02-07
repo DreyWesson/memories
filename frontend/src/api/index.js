@@ -1,5 +1,15 @@
 import axios from "./axios";
 
+// This is important for our routes auth.middleware to work
+axios.interceptors.request.use((req) => {
+  if (localStorage.getItem("profile")) {
+    req.headers.Authorization = `Bearer ${
+      JSON.parse(localStorage.getItem("profile")).token
+    }`;
+  }
+  return req;
+});
+
 // Posts APIs
 const fetchPosts = () => axios.get("/posts"),
   createPost = (newPost) => axios.post("/posts", newPost),

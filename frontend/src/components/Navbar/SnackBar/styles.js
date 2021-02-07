@@ -35,7 +35,7 @@ export default makeStyles((theme) => ({
     },
   },
   purple: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
+    color: theme.palette.getContrastText(deepPurple[300]),
+    backgroundColor: deepPurple[300],
   },
 }));

@@ -14,19 +14,18 @@ import { useDispatch } from "react-redux";
 import { sm } from "../../../utils/screenSize";
 import { snackMessages } from "../../../snackMessages";
 import { useSnackbar } from "notistack";
-import decode from "jwt-decode";
+// import decode from "jwt-decode";
 
 export const SnackBar = () => {
-  const classes = useStyles();
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const [open, setOpen] = useState(false);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const location = useLocation();
-  const { enqueueSnackbar } = useSnackbar();
-
-  console.log(user);
-  const handleClose = (event, reason) => setOpen(false);
+  const classes = useStyles(),
+    dispatch = useDispatch(),
+    history = useHistory(),
+    [open, setOpen] = useState(false),
+    [user, setUser] = useState(JSON.parse(localStorage.getItem("profile"))),
+    location = useLocation(),
+    { enqueueSnackbar } = useSnackbar(),
+    handleClose = (event, reason) => setOpen(false),
+    openSnack = () => setOpen(true);
 
   useEffect(() => {
     // const token = user?.token;
@@ -41,15 +40,17 @@ export const SnackBar = () => {
 
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
+
   const logout = () => {
     dispatch(setLogout());
     history.push("/");
     setUser(null);
+    handleClose();
     enqueueSnackbar(snackMessages.logout, {
       variant: "warning",
     });
   };
-  const openSnack = () => setOpen(true);
+
   const snapBarMessage = () => {
     return user?.result ? (
       <div className={classes.profile}>
@@ -113,7 +114,7 @@ export const SnackBar = () => {
           horizontal: "center",
         }}
         open={open}
-        autoHideDuration={sm ? 12000 : null}
+        autoHideDuration={sm ? 8000 : null}
         onClose={handleClose}
         message={snapBarMessage()}
         action={

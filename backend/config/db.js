@@ -22,20 +22,22 @@ export const connectDB = () => {
         const {
           title,
           message,
+          name,
           creator,
           tags,
           selectedFile,
-          likeCount,
+          likes,
           createdAt,
         } = change.fullDocument;
 
         pusher.trigger("posts", "inserted", {
           title,
           message,
+          name,
           creator,
           tags,
           selectedFile,
-          likeCount,
+          likes,
           createdAt,
         });
       } else if (change.operationType === "delete") {

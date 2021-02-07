@@ -22,7 +22,6 @@ import { snackMessages } from "../../snackMessages";
 export const Form = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [postData, setPostData] = useState({
-    // creator: "",
     title: "",
     message: "",
     tags: "",
@@ -35,13 +34,11 @@ export const Form = () => {
     dispatch = useDispatch(),
     classes = useStyles();
 
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  console.log(user);
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   const clear = () => {
     setCurrentId(null);
     setPostData({
-      // creator: "",
       title: "",
       message: "",
       tags: "",
@@ -94,17 +91,6 @@ export const Form = () => {
           {currentId ? `Editing "${post?.title}"` : "Creating a Memory"}
         </Typography>
         <ThemeProvider theme={theme}>
-          {/* <TextField
-            className={classes.margin}
-            name="creator"
-            variant="outlined"
-            label="Creator"
-            fullWidth
-            value={postData.creator}
-            onChange={(e) =>
-              setPostData({ ...postData, creator: e.target.value })
-            }
-          /> */}
           <TextField
             className={classes.margin}
             name="title"

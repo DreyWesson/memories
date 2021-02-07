@@ -70,13 +70,13 @@ const fetchPosts = createAsyncThunk(
     "posts/createPost",
     async (payload, { dispatch }) => {
       const { data } = await api.createPost(payload);
-      console.log(data);
       return dispatch(addPost(data));
     }
   ),
   updatePost = createAsyncThunk(
     "posts/updatePost",
-    async ({ currentId, postData }, { dispatch }) => {
+    async (payload, { dispatch }) => {
+      const { currentId, ...postData } = payload;
       const { data } = await api.updatePost(currentId, postData);
       dispatch(editPost(data));
     }

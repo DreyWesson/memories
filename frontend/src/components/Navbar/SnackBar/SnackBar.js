@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { sm } from "../../../utils/screenSize";
 import { snackMessages } from "../../../snackMessages";
 import { useSnackbar } from "notistack";
-// import decode from "jwt-decode";
+import decode from "jwt-decode";
 
 export const SnackBar = () => {
   const classes = useStyles(),
@@ -28,15 +28,12 @@ export const SnackBar = () => {
     openSnack = () => setOpen(true);
 
   useEffect(() => {
-    // const token = user?.token;
-    // console.log(token);
-    // JWT
-    // if (token) {
-    //   const decodedToken = decode(token);
-    //   console.log(decodedToken);
-
-    //   if (decodedToken.exp * 1000 < new Date().getTime()) logout();
-    // }
+    const token = user?.token;
+    if (token) {
+      const decodedToken = decode(token);
+      // Check for token expiry
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
 
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);

@@ -34,15 +34,21 @@ export const Post = ({ post }) => {
     user = JSON.parse(localStorage.getItem("profile"));
 
   const postEdit = () => {
+    const currentUserID = user?.result?.googleId || user?.result._doc._id;
+    if (user) {
+      if (post._id !== currentUserID) {
+        return enqueueSnackbar(snackMessages.unauthorized, option("error"));
+      }
+    } else {
+      enqueueSnackbar(snackMessages.isUser, option("info"));
+    }
     dispatch(setModal(true));
     dispatch(setCurrentId(post._id));
   };
 
-  const currentUserDelActions = (action) => {
+  const currentUserDelActions = (action = "") => {
     const currentUserID = user?.result?.googleId || user?.result._doc._id;
-    // Prevent people not signed in from deleting post
     if (user) {
-      // prevent other users from deleting user's post
       if (post._id === currentUserID) {
         return action;
       } else {

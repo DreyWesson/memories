@@ -15,7 +15,7 @@ export const option = (variant) => {
     variant: variant,
     anchorOrigin: {
       vertical: "top",
-      horizontal: "left",
+      horizontal: "right",
     },
   };
 };

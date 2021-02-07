@@ -12,6 +12,8 @@ import moment from "moment";
 import useStyles from "./styles";
 import {
   DeleteOutlined,
+  Favorite,
+  FavoriteBorder,
   FavoriteBorderOutlined,
   MoreHorizOutlined,
 } from "@material-ui/icons";
@@ -22,14 +24,72 @@ import {
   likePost,
   setCurrentId,
 } from "../../../features/post/postsSlice";
+import { useSnackbar } from "notistack";
+import { option, snackMessages } from "../../../snackMessages";
 
 export const Post = ({ post }) => {
   const classes = useStyles(),
-    dispatch = useDispatch();
+    dispatch = useDispatch(),
+    { enqueueSnackbar } = useSnackbar(),
+    user = JSON.parse(localStorage.getItem("profile"));
+
   const postEdit = () => {
     dispatch(setModal(true));
     dispatch(setCurrentId(post._id));
   };
+
+  const currentUserDelActions = (action) => {
+    const currentUserID = user?.result?.googleId || user?.result._doc._id;
+    // Prevent people not signed in from deleting post
+    if (user) {
+      // prevent other users from deleting user's post
+      if (post._id === currentUserID) {
+        return action;
+      } else {
+        enqueueSnackbar(snackMessages.unauthorized, option("error"));
+      }
+    } else {
+      enqueueSnackbar(snackMessages.isUser, option("info"));
+    }
+  };
+
+  const currentUserLikeActions = (action) => {
+    if (user) {
+      return action;
+    } else {
+      enqueueSnackbar(snackMessages.isUser, option("info"));
+    }
+  };
+
+  const Likes = () => {
+    if (post.likes.length > 0) {
+      return post.likes.find(
+        (like) => like === (user?.result?.googleId || user?.result?._id)
+      ) ? (
+        <>
+          <Favorite fontSize="small" />
+          &nbsp;
+          {post.likes.length > 2
+            ? `You and ${post.likes.length - 1} others`
+            : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+        </>
+      ) : (
+        <>
+          <Favorite fontSize="small" />
+          &nbsp;{post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+        </>
+      );
+    }
+
+    return (
+      <>
+        <FavoriteBorderOutlined fontSize="small" />
+        &nbsp;Like
+      </>
+    );
+  };
+  const del = () => dispatch(deletePost({ id: post._id }));
+  const fav = () => dispatch(likePost({ id: post._id }));
 
   return (
     <Card className={classes.card}>
@@ -81,15 +141,20 @@ export const Post = ({ post }) => {
         <Button
           size="small"
           className={classes.btnColor}
-          onClick={() => dispatch(likePost({ id: post._id }))}
+          onClick={(e) => {
+            e.preventDefault();
+            currentUserLikeActions(fav);
+          }}
         >
-          <FavoriteBorderOutlined fontSize="small" />
-          &nbsp; Like &nbsp;{post.likeCount}
+          <Likes />
         </Button>
         <Button
           size="small"
           className={classes.btnColor}
-          onClick={() => dispatch(deletePost({ id: post._id }))}
+          onClick={(e) => {
+            e.preventDefault();
+            currentUserDelActions(del);
+          }}
         >
           <DeleteOutlined fontSize="small" /> Delete
         </Button>

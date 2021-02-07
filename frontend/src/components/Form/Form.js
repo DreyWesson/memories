@@ -18,6 +18,7 @@ import useStyles, { theme } from "./styles";
 import { setModal } from "../../features/post/modalSlice";
 import { useSnackbar } from "notistack";
 import { snackMessages } from "../../snackMessages";
+import { Link } from "react-router-dom";
 
 export const Form = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -71,9 +72,12 @@ export const Form = () => {
 
   if (!user?.result?.name) {
     return (
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} style={{ minWidth: "180px" }}>
         <Typography variant="h6" align="center">
-          Please Sign In to create your own memories and like other's memories.
+          <p>Please, Sign in to create your own memories.</p>
+          <Button component={Link} to="/auth" color="secondary">
+            Sign In
+          </Button>
         </Typography>
       </Paper>
     );

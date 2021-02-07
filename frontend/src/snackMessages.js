@@ -6,4 +6,16 @@ export const snackMessages = {
   signup: "Signup Successful!",
   updatePost: "Post Updating!",
   createPost: "Post Created!",
+  unauthorized: "Oops, this is not your post",
+  isUser: "You really need to sign in now",
+};
+
+export const option = (variant) => {
+  return {
+    variant: variant,
+    anchorOrigin: {
+      vertical: "top",
+      horizontal: "left",
+    },
+  };
 };

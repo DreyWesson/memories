@@ -13,3 +13,11 @@
 [-] Create post notification
 [-] Update post notification
 [-] Delete post notification
+
+## Stack
+
+[-] React
+[-] Redux toolkit
+[-] Matrial UI
+[-] Node, MongoDB & Express
+[-] SendGrid

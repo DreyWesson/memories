@@ -26,7 +26,6 @@ export const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userEmail = { email };
-    console.log(userEmail);
     try {
       // const { data } = await postData("/api/auth/forgotpassword", userEmail);
       dispatch(forgotPassword(userEmail));
@@ -85,30 +84,5 @@ export const ForgotPassword = () => {
         </form>
       </Paper>
     </Container>
-    // <div className="forgotpassword-screen">
-    //   <form
-    //     onSubmit={forgotPasswordHandler}
-    //     className="forgotpassword-screen__form"
-    //   >
-    //     <h3 className="forgotpassword-screen__title">Forgot Password</h3>
-    //     {error && <span className="error-message">{error}</span>}
-    //     {success && <span className="success-message">{success}</span>}
-    //     <div className="form-group">
-
-    //       <label htmlFor="email">Email:</label>
-    //       <input
-    //         type="email"
-    //         required
-    //         id="email"
-    //         placeholder="Email address"
-    //         value={email}
-    //         onChange={(e) => setEmail(e.target.value)}
-    //       />
-    //     </div>
-    //     <button type="submit" className="btn btn-primary">
-    //       Send Email
-    //     </button>
-    //   </form>
-    // </div>
   );
 };

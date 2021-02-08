@@ -94,11 +94,9 @@ export const forgotPassword = async (req, res, next) => {
 };
 
 export const resetPassword = async (req, res, next) => {
-  const { resetToken } = req.params;
-
   const resetPasswordToken = crypto
     .createHash("sha256")
-    .update(resetToken)
+    .update(req.params.resetToken)
     .digest("hex");
 
   try {
@@ -108,6 +106,7 @@ export const resetPassword = async (req, res, next) => {
     });
 
     if (!user) {
+      console.log("INVALID");
       return next(new ErrorHandler("Invalid Reset Token", 400));
     }
     user.password = req.body.password;

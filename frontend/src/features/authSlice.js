@@ -7,6 +7,7 @@ export const authSlice = createSlice({
     authData: null,
     authFormData: null,
     forgotPassword: null,
+    reset: null,
   },
   reducers: {
     setGoogleAuth: (state, { payload }) => {
@@ -22,9 +23,14 @@ export const authSlice = createSlice({
       localStorage.setItem("profile", JSON.stringify({ ...payload }));
       state.authFormData = payload;
     },
-    forgotpasswordReducer: (state, { payload }) => {
+    forgotPasswordReducer: (state, { payload }) => {
       // console.log(payload);
       state.forgotPassword = payload;
+    },
+    resetPasswordReducer: (state, { payload }) => {
+      console.log(payload);
+      console.log(state);
+      state.reset = payload;
     },
   },
 });
@@ -56,15 +62,27 @@ const forgotPassword = createAsyncThunk(
     console.log(userEmail);
     const { data } = await api.forgotpassword(userEmail);
     console.log(data);
-    dispatch(forgotpasswordReducer(data));
+    dispatch(forgotPasswordReducer(data));
   }
 );
-export { formSignin, formSignup, forgotPassword };
+
+const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async ({ passwordDetails, match, history }, { dispatch }) => {
+    console.log(match);
+    const { data } = await api.resetpassword(passwordDetails, match);
+    console.log(data);
+    dispatch(resetPasswordReducer(data));
+    history.push("/auth");
+  }
+);
+export { formSignin, formSignup, forgotPassword, resetPassword };
 export const {
   setGoogleAuth,
   setLogout,
   authFormData,
-  forgotpasswordReducer,
+  forgotPasswordReducer,
+  resetPasswordReducer,
 } = authSlice.actions;
 export const selectAuth = (state) => state.auth;
 export default authSlice.reducer;

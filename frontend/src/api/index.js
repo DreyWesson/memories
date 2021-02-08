@@ -3,7 +3,7 @@ import axios from "./axios";
 // This is important for our routes auth.middleware to work
 axios.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {
-    req.headers.Authorization = `Bearer ${
+    req.headers.authorization = `Bearer ${
       JSON.parse(localStorage.getItem("profile")).token
     }`;
   }
@@ -20,7 +20,11 @@ const fetchPosts = () => axios.get("/posts"),
 // Auth APIs
 const signin = (formData) => axios.post("/user/signin", formData),
   signup = (formData) => axios.post("/user/signup", formData),
-  forgotpassword = (formData) => axios.post("/user/forgotpassword", formData);
+  forgotpassword = (formData) => axios.post("/user/forgotpassword", formData),
+  resetpassword = (formData, match) => {
+    axios.put(`/user/resetpassword/${match.params.resetToken}`, formData);
+    console.log(match.params.resetToken);
+  };
 
 export {
   fetchPosts,
@@ -31,4 +35,5 @@ export {
   signin,
   signup,
   forgotpassword,
+  resetpassword,
 };

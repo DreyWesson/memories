@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userSchema.js";
-import ErrorHandler from "../utils/errorHandler.js";
+import ErrorHandler from "../utils/errorHandler.utils.js";
 
 // This auth middleware can be used to protect a route
-// Sample need auth to createPost, deletePost or likePost
+// Sample: use auth to createPost, deletePost or likePost
 export const auth = async (req, res, next) => {
   try {
     let token;

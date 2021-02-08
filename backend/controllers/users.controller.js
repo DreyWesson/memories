@@ -1,5 +1,30 @@
+import crypto from "crypto";
 import User from "../models/userSchema.js";
-import ErrorHandler from "../utils/errorHandler.js";
+import ErrorHandler from "../utils/errorHandler.utils.js";
+import sendEmail from "../utils/sendEmail.utils.js";
+
+export const signup = async (req, res, next) => {
+  const { lastName, firstName, email, password, confirmPassword } = req.body;
+
+  const existingUser = await User.findOne({ email }).select("password");
+  if (existingUser) return next(new ErrorHandler("User already exist", 400));
+
+  if (password !== confirmPassword)
+    return next(new ErrorHandler("Password doesn't match", 400));
+
+  try {
+    let user = await User.create({
+      lastName,
+      firstName,
+      email,
+      password,
+    });
+    sendToken(user, 201, res);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
 
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
@@ -25,25 +50,72 @@ export const signin = async (req, res, next) => {
     next(error);
   }
 };
-export const signup = async (req, res, next) => {
-  const { lastName, firstName, email, password, confirmPassword } = req.body;
 
-  const existingUser = await User.findOne({ email }).select("password");
-  if (existingUser) return next(new ErrorHandler("User already exist", 400));
+export const forgotPassword = async (req, res, next) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
 
-  if (password !== confirmPassword)
-    return next(new ErrorHandler("Password doesn't match", 400));
+    if (!user) {
+      return next(new ErrorHandler("Email could not be sent", 404));
+    }
+    const resetToken = user.getResetPasswordToken();
+
+    await user.save();
+
+    // passwordreset or resetpassword
+    const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`;
+    const feedbackMessage = `<h1>You have requested a password reset</h1>
+      <p>Please click reset button to reset your password</p>
+      <p>${resetUrl}</p>
+      <form action=${resetUrl} clicktracking=off>
+    <input type="submit" value="Reset Password" style="background-color:#fe3d71; color: white; border: none; padding: 10px; border-radius: 20px;"/>
+</form>`;
+
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: "Request Password Reset",
+        text: feedbackMessage,
+      });
+      res.status(200).json({ success: true, data: "Email Sent" });
+    } catch (error) {
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+
+      await user.save();
+
+      return next(new ErrorHandler("Email could not be sent", 500));
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resetPassword = async (req, res, next) => {
+  const { resetToken } = req.params;
+
+  const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
 
   try {
-    let user = await User.create({
-      lastName,
-      firstName,
-      email,
-      password,
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
     });
-    sendToken(user, 201, res);
+
+    if (!user) {
+      return next(new ErrorHandler("Invalid Reset Token", 400));
+    }
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+
+    res.status(201).json({ success: true, data: "Password Reset Successful" });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

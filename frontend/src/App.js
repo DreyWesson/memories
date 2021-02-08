@@ -2,8 +2,13 @@ import { Container } from "@material-ui/core";
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import useStyles from "./styles";
-
-import { Auth, Home, Navbar } from "./components";
+import {
+  Auth,
+  ForgotPassword,
+  Home,
+  Navbar,
+  ResetPassword,
+} from "./components";
 import { sm } from "./utils/screenSize";
 
 function App() {
@@ -20,6 +25,8 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/auth" exact component={Auth} />
+          <Route path="/forgotpassword" exact component={ForgotPassword} />
+          <Route path="/resetpassword" exact component={ResetPassword} />
         </Switch>
       </Container>
     </Router>

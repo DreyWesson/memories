@@ -53,6 +53,7 @@ export const signin = async (req, res, next) => {
 
 export const forgotPassword = async (req, res, next) => {
   const { email } = req.body;
+  console.log(email);
   try {
     const user = await User.findOne({ email });
 

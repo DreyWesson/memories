@@ -1,5 +1,7 @@
 import { Home } from "./Home/Home";
 import { Auth } from "./Auth/Auth";
+import { ForgotPassword } from "./Auth/ForgotPassword/ForgotPassword";
+import { ResetPassword } from "./Auth/ForgotPassword/ResetPassword";
 import { Input } from "./Auth/Input";
 import { Navbar } from "./Navbar/Navbar";
 import { SnackBar } from "./Navbar/SnackBar/SnackBar";
@@ -20,4 +22,6 @@ export {
   Auth,
   Input,
   SnackBar,
+  ForgotPassword,
+  ResetPassword,
 };

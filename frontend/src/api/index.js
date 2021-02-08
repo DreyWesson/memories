@@ -19,7 +19,8 @@ const fetchPosts = () => axios.get("/posts"),
 
 // Auth APIs
 const signin = (formData) => axios.post("/user/signin", formData),
-  signup = (formData) => axios.post("/user/signup", formData);
+  signup = (formData) => axios.post("/user/signup", formData),
+  forgotpassword = (formData) => axios.post("/user/forgotpassword", formData);
 
 export {
   fetchPosts,
@@ -29,4 +30,5 @@ export {
   likePost,
   signin,
   signup,
+  forgotpassword,
 };

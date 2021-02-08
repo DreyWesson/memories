@@ -6,6 +6,7 @@ export const authSlice = createSlice({
   initialState: {
     authData: null,
     authFormData: null,
+    forgotPassword: null,
   },
   reducers: {
     setGoogleAuth: (state, { payload }) => {
@@ -21,15 +22,23 @@ export const authSlice = createSlice({
       localStorage.setItem("profile", JSON.stringify({ ...payload }));
       state.authFormData = payload;
     },
+    forgotpasswordReducer: (state, { payload }) => {
+      // console.log(payload);
+      state.forgotPassword = payload;
+    },
   },
 });
 
 const formSignin = createAsyncThunk(
   "auth/formSignin",
   async ({ formData, history }, { dispatch }) => {
-    const { data } = await api.signin(formData);
-    dispatch(authFormData(data));
-    history.push("/");
+    try {
+      const { data } = await api.signin(formData);
+      dispatch(authFormData(data));
+      history.push("/");
+    } catch (error) {
+      console.log("Invalid credentials");
+    }
   }
 );
 const formSignup = createAsyncThunk(
@@ -41,7 +50,21 @@ const formSignup = createAsyncThunk(
     history.push("/");
   }
 );
-export { formSignin, formSignup };
-export const { setGoogleAuth, setLogout, authFormData } = authSlice.actions;
+const forgotPassword = createAsyncThunk(
+  "auth/forgotPassword",
+  async (userEmail, { dispatch }) => {
+    console.log(userEmail);
+    const { data } = await api.forgotpassword(userEmail);
+    console.log(data);
+    dispatch(forgotpasswordReducer(data));
+  }
+);
+export { formSignin, formSignup, forgotPassword };
+export const {
+  setGoogleAuth,
+  setLogout,
+  authFormData,
+  forgotpasswordReducer,
+} = authSlice.actions;
 export const selectAuth = (state) => state.auth;
 export default authSlice.reducer;

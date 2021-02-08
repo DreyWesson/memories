@@ -147,10 +147,13 @@ export const Post = ({ post }) => {
         <Button
           size="small"
           className={classes.btnColor}
-          onClick={(e) => {
-            e.preventDefault();
-            currentUserLikeActions(fav);
-          }}
+          onClick={
+            fav
+            //   (e) => {
+            //   e.preventDefault();
+            //   currentUserLikeActions(fav);
+            // }
+          }
         >
           <Likes />
         </Button>

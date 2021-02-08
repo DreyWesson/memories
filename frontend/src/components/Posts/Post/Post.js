@@ -47,24 +47,16 @@ export const Post = ({ post }) => {
   };
 
   const currentUserDelActions = (action = "") => {
-    const currentUserID = user?.result?.googleId || user?.result._doc._id;
+    const currentUserID = user?.result?.googleId || user?.result?._doc._id;
     if (user) {
-      if (post._id === currentUserID) {
-        return action;
-      } else {
-        enqueueSnackbar(snackMessages.unauthorized, option("error"));
-      }
-    } else {
-      enqueueSnackbar(snackMessages.isUser, option("info"));
-    }
+      currentUserID === post?.creator
+        ? action()
+        : enqueueSnackbar(snackMessages.unauthorized, option("error"));
+    } else enqueueSnackbar(snackMessages.isUser, option("info"));
   };
 
   const currentUserLikeActions = (action) => {
-    if (user) {
-      return action;
-    } else {
-      enqueueSnackbar(snackMessages.isUser, option("info"));
-    }
+    user ? action() : enqueueSnackbar(snackMessages.isUser, option("info"));
   };
 
   const Likes = () => {
@@ -148,11 +140,11 @@ export const Post = ({ post }) => {
           size="small"
           className={classes.btnColor}
           onClick={
-            fav
-            //   (e) => {
-            //   e.preventDefault();
-            //   currentUserLikeActions(fav);
-            // }
+            // fav
+            (e) => {
+              e.preventDefault();
+              currentUserLikeActions(fav);
+            }
           }
         >
           <Likes />

@@ -8,7 +8,7 @@ import {
   Typography,
   Container,
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 
 import Icon from "./icon";
@@ -131,6 +131,14 @@ export const Auth = () => {
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
+            <label htmlFor="password" style={{ marginLeft: "10px" }}>
+              <Link
+                to="/forgotpassword"
+                className="login-screen__forgotpassword"
+              >
+                Forgot Password?
+              </Link>
+            </label>
             {isSignup && (
               <Input
                 name="confirmPassword"

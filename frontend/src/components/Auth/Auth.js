@@ -131,14 +131,11 @@ export const Auth = () => {
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
-            <label htmlFor="password" style={{ marginLeft: "10px" }}>
-              <Link
-                to="/forgotpassword"
-                className="login-screen__forgotpassword"
-              >
-                Forgot Password?
-              </Link>
-            </label>
+            {!isSignup && (
+              <label htmlFor="password" style={{ marginLeft: "10px" }}>
+                <Link to="/forgotpassword">Forgot Password?</Link>
+              </label>
+            )}
             {isSignup && (
               <Input
                 name="confirmPassword"

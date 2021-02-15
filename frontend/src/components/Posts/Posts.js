@@ -53,8 +53,6 @@ export const Posts = () => {
       >
         <div style={modalStyle} className={classes.paper}>
           <InputForm />
-          {/* <Formik render={(props) => <Form {...props} />} /> */}
-          {/* <Form /> */}
         </div>
       </Modal>
     </>

@@ -18,10 +18,11 @@ export const InputForm = () => {
 
   return (
     <Formik
-      render={(props) => <Form {...props} />}
       initialValues={values}
       validationSchema={validationSchema}
       validateOnMount={true}
-    />
+    >
+      {(props) => <Form {...props} />}
+    </Formik>
   );
 };

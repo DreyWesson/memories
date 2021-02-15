@@ -29,14 +29,13 @@ export const Form = ({
   values: { title, message, tags },
   errors,
   touched,
-  // handleSubmit,
   handleChange,
   isValid,
   setFieldTouched,
 }) => {
-  const { enqueueSnackbar } = useSnackbar();
-  const [postData, setPostData] = useState(initValue);
-  const { posts, currentId } = useSelector(selectPosts),
+  const { enqueueSnackbar } = useSnackbar(),
+    [postData, setPostData] = useState(initValue),
+    { posts, currentId } = useSelector(selectPosts),
     post = currentId
       ? posts?.find((message) => message._id === currentId)
       : null,

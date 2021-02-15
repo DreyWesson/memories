@@ -23,7 +23,16 @@ const initialState = {
   password: "",
   confirmPassword: "",
 };
-export const ResetPassword = ({ match }) => {
+export const ResetPassword = ({
+  values: { password, confirmPassword },
+  errors,
+  touched,
+  // handleSubmit,
+  handleChange,
+  isValid,
+  setFieldTouched,
+  match,
+}) => {
   const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState(initialState);
   // const [password, setPassword] = useState("");
@@ -36,10 +45,17 @@ export const ResetPassword = ({ match }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const change = (name, e) => {
+    e.persist();
+    handleChange(e);
+    setFieldTouched(name, true, false);
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   // console.log(formData.confirmPassword);
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // const onChange = (e) =>
+  // setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -84,31 +100,25 @@ export const ResetPassword = ({ match }) => {
         <Typography align="center">
           Please enter a new password to access your account
         </Typography>
-        {/* {!emailStatus && (
-        <span style={{ color: "red" }} className="error-message">
-          {feedback}
-        </span>
-      )}
-      {emailStatus && (
-        <span style={{ color: "green" }} className="success-message">
-          {emailStatus}
-        </span>
-      )} */}
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Input
               name="password"
               label="Password"
-              handleChange={handleChange}
+              handleChange={change}
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
+              helperText={touched.password ? errors.password : ""}
+              error={touched.password && Boolean(errors.password)}
             />
             <Input
               name="confirmPassword"
               label="Repeat Password"
-              handleChange={handleChange}
+              handleChange={change}
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
+              helperText={touched.confirmPassword ? errors.confirmPassword : ""}
+              error={touched.confirmPassword && Boolean(errors.confirmPassword)}
             />
           </Grid>
           <Button
@@ -117,6 +127,7 @@ export const ResetPassword = ({ match }) => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={!isValid}
           >
             Reset Password
           </Button>

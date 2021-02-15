@@ -65,7 +65,7 @@ export const forgotPassword = async (req, res, next) => {
     await user.save();
 
     // passwordreset or resetpassword
-    const resetUrl = `https://insta-memories.herokuapp.com/resetpassword/${resetToken}`;
+    const resetUrl = `http://memories-99585.web.app/resetpassword/${resetToken}`;
     const feedbackMessage = `<h1>You have requested a password reset</h1>
       <p>Please click reset button to reset your password</p>
       <p>${resetUrl}</p>

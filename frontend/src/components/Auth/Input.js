@@ -4,12 +4,12 @@ import { VisibilityOffOutlined, VisibilityOutlined } from "@material-ui/icons";
 
 export const Input = ({
   name,
-  half,
-  handleChange,
   label,
-  autoFocus,
+  handleChange,
   type,
   handleShowPassword,
+  half,
+  autoFocus,
 }) => (
   <Grid item xs={12} sm={half ? 6 : 12}>
     <TextField

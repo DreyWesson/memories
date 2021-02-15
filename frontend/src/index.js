@@ -8,13 +8,13 @@ import * as serviceWorker from "./serviceWorker";
 import { SnackbarProvider } from "notistack";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <SnackbarProvider maxSnack={3} preventDuplicate dense>
-        <App />
-      </SnackbarProvider>
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <SnackbarProvider maxSnack={3} preventDuplicate dense>
+      <App />
+    </SnackbarProvider>
+  </Provider>,
+  // </React.StrictMode>
   document.getElementById("root")
 );
 

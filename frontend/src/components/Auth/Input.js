@@ -10,6 +10,8 @@ export const Input = ({
   handleShowPassword,
   half,
   autoFocus,
+  helperText,
+  error,
 }) => (
   <Grid item xs={12} sm={half ? 6 : 12}>
     <TextField
@@ -21,6 +23,8 @@ export const Input = ({
       label={label}
       autoFocus={autoFocus}
       type={type}
+      helperText={helperText}
+      error={error}
       InputProps={
         name === "password"
           ? {

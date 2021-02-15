@@ -27,7 +27,6 @@ export const ResetPassword = ({
   values: { password, confirmPassword },
   errors,
   touched,
-  // handleSubmit,
   handleChange,
   isValid,
   setFieldTouched,
@@ -35,10 +34,6 @@ export const ResetPassword = ({
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState(initialState);
-  // const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
-  // const [success, setSuccess] = useState("");
-  // const [error, setError] = useState("");
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
@@ -52,20 +47,11 @@ export const ResetPassword = ({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // console.log(formData.confirmPassword);
-
-  // const onChange = (e) =>
-  // setFormData({ ...formData, [e.target.name]: e.target.value });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
       setFormData("");
-      // setTimeout(() => {
-      //   setError("");
-      // }, 5000);
-      // return setError("Passwords don't match");
     }
 
     const passwordDetails = {
@@ -74,19 +60,17 @@ export const ResetPassword = ({
     try {
       console.log("Got here");
       dispatch(resetPassword({ passwordDetails, match, history }));
-      // const { data } = await resetPassword(passwordDetails, match);
-      // console.log(data);
-      // setSuccess(data.data);
     } catch (error) {
-      // setError(error.response.data.error);
       setTimeout(() => {
         enqueueSnackbar(snackMessages.signin, {
           variant: "success",
         });
-        // setError("");
       }, 5000);
     }
   };
+
+  const helperText = (x) => (touched[x] ? errors[x] : "");
+  const err = (x) => touched[x] && Boolean(errors[x]);
 
   return (
     <Container component="main" maxWidth="xs" disableGutters={sm && true}>
@@ -105,20 +89,22 @@ export const ResetPassword = ({
             <Input
               name="password"
               label="Password"
-              handleChange={change}
+              handleChange={(e) => change("password", e)}
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
-              helperText={touched.password ? errors.password : ""}
-              error={touched.password && Boolean(errors.password)}
+              helperText={helperText("password")}
+              error={err("password")}
+              value={password}
             />
             <Input
               name="confirmPassword"
               label="Repeat Password"
-              handleChange={change}
+              handleChange={(e) => change("confirmPassword", e)}
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
-              helperText={touched.confirmPassword ? errors.confirmPassword : ""}
-              error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+              helperText={helperText("confirmPassword")}
+              error={err("confirmPassword")}
+              value={confirmPassword}
             />
           </Grid>
           <Button

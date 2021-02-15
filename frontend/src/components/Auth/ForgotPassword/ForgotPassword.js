@@ -9,36 +9,52 @@ import {
   Typography,
 } from "@material-ui/core";
 import { LockOutlined } from "@material-ui/icons";
+import { useSnackbar } from "notistack";
 import { sm } from "../../../utils/screenSize";
 import useStyles from "../styles";
 import { useDispatch } from "react-redux";
 import { forgotPassword } from "../../../features/authSlice";
-
-export const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
-  // const [emailStatus, setEmailStatus] = useState("");
-  // const [feedback, setFeedback] = useState("");
+import { snackMessages } from "../../../snackMessages";
+export const ForgotPassword = ({
+  values: { email },
+  errors,
+  touched,
+  handleChange,
+  isValid,
+  setFieldTouched,
+}) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [emailData, setEmailData] = useState("");
   const classes = useStyles();
   const dispatch = useDispatch();
-  const handleChange = (e) => setEmail(e.target.value);
-  // const { forgotPassword } = useSelector(selectAuth);
+
+  const change = (name, e) => {
+    e.persist();
+    handleChange(e);
+    console.log(e);
+    setFieldTouched(name, true, false);
+    setEmailData(e.target.value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userEmail = { email };
+    const userEmail = { emailData };
     try {
-      // const { data } = await postData("/api/auth/forgotpassword", userEmail);
       dispatch(forgotPassword(userEmail));
-      // setEmailStatus(success);
-      // setFeedback(data);
+      enqueueSnackbar(snackMessages.forgotPasswordSuccess, {
+        variant: "info",
+      });
     } catch (error) {
-      setEmail("");
+      setEmailData("");
       setTimeout(() => {
-        // setEmailStatus("");
-        // setFeedback(data);
+        enqueueSnackbar(snackMessages.forgotPasswordFail, {
+          variant: "info",
+        });
       }, 5000);
     }
   };
+  const helperText = (name) => (touched[name] ? errors[name] : "");
+  const err = (name) => touched[name] && Boolean(errors[name]);
 
   return (
     <Container component="main" maxWidth="xs" disableGutters={sm && true}>
@@ -53,23 +69,16 @@ export const ForgotPassword = () => {
           Please enter the email address you register your account with. We will
           send you reset password confirmation to this email
         </Typography>
-        {/* {!emailStatus && (
-          <span style={{ color: "red" }} className="error-message">
-            {feedback}
-          </span>
-        )}
-        {emailStatus && (
-          <span style={{ color: "green" }} className="success-message">
-            {emailStatus}
-          </span>
-        )} */}
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Input
               name="email"
               label="Email Address"
-              handleChange={handleChange}
+              handleChange={(e) => change("email", e)}
               type="email"
+              helperText={helperText("email")}
+              error={err("email")}
+              value={email}
             />
           </Grid>
           <Button
@@ -78,6 +87,7 @@ export const ForgotPassword = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={!isValid}
           >
             Send Mail
           </Button>

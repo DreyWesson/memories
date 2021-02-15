@@ -4,12 +4,14 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import useStyles from "./styles";
 import {
   Auth,
-  ForgotPassword,
+  // ForgotPassword,
   Home,
   Navbar,
-  ResetPassword,
+  // ResetPassword,
 } from "./components";
 import { sm } from "./utils/screenSize";
+import { ResetForm } from "./components/Auth/ResetPassword/Index";
+import { ForgotPasswordForm } from "./components/Auth/ForgotPassword/Index";
 
 function App() {
   const classes = useStyles();
@@ -25,11 +27,11 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/auth" exact component={Auth} />
-          <Route path="/forgotpassword" exact component={ForgotPassword} />
+          <Route path="/forgotpassword" exact component={ForgotPasswordForm} />
           <Route
             path="/resetpassword/:resetToken"
             exact
-            component={ResetPassword}
+            component={ResetForm}
           />
         </Switch>
       </Container>

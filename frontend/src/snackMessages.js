@@ -10,6 +10,8 @@ export const snackMessages = {
   isUser: "You really need to sign in now",
   resetPasswordError: "Password reset unsuccessful",
   resetPasswordSuccess: "Password reset successful",
+  forgotPasswordFail: "Email not sent",
+  forgotPasswordSuccess: "Email sent",
 };
 
 export const option = (variant) => {

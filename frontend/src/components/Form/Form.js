@@ -72,6 +72,7 @@ export const Form = ({
     e.persist();
     handleChange(e);
     setFieldTouched(name, true, false);
+    setPostData({ ...postData, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
@@ -111,12 +112,8 @@ export const Form = ({
             fullWidth
             helperText={touched.title ? errors.title : ""}
             error={touched.title && Boolean(errors.title)}
-            // value={postData.title}
             value={title}
-            onChange={(e) => {
-              change("title", e);
-              setPostData({ ...postData, title: e.target.value });
-            }}
+            onChange={(e) => change("title", e)}
           />
           <TextField
             className={classes.margin}
@@ -128,12 +125,8 @@ export const Form = ({
             rows={4}
             helperText={touched.message ? errors.message : ""}
             error={touched.message && Boolean(errors.message)}
-            // value={postData.message}
             value={message}
-            onChange={(e) => {
-              change("message", e);
-              setPostData({ ...postData, message: e.target.value });
-            }}
+            onChange={(e) => change("message", e)}
           />
           <TextField
             className={classes.margin}
@@ -143,12 +136,8 @@ export const Form = ({
             fullWidth
             helperText={touched.tags ? errors.tags : ""}
             error={touched.tags && Boolean(errors.tags)}
-            // value={postData.tags}
             value={tags}
-            onChange={(e) => {
-              change("tags", e);
-              setPostData({ ...postData, tags: e.target.value.split(",") });
-            }}
+            onChange={(e) => change("tags", e)}
           />
           <div className={classes.fileInput}>
             <FileBase

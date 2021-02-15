@@ -1,12 +1,14 @@
 import { Grid, Modal } from "@material-ui/core";
 import React, { useState } from "react";
-import { ErrorPage, Form, Loader } from "..";
-import { Post } from "./Post/Post";
+import { Formik } from "formik";
 import { MonochromePhotosOutlined } from "@material-ui/icons/";
+import { Post } from "./Post/Post";
+import { ErrorPage, Form, Loader } from "..";
 import useStyles, { getModalStyle } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPosts, setCurrentId } from "../../features/post/postsSlice";
 import { selectModal, setModal } from "../../features/post/modalSlice";
+import { InputForm } from "../Form/Index";
 
 export const Posts = () => {
   const dispatch = useDispatch(),
@@ -51,7 +53,9 @@ export const Posts = () => {
         aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paper}>
-          <Form />
+          <InputForm />
+          {/* <Formik render={(props) => <Form {...props} />} /> */}
+          {/* <Form /> */}
         </div>
       </Modal>
     </>

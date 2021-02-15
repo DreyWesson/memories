@@ -20,14 +20,22 @@ import { useSnackbar } from "notistack";
 import { snackMessages } from "../../snackMessages";
 import { Link } from "react-router-dom";
 
-export const Form = () => {
+const initValue = {
+  title: "",
+  message: "",
+  tags: "",
+  selectedFile: "",
+};
+export const Form = ({
+  values: { title, message, tags },
+  errors,
+  touched,
+  handleChange,
+  isValid,
+  setFieldTouched,
+}) => {
   const { enqueueSnackbar } = useSnackbar();
-  const [postData, setPostData] = useState({
-    title: "",
-    message: "",
-    tags: "",
-    selectedFile: "",
-  });
+  const [postData, setPostData] = useState(initValue);
   const { posts, currentId } = useSelector(selectPosts),
     post = currentId
       ? posts?.find((message) => message._id === currentId)
@@ -36,15 +44,10 @@ export const Form = () => {
     classes = useStyles();
 
   const user = JSON.parse(localStorage.getItem("profile"));
-
+  console.log(isValid);
   const clear = () => {
     setCurrentId(null);
-    setPostData({
-      title: "",
-      message: "",
-      tags: "",
-      selectedFile: "",
-    });
+    setPostData(initValue);
   };
 
   const handleSubmit = async (e) => {
@@ -64,6 +67,11 @@ export const Form = () => {
     }
     clear();
     dispatch(setModal(false));
+  };
+  const change = (name, e) => {
+    e.persist();
+    handleChange(e);
+    setFieldTouched(name, true, false);
   };
 
   useEffect(() => {
@@ -101,10 +109,14 @@ export const Form = () => {
             variant="outlined"
             label="Title"
             fullWidth
-            value={postData.title}
-            onChange={(e) =>
-              setPostData({ ...postData, title: e.target.value })
-            }
+            helperText={touched.title ? errors.title : ""}
+            error={touched.title && Boolean(errors.title)}
+            // value={postData.title}
+            value={title}
+            onChange={(e) => {
+              change("title", e);
+              setPostData({ ...postData, title: e.target.value });
+            }}
           />
           <TextField
             className={classes.margin}
@@ -114,10 +126,14 @@ export const Form = () => {
             fullWidth
             multiline
             rows={4}
-            value={postData.message}
-            onChange={(e) =>
-              setPostData({ ...postData, message: e.target.value })
-            }
+            helperText={touched.message ? errors.message : ""}
+            error={touched.message && Boolean(errors.message)}
+            // value={postData.message}
+            value={message}
+            onChange={(e) => {
+              change("message", e);
+              setPostData({ ...postData, message: e.target.value });
+            }}
           />
           <TextField
             className={classes.margin}
@@ -125,10 +141,14 @@ export const Form = () => {
             variant="outlined"
             label="Tags (coma separated)"
             fullWidth
-            value={postData.tags}
-            onChange={(e) =>
-              setPostData({ ...postData, tags: e.target.value.split(",") })
-            }
+            helperText={touched.tags ? errors.tags : ""}
+            error={touched.tags && Boolean(errors.tags)}
+            // value={postData.tags}
+            value={tags}
+            onChange={(e) => {
+              change("tags", e);
+              setPostData({ ...postData, tags: e.target.value.split(",") });
+            }}
           />
           <div className={classes.fileInput}>
             <FileBase
@@ -146,6 +166,7 @@ export const Form = () => {
             size="large"
             type="submit"
             fullWidth
+            disabled={!isValid}
           >
             Submit
           </Button>

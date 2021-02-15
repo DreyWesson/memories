@@ -1,9 +1,8 @@
 import { Grid, Modal } from "@material-ui/core";
 import React, { useState } from "react";
-import { Formik } from "formik";
 import { MonochromePhotosOutlined } from "@material-ui/icons/";
 import { Post } from "./Post/Post";
-import { ErrorPage, Form, Loader } from "..";
+import { ErrorPage, Loader } from "..";
 import useStyles, { getModalStyle } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPosts, setCurrentId } from "../../features/post/postsSlice";

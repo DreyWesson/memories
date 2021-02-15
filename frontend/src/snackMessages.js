@@ -8,6 +8,8 @@ export const snackMessages = {
   createPost: "Post Created!",
   unauthorized: "Oops, this is not your post",
   isUser: "You really need to sign in now",
+  resetPasswordError: "Password reset unsuccessful",
+  resetPasswordSuccess: "Password reset successful",
 };
 
 export const option = (variant) => {

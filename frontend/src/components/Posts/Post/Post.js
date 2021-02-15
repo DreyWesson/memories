@@ -13,7 +13,6 @@ import useStyles from "./styles";
 import {
   DeleteOutlined,
   Favorite,
-  FavoriteBorder,
   FavoriteBorderOutlined,
   MoreHorizOutlined,
 } from "@material-ui/icons";

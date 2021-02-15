@@ -9,22 +9,27 @@ import {
 import { LockOutlined } from "@material-ui/icons";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Input } from "../..";
 import { resetPassword } from "../../../features/authSlice";
 import { sm } from "../../../utils/screenSize";
 import useStyles from "../styles";
 import { useHistory } from "react-router-dom";
+
+import { useSnackbar } from "notistack";
+import { snackMessages } from "../../../snackMessages";
+
 const initialState = {
   password: "",
   confirmPassword: "",
 };
 export const ResetPassword = ({ match }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState(initialState);
   // const [password, setPassword] = useState("");
   // const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  // const [success, setSuccess] = useState("");
+  // const [error, setError] = useState("");
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
@@ -59,7 +64,10 @@ export const ResetPassword = ({ match }) => {
     } catch (error) {
       // setError(error.response.data.error);
       setTimeout(() => {
-        setError("");
+        enqueueSnackbar(snackMessages.signin, {
+          variant: "success",
+        });
+        // setError("");
       }, 5000);
     }
   };
@@ -115,46 +123,5 @@ export const ResetPassword = ({ match }) => {
         </form>
       </Paper>
     </Container>
-    // <div className="resetpassword-screen">
-    //   <form
-    //     onSubmit={resetPasswordHandler}
-    //     className="resetpassword-screen__form"
-    //   >
-    //     <h3 className="resetpassword-screen__title">Forgot Password</h3>
-    //     {error && <span className="error-message">{error} </span>}
-    //     {success && (
-    //       <span className="success-message">
-    //         {success} <Link to="/login">Login</Link>
-    //       </span>
-    //     )}
-    //     <div className="form-group">
-    //       <label htmlFor="password">New Password:</label>
-    //       <input
-    //         type="password"
-    //         required
-    //         id="password"
-    //         placeholder="Enter new password"
-    //         autoComplete="true"
-    //         value={password}
-    //         onChange={(e) => setPassword(e.target.value)}
-    //       />
-    //     </div>
-    //     <div className="form-group">
-    //       <label htmlFor="confirmpassword">Confirm New Password:</label>
-    //       <input
-    //         type="password"
-    //         required
-    //         id="confirmpassword"
-    //         placeholder="Confirm new password"
-    //         autoComplete="true"
-    //         value={confirmPassword}
-    //         onChange={(e) => setConfirmPassword(e.target.value)}
-    //       />
-    //     </div>
-    //     <button type="submit" className="btn btn-primary">
-    //       Reset Password
-    //     </button>
-    //   </form>
-    // </div>
   );
 };

@@ -24,12 +24,12 @@ const initValue = {
   title: "",
   message: "",
   tags: "",
-  selectedFile: "",
 };
 export const Form = ({
   values: { title, message, tags },
   errors,
   touched,
+  // handleSubmit,
   handleChange,
   isValid,
   setFieldTouched,
@@ -44,13 +44,13 @@ export const Form = ({
     classes = useStyles();
 
   const user = JSON.parse(localStorage.getItem("profile"));
-  console.log(isValid);
+
   const clear = () => {
     setCurrentId(null);
     setPostData(initValue);
   };
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (currentId) {
       dispatch(
@@ -68,6 +68,7 @@ export const Form = ({
     clear();
     dispatch(setModal(false));
   };
+
   const change = (name, e) => {
     e.persist();
     handleChange(e);
@@ -97,7 +98,7 @@ export const Form = ({
         autoComplete="off"
         noValidate
         className={`${classes.root} ${classes.form}`}
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
       >
         <Typography variant="h6">
           {currentId ? `Editing "${post?.title}"` : "Creating a Memory"}

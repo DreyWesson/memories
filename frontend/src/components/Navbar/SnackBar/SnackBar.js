@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { Close } from "@material-ui/icons";
 import useStyles from "./styles";
 import {
@@ -27,6 +27,16 @@ export const SnackBar = () => {
     handleClose = (event, reason) => setOpen(false),
     openSnack = () => setOpen(true);
 
+  const logout = useCallback(() => {
+    dispatch(setLogout());
+    history.push("/");
+    setUser(null);
+    handleClose();
+    enqueueSnackbar(snackMessages.logout, {
+      variant: "warning",
+    });
+  }, [dispatch, history, enqueueSnackbar]);
+
   useEffect(() => {
     const token = user?.token;
     if (token) {
@@ -36,17 +46,7 @@ export const SnackBar = () => {
     }
 
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location]);
-
-  const logout = () => {
-    dispatch(setLogout());
-    history.push("/");
-    setUser(null);
-    handleClose();
-    enqueueSnackbar(snackMessages.logout, {
-      variant: "warning",
-    });
-  };
+  }, [location, logout, user?.token]);
 
   const snapBarMessage = () => {
     return user?.result ? (

@@ -21,6 +21,7 @@ export const InputForm = () => {
       render={(props) => <Form {...props} />}
       initialValues={values}
       validationSchema={validationSchema}
+      validateOnMount={true}
     />
   );
 };

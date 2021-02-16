@@ -17,7 +17,7 @@ import useStyles from "../styles";
 import { useHistory } from "react-router-dom";
 
 import { useSnackbar } from "notistack";
-import { snackMessages } from "../../../snackMessages";
+import { option, snackMessages } from "../../../snackMessages";
 
 const initialState = {
   password: "",
@@ -58,14 +58,14 @@ export const ResetPassword = ({
       password: formData.password,
     };
     try {
-      console.log("Got here");
       dispatch(resetPassword({ passwordDetails, match, history }));
+      setTimeout(() => {
+        enqueueSnackbar(snackMessages.resetPasswordSuccess, option);
+      }, 3000);
     } catch (error) {
       setTimeout(() => {
-        enqueueSnackbar(snackMessages.signin, {
-          variant: "success",
-        });
-      }, 5000);
+        enqueueSnackbar(snackMessages.resetPasswordError, option);
+      }, 3000);
     }
   };
 

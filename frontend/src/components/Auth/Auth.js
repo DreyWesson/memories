@@ -22,7 +22,7 @@ import {
 } from "../../features/authSlice";
 import { sm } from "../../utils/screenSize";
 import { useSnackbar } from "notistack";
-import { snackMessages } from "../../snackMessages";
+import { option, snackMessages } from "../../snackMessages";
 
 const initialState = {
   firstName: "",
@@ -61,14 +61,14 @@ export const Auth = ({
     const data = { formData, history };
     if (isSignup) {
       dispatch(formSignup(data));
-      enqueueSnackbar(snackMessages.signin, {
-        variant: "success",
-      });
+      setTimeout(() => {
+        enqueueSnackbar(snackMessages.signin, option);
+      }, 3000);
     } else {
       dispatch(formSignin(data));
-      enqueueSnackbar(snackMessages.signup, {
-        variant: "success",
-      });
+      setTimeout(() => {
+        enqueueSnackbar(snackMessages.signup, option);
+      }, 3000);
     }
   };
 
@@ -79,21 +79,14 @@ export const Auth = ({
       const data = { result, token };
       dispatch(setGoogleAuth(data));
       history.push("/");
-      enqueueSnackbar(snackMessages.googleSuccess, {
-        variant: "success",
-      });
+      enqueueSnackbar(snackMessages.googleSuccess, option);
     } catch (error) {
       console.log(error);
-      enqueueSnackbar(snackMessages.googleSuccess, {
-        variant: "success",
-      });
     }
   };
 
   const googleError = () => {
-    enqueueSnackbar(snackMessages.googleError, {
-      variant: "error",
-    });
+    enqueueSnackbar(snackMessages.googleError, option);
   };
 
   const change = (name, e) => {

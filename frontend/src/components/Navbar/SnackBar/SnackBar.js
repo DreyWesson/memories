@@ -12,7 +12,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { setLogout } from "../../../features/authSlice";
 import { useDispatch } from "react-redux";
 import { sm } from "../../../utils/screenSize";
-import { snackMessages } from "../../../snackMessages";
+import { option, snackMessages } from "../../../snackMessages";
 import { useSnackbar } from "notistack";
 import decode from "jwt-decode";
 
@@ -32,9 +32,8 @@ export const SnackBar = () => {
     history.push("/");
     setUser(null);
     handleClose();
-    enqueueSnackbar(snackMessages.logout, {
-      variant: "warning",
-    });
+
+    enqueueSnackbar(snackMessages.logout, option);
   }, [dispatch, history, enqueueSnackbar]);
 
   useEffect(() => {

@@ -36,10 +36,10 @@ export const Post = ({ post }) => {
     const currentUserID = user?.result?.googleId || user?.result._doc._id;
     if (user) {
       if (post._id !== currentUserID) {
-        return enqueueSnackbar(snackMessages.unauthorized, option("error"));
+        return enqueueSnackbar(snackMessages.unauthorized, option);
       }
     } else {
-      enqueueSnackbar(snackMessages.isUser, option("info"));
+      enqueueSnackbar(snackMessages.isUser, option);
     }
     dispatch(setModal(true));
     dispatch(setCurrentId(post._id));
@@ -50,12 +50,12 @@ export const Post = ({ post }) => {
     if (user) {
       currentUserID === post?.creator
         ? action()
-        : enqueueSnackbar(snackMessages.unauthorized, option("error"));
-    } else enqueueSnackbar(snackMessages.isUser, option("info"));
+        : enqueueSnackbar(snackMessages.unauthorized, option);
+    } else enqueueSnackbar(snackMessages.isUser, option);
   };
 
   const currentUserLikeActions = (action) => {
-    user ? action() : enqueueSnackbar(snackMessages.isUser, option("info"));
+    user ? action() : enqueueSnackbar(snackMessages.isUser, option);
   };
 
   const Likes = () => {

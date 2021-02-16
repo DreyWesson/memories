@@ -1,6 +1,6 @@
 export const snackMessages = {
-  googleSuccess: "You've just signed in",
-  googleError: "Google sign in unsuccessful. Try again",
+  googleSuccess: "You've just signed in Google",
+  googleError: "Google signin unsuccessful. Try again",
   logout: "You've just logged out",
   signin: "Signin Successful!",
   signup: "Signup Successful!",
@@ -14,12 +14,9 @@ export const snackMessages = {
   forgotPasswordSuccess: "Email sent",
 };
 
-export const option = (variant) => {
-  return {
-    variant: variant,
-    anchorOrigin: {
-      vertical: "top",
-      horizontal: "right",
-    },
-  };
+export const option = {
+  anchorOrigin: {
+    vertical: "top",
+    horizontal: "right",
+  },
 };

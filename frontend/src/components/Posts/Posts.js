@@ -30,7 +30,7 @@ export const Posts = () => {
           spacing={3}
         >
           {posts?.map((post) => (
-            <Grid key={post._id} item xs={12} sm={4} md={4}>
+            <Grid key={post._id} item xs={12} sm={4} md={3}>
               <Post post={post} />
             </Grid>
           ))}

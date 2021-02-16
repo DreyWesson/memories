@@ -14,7 +14,7 @@ import { sm } from "../../../utils/screenSize";
 import useStyles from "../styles";
 import { useDispatch } from "react-redux";
 import { forgotPassword } from "../../../features/authSlice";
-import { snackMessages } from "../../../snackMessages";
+import { option, snackMessages } from "../../../snackMessages";
 
 export const ForgotPassword = ({
   values: { email },
@@ -41,16 +41,14 @@ export const ForgotPassword = ({
     const userEmail = { emailData };
     try {
       dispatch(forgotPassword(userEmail));
-      enqueueSnackbar(snackMessages.forgotPasswordSuccess, {
-        variant: "info",
-      });
+      setTimeout(() => {
+        enqueueSnackbar(snackMessages.forgotPasswordSuccess, option);
+      }, 3000);
     } catch (error) {
       setEmailData("");
       setTimeout(() => {
-        enqueueSnackbar(snackMessages.forgotPasswordFail, {
-          variant: "info",
-        });
-      }, 5000);
+        enqueueSnackbar(snackMessages.forgotPasswordFail, option);
+      }, 3000);
     }
   };
   const helperText = (name) => (touched[name] ? errors[name] : "");

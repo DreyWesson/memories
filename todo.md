@@ -16,12 +16,13 @@
 
 ## Stack
 
-[-] React
-[-] Redux toolkit
-[-] Matrial UI
-[-] Node, MongoDB & Express
-[-] SendGrid
+[+] React
+[+] Redux toolkit
+[+] Material UI
+[+] Node, MongoDB & Express
+[+] SendGrid
+[+] Formik, Yup
 
 ## authentication
 
-[-] Formik
+[+] Formik

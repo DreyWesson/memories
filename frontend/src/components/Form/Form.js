@@ -17,7 +17,7 @@ import {
 import useStyles, { theme } from "./styles";
 import { setModal } from "../../features/post/modalSlice";
 import { useSnackbar } from "notistack";
-import { snackMessages } from "../../snackMessages";
+import { option, snackMessages } from "../../snackMessages";
 import { Link } from "react-router-dom";
 
 const initValue = {
@@ -55,14 +55,14 @@ export const Form = ({
       dispatch(
         updatePost({ ...postData, currentId, name: user?.result?.name })
       );
-      enqueueSnackbar(snackMessages.updatePost, {
-        variant: "info",
-      });
+      setTimeout(() => {
+        enqueueSnackbar(snackMessages.updatePost, option);
+      }, 3000);
     } else {
       dispatch(createPost({ ...postData, name: user?.result?.name }));
-      enqueueSnackbar(snackMessages.createPost, {
-        variant: "info",
-      });
+      setTimeout(() => {
+        enqueueSnackbar(snackMessages.createPost, option);
+      }, 3000);
     }
     clear();
     dispatch(setModal(false));

@@ -69,8 +69,8 @@ export const ResetPassword = ({
     }
   };
 
-  const helperText = (x) => (touched[x] ? errors[x] : "");
-  const err = (x) => touched[x] && Boolean(errors[x]);
+  const helperText = (name) => (touched[name] ? errors[name] : "");
+  const err = (name) => touched[name] && Boolean(errors[name]);
 
   return (
     <Container component="main" maxWidth="xs" disableGutters={sm && true}>

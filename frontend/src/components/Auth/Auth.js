@@ -32,7 +32,14 @@ const initialState = {
   confirmPassword: "",
 };
 
-export const Auth = () => {
+export const Auth = ({
+  values: { firstName, lastName, email, password, confirmPassword },
+  errors,
+  touched,
+  handleChange,
+  isValid,
+  setFieldTouched,
+}) => {
   const [formData, setFormData] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
@@ -68,8 +75,6 @@ export const Auth = () => {
   const googleSuccess = async (res) => {
     const result = await res?.profileObj;
     const token = await res?.tokenId;
-    // console.log(result);
-    // console.log(token);
     try {
       const data = { result, token };
       dispatch(setGoogleAuth(data));
@@ -79,6 +84,9 @@ export const Auth = () => {
       });
     } catch (error) {
       console.log(error);
+      enqueueSnackbar(snackMessages.googleSuccess, {
+        variant: "success",
+      });
     }
   };
 
@@ -87,8 +95,16 @@ export const Auth = () => {
       variant: "error",
     });
   };
-  const handleChange = (e) =>
+
+  const change = (name, e) => {
+    e.persist();
+    handleChange(e);
+    setFieldTouched(name, true, false);
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const helperText = (name) => (touched[name] ? errors[name] : "");
+  const err = (name) => touched[name] && Boolean(errors[name]);
 
   return (
     <Container component="main" maxWidth="xs" disableGutters={sm && true}>
@@ -106,30 +122,42 @@ export const Auth = () => {
                 <Input
                   name="firstName"
                   label="First Name"
-                  handleChange={handleChange}
+                  handleChange={(e) => change("firstName", e)}
                   autoFocus
                   half
+                  helperText={helperText("firstName")}
+                  error={err("firstName")}
+                  value={firstName}
                 />
                 <Input
                   name="lastName"
                   label="Last Name"
-                  handleChange={handleChange}
+                  handleChange={(e) => change("lastName", e)}
                   half
+                  helperText={helperText("lastName")}
+                  error={err("lastName")}
+                  value={lastName}
                 />
               </>
             )}
             <Input
               name="email"
               label="Email Address"
-              handleChange={handleChange}
+              handleChange={(e) => change("email", e)}
               type="email"
+              helperText={helperText("email")}
+              error={err("email")}
+              value={email}
             />
             <Input
               name="password"
               label="Password"
-              handleChange={handleChange}
+              handleChange={(e) => change("password", e)}
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
+              helperText={helperText("password")}
+              error={err("password")}
+              value={password}
             />
             {!isSignup && (
               <label htmlFor="password" style={{ marginLeft: "10px" }}>
@@ -140,8 +168,11 @@ export const Auth = () => {
               <Input
                 name="confirmPassword"
                 label="Repeat Password"
-                handleChange={handleChange}
+                handleChange={(e) => change("confirmPassword", e)}
                 type="password"
+                helperText={helperText("confirmPassword")}
+                error={err("confirmPassword")}
+                value={confirmPassword}
               />
             )}
           </Grid>
@@ -151,6 +182,7 @@ export const Auth = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={isSignup && !isValid}
           >
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>

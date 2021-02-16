@@ -15,6 +15,7 @@ import useStyles from "../styles";
 import { useDispatch } from "react-redux";
 import { forgotPassword } from "../../../features/authSlice";
 import { snackMessages } from "../../../snackMessages";
+
 export const ForgotPassword = ({
   values: { email },
   errors,
@@ -31,7 +32,6 @@ export const ForgotPassword = ({
   const change = (name, e) => {
     e.persist();
     handleChange(e);
-    console.log(e);
     setFieldTouched(name, true, false);
     setEmailData(e.target.value);
   };

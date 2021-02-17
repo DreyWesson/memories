@@ -3,21 +3,18 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import useStyles from "./styles";
 import { Home, Navbar } from "./components";
-import { sm } from "./utils/screenSize";
 import { ResetForm } from "./components/Auth/ResetPassword/Index";
 import { ForgotPasswordForm } from "./components/Auth/ForgotPassword/Index";
-import { AuthForm } from "./components/Auth/Signup/Index";
+import { Snackbar as Snack } from "react-redux-snackbar";
+import { AuthForm } from "./components/Auth/Index";
 
 function App() {
   const classes = useStyles();
 
   return (
     <Router>
-      <Container
-        maxWidth="lg"
-        className={classes.root}
-        disableGutters={sm && true}
-      >
+      <Container maxWidth="lg" className={classes.root}>
+        <Snack />
         <Navbar />
         <Switch>
           <Route path="/" exact component={Home} />

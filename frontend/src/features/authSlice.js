@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from "../api";
+import { showSnack } from "react-redux-snackbar";
+import { snackMessages } from "../snackMessages";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -19,12 +21,10 @@ export const authSlice = createSlice({
       state.authData = null;
     },
     authFormData: (state, { payload }) => {
-      // console.log(payload);
       localStorage.setItem("profile", JSON.stringify({ ...payload }));
       state.authFormData = payload;
     },
     forgotPasswordReducer: (state, { payload }) => {
-      // console.log(payload);
       state.forgotPassword = payload;
     },
     resetPasswordReducer: (state, { payload }) => {
@@ -42,38 +42,92 @@ const formSignin = createAsyncThunk(
       const { data } = await api.signin(formData);
       dispatch(authFormData(data));
       history.push("/");
+      dispatch(
+        showSnack("formSignIn", {
+          label: snackMessages.signin,
+          timeout: 6000,
+        })
+      );
     } catch (error) {
       console.log("Invalid credentials");
+      dispatch(
+        showSnack("formSignInFail", {
+          label: snackMessages.signinFail,
+          timeout: 6000,
+        })
+      );
     }
   }
 );
 const formSignup = createAsyncThunk(
   "auth/formSignup",
   async ({ formData, history }, { dispatch }) => {
-    // console.log(formData);
-    const { data } = await api.signup(formData);
-    dispatch(authFormData(data));
-    history.push("/");
+    try {
+      const { data } = await api.signup(formData);
+      dispatch(authFormData(data));
+      history.push("/");
+      dispatch(
+        showSnack("formSignUp", {
+          label: snackMessages.signup,
+          timeout: 6000,
+        })
+      );
+    } catch (error) {
+      console.log("Invalid credentials");
+      dispatch(
+        showSnack("formSignUpFail", {
+          label: snackMessages.signupFail,
+          timeout: 6000,
+        })
+      );
+    }
   }
 );
 const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
   async (userEmail, { dispatch }) => {
-    console.log(userEmail);
-    const { data } = await api.forgotpassword(userEmail);
-    console.log(data);
-    dispatch(forgotPasswordReducer(data));
+    try {
+      const { data } = await api.forgotpassword(userEmail);
+      console.log(data);
+      dispatch(forgotPasswordReducer(data));
+      dispatch(
+        showSnack("forgotPassword", {
+          label: snackMessages.forgotPasswordSuccess,
+          timeout: 6000,
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showSnack("forgotPasswordFail", {
+          label: snackMessages.forgotPasswordFail,
+          timeout: 6000,
+        })
+      );
+    }
   }
 );
 
 const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async ({ passwordDetails, match, history }, { dispatch }) => {
-    console.log(match);
-    const { data } = await api.resetpassword(passwordDetails, match);
-    console.log(data);
-    dispatch(resetPasswordReducer(data));
-    history.push("/auth");
+    try {
+      const { data } = await api.resetpassword(passwordDetails, match);
+      dispatch(resetPasswordReducer(data));
+      history.push("/auth");
+      dispatch(
+        showSnack("resetPassword", {
+          label: snackMessages.resetPasswordSuccess,
+          timeout: 6000,
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showSnack("resetPasswordFail", {
+          label: snackMessages.resetPasswordError,
+          timeout: 6000,
+        })
+      );
+    }
   }
 );
 export { formSignin, formSignup, forgotPassword, resetPassword };

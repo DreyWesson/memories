@@ -22,7 +22,7 @@ export default makeStyles((theme) => ({
     },
   },
   capsule: {
-    backgroundColor: "#fe3d71",
+    backgroundColor: "#f91150",
     borderRadius: "0 25px 25px 0",
     padding: "2px 7px 2px 2px",
     color: "white",

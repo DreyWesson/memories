@@ -6,10 +6,8 @@ import {
   CardMedia,
   Button,
   Typography,
-  // IconButton,
 } from "@material-ui/core/";
 import moment from "moment";
-import useStyles from "./styles";
 import {
   DeleteOutlined,
   Favorite,
@@ -17,29 +15,39 @@ import {
   MoreHorizOutlined,
 } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
+import { showSnack } from "react-redux-snackbar";
+import useStyles from "./styles";
 import { setModal } from "../../../features/post/modalSlice";
 import {
   deletePost,
   likePost,
   setCurrentId,
 } from "../../../features/post/postsSlice";
-import { useSnackbar } from "notistack";
-import { option, snackMessages } from "../../../snackMessages";
+import { snackMessages } from "../../../snackMessages";
 
 export const Post = ({ post }) => {
   const classes = useStyles(),
     dispatch = useDispatch(),
-    { enqueueSnackbar } = useSnackbar(),
     user = JSON.parse(localStorage.getItem("profile"));
 
   const postEdit = () => {
     const currentUserID = user?.result?.googleId || user?.result._doc._id;
     if (user) {
-      if (post._id !== currentUserID) {
-        return enqueueSnackbar(snackMessages.unauthorized, option);
+      if (post?.creator !== currentUserID) {
+        return dispatch(
+          showSnack("unauthorized", {
+            label: snackMessages.unauthorized,
+            timeout: 6000,
+          })
+        );
       }
     } else {
-      enqueueSnackbar(snackMessages.isUser, option);
+      dispatch(
+        showSnack("isUser", {
+          label: snackMessages.isUser,
+          timeout: 6000,
+        })
+      );
     }
     dispatch(setModal(true));
     dispatch(setCurrentId(post._id));
@@ -50,12 +58,30 @@ export const Post = ({ post }) => {
     if (user) {
       currentUserID === post?.creator
         ? action()
-        : enqueueSnackbar(snackMessages.unauthorized, option);
-    } else enqueueSnackbar(snackMessages.isUser, option);
+        : dispatch(
+            showSnack("userUnauthorized", {
+              label: snackMessages.unauthorized,
+              timeout: 6000,
+            })
+          );
+    } else
+      dispatch(
+        showSnack("isUser", {
+          label: snackMessages.isUser,
+          timeout: 6000,
+        })
+      );
   };
 
   const currentUserLikeActions = (action) => {
-    user ? action() : enqueueSnackbar(snackMessages.isUser, option);
+    user
+      ? action()
+      : dispatch(
+          showSnack("isUser", {
+            label: snackMessages.isUser,
+            timeout: 6000,
+          })
+        );
   };
 
   const Likes = () => {

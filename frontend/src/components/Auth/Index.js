@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Auth } from "../..";
+import { Auth } from "..";
 
 const validationSchema = Yup.object({
   firstName: Yup.string("Enter your first name").required(

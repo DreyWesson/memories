@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from "../../api";
+import { showSnack } from "react-redux-snackbar";
+import { snackMessages } from "../../snackMessages";
 
 export const postsSlice = createSlice({
   name: "posts",
@@ -61,38 +63,107 @@ export const {
 const fetchPosts = createAsyncThunk(
     "posts/fetchPosts",
     async (payload, { dispatch }) => {
-      dispatch(getPosts());
-      const { data } = await api.fetchPosts();
-      dispatch(getPostsSuccess(data));
+      try {
+        dispatch(getPosts());
+        const { data } = await api.fetchPosts();
+        dispatch(getPostsSuccess(data));
+      } catch (error) {
+        dispatch(
+          showSnack("fetchPost", {
+            label: snackMessages.fetchPost,
+            timeout: 6000,
+          })
+        );
+      }
     }
   ),
   createPost = createAsyncThunk(
     "posts/createPost",
     async (payload, { dispatch }) => {
-      const { data } = await api.createPost(payload);
-      return dispatch(addPost(data));
+      try {
+        const { data } = await api.createPost(payload);
+        dispatch(addPost(data));
+        dispatch(
+          showSnack("createPost", {
+            label: snackMessages.createPost,
+            timeout: 6000,
+          })
+        );
+      } catch (error) {
+        dispatch(
+          showSnack("createPostFail", {
+            label: snackMessages.createPostFail,
+            timeout: 6000,
+          })
+        );
+      }
     }
   ),
   updatePost = createAsyncThunk(
     "posts/updatePost",
     async (payload, { dispatch }) => {
-      const { currentId, ...postData } = payload;
-      const { data } = await api.updatePost(currentId, postData);
-      dispatch(editPost(data));
+      try {
+        const { currentId, ...postData } = payload;
+        const { data } = await api.updatePost(currentId, postData);
+        dispatch(editPost(data));
+        dispatch(
+          showSnack("updatePost", {
+            label: snackMessages.updatePost,
+            timeout: 6000,
+          })
+        );
+      } catch (error) {
+        dispatch(
+          showSnack("updatePostFail", {
+            label: snackMessages.updatePostFail,
+            timeout: 6000,
+          })
+        );
+      }
     }
   ),
   deletePost = createAsyncThunk(
     "posts/deletePost",
     async ({ id }, { dispatch }) => {
-      await api.deletePost(id);
-      return dispatch(removePost());
+      try {
+        await api.deletePost(id);
+        dispatch(removePost());
+        dispatch(
+          showSnack("deletePost", {
+            label: snackMessages.deletePost,
+            timeout: 6000,
+          })
+        );
+      } catch (error) {
+        dispatch(
+          showSnack("deletePostFail", {
+            label: snackMessages.deletePostFail,
+            timeout: 6000,
+          })
+        );
+      }
     }
   ),
   likePost = createAsyncThunk(
     "posts/likePost",
     async ({ id }, { dispatch }) => {
-      const { data } = await api.likePost(id);
-      dispatch(favPost(data));
+      try {
+        const { data } = await api.likePost(id);
+        dispatch(favPost(data));
+        dispatch(
+          showSnack("likePost", {
+            label: snackMessages.likePost,
+            timeout: 6000,
+          })
+        );
+      } catch (error) {
+        dispatch(
+          showSnack("likePostFail", {
+            label: snackMessages.likePostFail,
+            timeout: 6000,
+          })
+        );
+      }
     }
   );
 export { fetchPosts, createPost, updatePost, deletePost, likePost };

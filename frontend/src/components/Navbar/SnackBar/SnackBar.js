@@ -12,9 +12,9 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { setLogout } from "../../../features/authSlice";
 import { useDispatch } from "react-redux";
 import { sm } from "../../../utils/screenSize";
-import { option, snackMessages } from "../../../snackMessages";
-import { useSnackbar } from "notistack";
+import { snackMessages } from "../../../snackMessages";
 import decode from "jwt-decode";
+import { showSnack } from "react-redux-snackbar";
 
 export const SnackBar = () => {
   const classes = useStyles(),
@@ -23,7 +23,6 @@ export const SnackBar = () => {
     [open, setOpen] = useState(false),
     [user, setUser] = useState(JSON.parse(localStorage.getItem("profile"))),
     location = useLocation(),
-    { enqueueSnackbar } = useSnackbar(),
     handleClose = (event, reason) => setOpen(false),
     openSnack = () => setOpen(true);
 
@@ -32,9 +31,13 @@ export const SnackBar = () => {
     history.push("/");
     setUser(null);
     handleClose();
-
-    enqueueSnackbar(snackMessages.logout, option);
-  }, [dispatch, history, enqueueSnackbar]);
+    dispatch(
+      showSnack("logout", {
+        label: snackMessages.logout,
+        timeout: 6000,
+      })
+    );
+  }, [dispatch, history]);
 
   useEffect(() => {
     const token = user?.token;

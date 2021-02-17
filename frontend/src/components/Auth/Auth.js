@@ -21,8 +21,8 @@ import {
   setGoogleAuth,
 } from "../../features/authSlice";
 import { sm } from "../../utils/screenSize";
-import { useSnackbar } from "notistack";
-import { option, snackMessages } from "../../snackMessages";
+import { snackMessages } from "../../snackMessages";
+import { showSnack } from "react-redux-snackbar";
 
 const initialState = {
   firstName: "",
@@ -45,7 +45,6 @@ export const Auth = ({
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
-  const { enqueueSnackbar } = useSnackbar();
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
@@ -61,14 +60,8 @@ export const Auth = ({
     const data = { formData, history };
     if (isSignup) {
       dispatch(formSignup(data));
-      setTimeout(() => {
-        enqueueSnackbar(snackMessages.signin, option);
-      }, 3000);
     } else {
       dispatch(formSignin(data));
-      setTimeout(() => {
-        enqueueSnackbar(snackMessages.signup, option);
-      }, 3000);
     }
   };
 
@@ -79,14 +72,24 @@ export const Auth = ({
       const data = { result, token };
       dispatch(setGoogleAuth(data));
       history.push("/");
-      enqueueSnackbar(snackMessages.googleSuccess, option);
+      dispatch(
+        showSnack("googleSuccess", {
+          label: snackMessages.googleSuccess,
+          timeout: 6000,
+        })
+      );
     } catch (error) {
       console.log(error);
     }
   };
 
   const googleError = () => {
-    enqueueSnackbar(snackMessages.googleError, option);
+    dispatch(
+      showSnack("googleError", {
+        label: snackMessages.googleError,
+        timeout: 6000,
+      })
+    );
   };
 
   const change = (name, e) => {

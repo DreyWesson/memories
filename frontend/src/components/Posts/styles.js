@@ -25,7 +25,7 @@ export default makeStyles((theme) => ({
   postsContainer: {
     position: "absolute",
     bottom: "10px",
-    color: "#fe3d71",
+    color: "#f91150",
   },
   postsCreateBtn: {
     position: "fixed",

@@ -16,13 +16,11 @@ import { sm } from "../../../utils/screenSize";
 import useStyles from "../styles";
 import { useHistory } from "react-router-dom";
 
-import { useSnackbar } from "notistack";
-import { option, snackMessages } from "../../../snackMessages";
-
 const initialState = {
   password: "",
   confirmPassword: "",
 };
+
 export const ResetPassword = ({
   values: { password, confirmPassword },
   errors,
@@ -32,13 +30,12 @@ export const ResetPassword = ({
   setFieldTouched,
   match,
 }) => {
-  const { enqueueSnackbar } = useSnackbar();
-  const [formData, setFormData] = useState(initialState);
-  const classes = useStyles();
-  const [showPassword, setShowPassword] = useState(false);
-  const handleShowPassword = () => setShowPassword(!showPassword);
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const [formData, setFormData] = useState(initialState),
+    classes = useStyles(),
+    [showPassword, setShowPassword] = useState(false),
+    handleShowPassword = () => setShowPassword(!showPassword),
+    dispatch = useDispatch(),
+    history = useHistory();
 
   const change = (name, e) => {
     e.persist();
@@ -59,13 +56,8 @@ export const ResetPassword = ({
     };
     try {
       dispatch(resetPassword({ passwordDetails, match, history }));
-      setTimeout(() => {
-        enqueueSnackbar(snackMessages.resetPasswordSuccess, option);
-      }, 3000);
     } catch (error) {
-      setTimeout(() => {
-        enqueueSnackbar(snackMessages.resetPasswordError, option);
-      }, 3000);
+      console.log(error);
     }
   };
 

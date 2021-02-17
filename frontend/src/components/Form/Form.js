@@ -16,8 +16,6 @@ import {
 } from "../../features/post/postsSlice";
 import useStyles, { theme } from "./styles";
 import { setModal } from "../../features/post/modalSlice";
-import { useSnackbar } from "notistack";
-import { option, snackMessages } from "../../snackMessages";
 import { Link } from "react-router-dom";
 
 const initValue = {
@@ -33,8 +31,7 @@ export const Form = ({
   isValid,
   setFieldTouched,
 }) => {
-  const { enqueueSnackbar } = useSnackbar(),
-    [postData, setPostData] = useState(initValue),
+  const [postData, setPostData] = useState(initValue),
     { posts, currentId } = useSelector(selectPosts),
     post = currentId
       ? posts?.find((message) => message._id === currentId)
@@ -55,24 +52,20 @@ export const Form = ({
       dispatch(
         updatePost({ ...postData, currentId, name: user?.result?.name })
       );
-      setTimeout(() => {
-        enqueueSnackbar(snackMessages.updatePost, option);
-      }, 3000);
     } else {
       dispatch(createPost({ ...postData, name: user?.result?.name }));
-      setTimeout(() => {
-        enqueueSnackbar(snackMessages.createPost, option);
-      }, 3000);
     }
     clear();
     dispatch(setModal(false));
   };
 
-  const change = (name, e) => {
+  const change = (name, e, hashtag = "") => {
     e.persist();
     handleChange(e);
     setFieldTouched(name, true, false);
-    setPostData({ ...postData, [e.target.name]: e.target.value });
+    hashtag
+      ? setPostData({ ...postData, [e.target.name]: e.target.value.split(",") })
+      : setPostData({ ...postData, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
@@ -112,7 +105,7 @@ export const Form = ({
             fullWidth
             helperText={touched.title ? errors.title : ""}
             error={touched.title && Boolean(errors.title)}
-            value={title}
+            value={postData.title}
             onChange={(e) => change("title", e)}
           />
           <TextField
@@ -125,7 +118,7 @@ export const Form = ({
             rows={4}
             helperText={touched.message ? errors.message : ""}
             error={touched.message && Boolean(errors.message)}
-            value={message}
+            value={postData.message}
             onChange={(e) => change("message", e)}
           />
           <TextField
@@ -136,8 +129,8 @@ export const Form = ({
             fullWidth
             helperText={touched.tags ? errors.tags : ""}
             error={touched.tags && Boolean(errors.tags)}
-            value={tags}
-            onChange={(e) => change("tags", e)}
+            value={postData.tags}
+            onChange={(e) => change("tags", e, "hashtag")}
           />
           <div className={classes.fileInput}>
             <FileBase
@@ -155,7 +148,7 @@ export const Form = ({
             size="large"
             type="submit"
             fullWidth
-            disabled={!isValid}
+            disabled={!currentId && !isValid}
           >
             Submit
           </Button>

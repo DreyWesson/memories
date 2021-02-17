@@ -35,9 +35,9 @@ export const ForgotPassword = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userEmail = { emailData };
+    const data = { email: emailData };
     try {
-      dispatch(forgotPassword(userEmail));
+      dispatch(forgotPassword(data));
     } catch (error) {
       setEmailData("");
     }

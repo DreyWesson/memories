@@ -53,7 +53,8 @@ export const signin = async (req, res, next) => {
 
 export const forgotPassword = async (req, res, next) => {
   const { email } = req.body;
-  console.log(email);
+  console.log("Email", email);
+  console.log("Email", req.body);
   try {
     const user = await User.findOne({ email });
 
@@ -61,6 +62,7 @@ export const forgotPassword = async (req, res, next) => {
       return next(new ErrorHandler("Email could not be sent", 404));
     }
     const resetToken = user.getResetPasswordToken();
+    console.log(resetToken);
 
     await user.save();
 
@@ -83,9 +85,8 @@ export const forgotPassword = async (req, res, next) => {
     } catch (error) {
       user.resetPasswordToken = undefined;
       user.resetPasswordExpire = undefined;
-
+      console.log("ERROR OCCURRED HERE");
       await user.save();
-
       return next(new ErrorHandler("Email could not be sent", 500));
     }
   } catch (error) {

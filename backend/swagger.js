@@ -216,6 +216,35 @@ export default {
           },
         },
       },
+      "/api/posts": {
+        get: {
+          tags: ["Posts"],
+          summary: "Fetch all posts",
+          description: "This fetches all the post from the database",
+          responses: {
+            200: {
+              description: "successful operation",
+            },
+            401: {
+              description: "Invalid Credentials",
+            },
+            500: {
+              description: "Could not register user",
+            },
+          },
+          requestBody: {
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/FetchPosts",
+                },
+              },
+            },
+            description: "Fetche posts",
+            required: true,
+          },
+        },
+      },
     },
   },
   apis: ["./routes/*.js"],

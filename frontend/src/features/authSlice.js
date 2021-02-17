@@ -8,7 +8,7 @@ export const authSlice = createSlice({
   initialState: {
     authData: null,
     authFormData: null,
-    forgotPassword: null,
+    // forgotPassword: null,
     reset: null,
   },
   reducers: {
@@ -24,9 +24,10 @@ export const authSlice = createSlice({
       localStorage.setItem("profile", JSON.stringify({ ...payload }));
       state.authFormData = payload;
     },
-    forgotPasswordReducer: (state, { payload }) => {
-      state.forgotPassword = payload;
-    },
+    // forgotPasswordReducer: (state, { payload }) => {
+    //   console.log(payload);
+    //   state.forgotPassword = payload;
+    // },
     resetPasswordReducer: (state, { payload }) => {
       console.log(payload);
       console.log(state);
@@ -85,11 +86,13 @@ const formSignup = createAsyncThunk(
 );
 const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
-  async (userEmail, { dispatch }) => {
+  async (data, { dispatch }) => {
     try {
-      const { data } = await api.forgotpassword(userEmail);
       console.log(data);
-      dispatch(forgotPasswordReducer(data));
+      // const { data } =
+      await api.forgotpassword(data);
+      // console.log("DATA", data);
+      // dispatch(forgotPasswordReducer(data));
       dispatch(
         showSnack("forgotPassword", {
           label: snackMessages.forgotPasswordSuccess,
@@ -97,6 +100,7 @@ const forgotPassword = createAsyncThunk(
         })
       );
     } catch (error) {
+      console.log(error);
       dispatch(
         showSnack("forgotPasswordFail", {
           label: snackMessages.forgotPasswordFail,
@@ -135,7 +139,7 @@ export const {
   setGoogleAuth,
   setLogout,
   authFormData,
-  forgotPasswordReducer,
+  // forgotPasswordReducer,
   resetPasswordReducer,
 } = authSlice.actions;
 export const selectAuth = (state) => state.auth;

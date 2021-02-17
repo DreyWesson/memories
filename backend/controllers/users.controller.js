@@ -123,6 +123,6 @@ export const resetPassword = async (req, res, next) => {
 // Figure out how to turn user to user.result // Done. ln 54
 const sendToken = (user, statusCode, res) => {
   const token = user.getSignedToken();
-  user = { ...user, name: user.name };
+  user = { name: user.name };
   res.status(statusCode).json({ result: user, success: true, token });
 };

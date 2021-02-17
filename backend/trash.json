@@ -1,0 +1,77 @@
+{
+  "result": {
+    "$__": {
+      "strictMode": true,
+      "selected": {},
+      "getters": {},
+      "_id": "602a3ca57c0a6600156d517d",
+      "wasPopulated": false,
+      "activePaths": {
+        "paths": {
+          "password": "init",
+          "email": "init",
+          "_id": "init",
+          "lastName": "init",
+          "firstName": "init",
+          "__v": "init",
+          "resetPasswordExpire": "init",
+          "resetPasswordToken": "init"
+        },
+        "states": {
+          "ignore": {},
+          "default": {},
+          "init": {
+            "_id": true,
+            "lastName": true,
+            "firstName": true,
+            "email": true,
+            "password": true,
+            "__v": true,
+            "resetPasswordExpire": true,
+            "resetPasswordToken": true
+          },
+          "modify": {},
+          "require": {}
+        },
+        "stateNames": [
+          "require",
+          "modify",
+          "init",
+          "default",
+          "ignore"
+        ]
+      },
+      "pathsToScopes": {},
+      "cachedRequired": {},
+      "$setCalled": {},
+      "emitter": {
+        "_events": {},
+        "_eventsCount": 0,
+        "_maxListeners": 0
+      },
+      "$options": {
+        "skipId": true,
+        "isNew": false,
+        "willInit": true,
+        "defaults": true
+      }
+    },
+    "isNew": false,
+    "$locals": {},
+    "$op": null,
+    "_doc": {
+      "_id": "602a3ca57c0a6600156d517d",
+      "lastName": "drey",
+      "firstName": "wesson",
+      "email": "wessondrey@gmail.com",
+      "password": "$2a$12$V.KxAyjFrg8OPXx1POctTekdPcaiS6iL1srqePpm3cDUy89iG8Yse",
+      "__v": 0,
+      "resetPasswordExpire": "2021-02-15T14:43:09.158Z",
+      "resetPasswordToken": "cf79a6eb7c940d9c3477d17a6b4e90272d7158e86fe2958ed78ea378e952eba9"
+    },
+    "$init": true,
+    "name": "wesson drey"
+  },
+  "success": true,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMmEzY2E1N2MwYTY2MDAxNTZkNTE3ZCIsImVtYWlsIjoid2Vzc29uZHJleUBnbWFpbC5jb20iLCJpYXQiOjE2MTM1NTU5OTUsImV4cCI6MTYxMzY0MjM5NX0._pcYo_RoslfV7u21dhfbgRaEKnz9XPCxQ84l9UlBYXQ"
+}

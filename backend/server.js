@@ -7,6 +7,11 @@ import userRoutes from "./routes/users.routes.js";
 import { connectDB } from "./config/db.js";
 import morgan from "morgan";
 import errorResponse from "./middleware/error.middleware.js";
+import swaggerUI from "swagger-ui-express";
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerJson from "./swagger.js";
+
+const specs = swaggerJsDoc(swaggerJson);
 
 dotenv.config();
 connectDB();
@@ -22,6 +27,7 @@ app.use(cors());
 // Routes
 app.use("/posts", postRoutes);
 app.use("/user", userRoutes);
+app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.get("/", (req, res) => {
   res.send("Hello from Memories API");

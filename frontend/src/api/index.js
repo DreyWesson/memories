@@ -11,18 +11,20 @@ axios.interceptors.request.use((req) => {
 });
 
 // Posts APIs
-const fetchPosts = () => axios.get("/posts"),
-  createPost = (newPost) => axios.post("/posts", newPost),
-  updatePost = (id, updatedData) => axios.patch(`/posts/${id}`, updatedData),
-  deletePost = (id) => axios.delete(`/posts/${id}`),
-  likePost = (id) => axios.patch(`/posts/${id}/likePost`);
+const fetchPosts = () => axios.get("/api/posts"),
+  createPost = (newPost) => axios.post("/api/posts", newPost),
+  updatePost = (id, updatedData) =>
+    axios.patch(`/api/posts/${id}`, updatedData),
+  deletePost = (id) => axios.delete(`/api/posts/${id}`),
+  likePost = (id) => axios.patch(`/api/posts/${id}/likePost`);
 
 // Auth APIs
-const signin = (formData) => axios.post("/user/signin", formData),
-  signup = (formData) => axios.post("/user/signup", formData),
-  forgotpassword = (formData) => axios.post("/user/forgotpassword", formData),
+const signin = (formData) => axios.post("/api/users/signin", formData),
+  signup = (formData) => axios.post("/api/users/signup", formData),
+  forgotpassword = (formData) =>
+    axios.post("/api/users/forgotpassword", formData),
   resetpassword = (formData, match) => {
-    axios.put(`/user/resetpassword/${match.params.resetToken}`, formData);
+    axios.put(`/api/users/resetpassword/${match.params.resetToken}`, formData);
     console.log(match.params.resetToken);
   };
 

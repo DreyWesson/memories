@@ -31,7 +31,7 @@ export const Post = ({ post }) => {
     user = JSON.parse(localStorage.getItem("profile"));
 
   const postEdit = () => {
-    const currentUserID = user?.result?.googleId || user?.result._doc._id;
+    const currentUserID = user?.result?.googleId || user?.result._id;
     if (user) {
       if (post?.creator !== currentUserID) {
         return dispatch(
@@ -54,7 +54,7 @@ export const Post = ({ post }) => {
   };
 
   const currentUserDelActions = (action = "") => {
-    const currentUserID = user?.result?.googleId || user?.result?._doc._id;
+    const currentUserID = user?.result?.googleId || user?.result?._id;
     if (user) {
       currentUserID === post?.creator
         ? action()

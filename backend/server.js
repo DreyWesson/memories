@@ -25,8 +25,8 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 // Routes
-app.use("/posts", postRoutes);
-app.use("/user", userRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.get("/", (req, res) => {

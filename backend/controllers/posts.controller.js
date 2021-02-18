@@ -10,6 +10,7 @@ const verifyID = (id, res) => {
 const getPosts = async (req, res, next) => {
     try {
       const posts = await Post.find().sort({ _id: -1 });
+
       res.status(200).json(posts);
     } catch (error) {
       console.log(error);

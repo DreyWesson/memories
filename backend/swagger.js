@@ -19,6 +19,7 @@ export default {
           name: "Authorization",
           in: "header",
         },
+        // security: { bearerAuth: [] },
       },
       schemas: {
         UserSignin: {
@@ -83,13 +84,33 @@ export default {
             name: "ResetUserPassword",
           },
         },
+        CreatePost: {
+          type: "object",
+          properties: {
+            title: {
+              type: "string",
+            },
+            message: {
+              type: "string",
+            },
+            tags: {
+              type: "string",
+            },
+            selectedFile: {
+              type: "string",
+            },
+          },
+          xml: {
+            name: "CreatePost",
+          },
+        },
       },
     },
     paths: {
       "/api/users/signin": {
         post: {
           tags: ["User"],
-          summary: "Register user",
+          summary: "Sign in user",
           description:
             "A user email and password should be provided. After successful login, the response will contain 'result:object', 'success' and 'token'",
           operationId: "userLogin",
@@ -174,7 +195,7 @@ export default {
                 },
               },
             },
-            description: "Register user schema",
+            description: "Sends user link to change password",
             required: true,
           },
         },
@@ -221,12 +242,36 @@ export default {
           tags: ["Posts"],
           summary: "Fetch all posts",
           description: "This fetches all the post from the database",
+          operationId: "fetchPost",
           responses: {
             200: {
               description: "successful operation",
             },
-            401: {
-              description: "Invalid Credentials",
+            500: {
+              description: "Internal server error",
+            },
+          },
+          requestBody: {
+            description: "Fetches posts",
+          },
+        },
+        post: {
+          security: [
+            {
+              Bearer: [],
+            },
+          ],
+          tags: ["Posts"],
+          summary: "Create post",
+          description:
+            "Provide post title, post message, tags and add image(optional). After successful post, the response will contain",
+          operationId: "createPost",
+          responses: {
+            200: {
+              description: "successful operation",
+            },
+            400: {
+              description: "Invalid operation",
             },
             500: {
               description: "Could not register user",
@@ -236,11 +281,11 @@ export default {
             content: {
               "application/json": {
                 schema: {
-                  $ref: "#/components/schemas/FetchPosts",
+                  $ref: "#/components/schemas/CreatePost",
                 },
               },
             },
-            description: "Fetche posts",
+            description: "Register user schema",
             required: true,
           },
         },

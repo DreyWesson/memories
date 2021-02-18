@@ -114,6 +114,8 @@ export const Post = ({ post }) => {
   const del = () => dispatch(deletePost({ id: post._id }));
   const fav = () => dispatch(likePost({ id: post._id }));
 
+  // var thumb = new Buffer(result.image.data).toString('base64');
+
   return (
     <Card className={classes.card}>
       <CardMedia

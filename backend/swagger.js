@@ -104,6 +104,26 @@ export default {
             name: "CreatePost",
           },
         },
+        EditPost: {
+          type: "object",
+          properties: {
+            title: {
+              type: "string",
+            },
+            message: {
+              type: "string",
+            },
+            tags: {
+              type: "string",
+            },
+            selectedFile: {
+              type: "string",
+            },
+          },
+          xml: {
+            name: "EditPost",
+          },
+        },
       },
     },
     paths: {
@@ -286,6 +306,52 @@ export default {
               },
             },
             description: "Register user schema",
+            required: true,
+          },
+        },
+      },
+      "/api/posts/{id}": {
+        patch: {
+          security: [
+            {
+              Bearer: [],
+            },
+          ],
+          tags: ["Posts"],
+          summary: "Update post",
+          description: "Users can edit there old posts",
+          operationId: "editPost",
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              description: "ID of post that needs update",
+              required: true,
+              schema: {
+                type: "string",
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: "successful operation",
+            },
+            400: {
+              description: "Invalid operation",
+            },
+            500: {
+              description: "Could not register user",
+            },
+          },
+          requestBody: {
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/EditPost",
+                },
+              },
+            },
+            description: "Edit post",
             required: true,
           },
         },

@@ -8,12 +8,16 @@ export const postsSlice = createSlice({
   initialState: {
     loading: false,
     posts: [],
+    post: {},
     hasErrors: false,
     currentId: null,
   },
   reducers: {
     getPosts: (state) => {
       state.loading = true;
+    },
+    singlePost: (state, { payload }) => {
+      state.post = payload;
     },
     getPostsSuccess: (state, { payload }) => {
       state.posts = payload;
@@ -51,6 +55,7 @@ export const postsSlice = createSlice({
 
 export const {
   getPosts,
+  singlePost,
   getPostsSuccess,
   getPostsFailure,
   addPost,
@@ -165,8 +170,28 @@ const fetchPosts = createAsyncThunk(
         );
       }
     }
-  );
-export { fetchPosts, createPost, updatePost, deletePost, likePost };
+  ),
+  getPost = createAsyncThunk("posts/getPost", async (payload, { dispatch }) => {
+    try {
+      const { data } = await api.getPost(payload);
+      console.log(data);
+      dispatch(singlePost(data));
+      dispatch(
+        showSnack("likePost", {
+          label: snackMessages.likePost,
+          timeout: 6000,
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showSnack("likePostFail", {
+          label: snackMessages.likePostFail,
+          timeout: 6000,
+        })
+      );
+    }
+  });
+export { fetchPosts, getPost, createPost, updatePost, deletePost, likePost };
 
 export const selectPosts = (state) => state.posts;
 export default postsSlice.reducer;

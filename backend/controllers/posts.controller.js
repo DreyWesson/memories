@@ -36,7 +36,6 @@ const getPosts = async (req, res, next) => {
   },
   updatePost = async (req, res, next) => {
     const { id: _id } = req.params;
-    console.log(_id);
     const post = req.body;
     verifyID(_id, res);
     try {
@@ -95,6 +94,18 @@ const getPosts = async (req, res, next) => {
     } catch (error) {
       console.log("UPDATE ERROR: ", error);
     }
+  },
+  getPost = async (req, res, next) => {
+    const { id: _id } = req.params;
+    console.log(_id);
+
+    verifyID(_id, res);
+    try {
+      let singularPost = await Post.findById(_id);
+      res.status(200).json(singularPost);
+    } catch (error) {
+      console.log("SINGLE POST ERROR: ", error);
+    }
   };
 
-export { getPosts, createPost, updatePost, deletePost, likePost };
+export { getPosts, createPost, updatePost, deletePost, likePost, getPost };

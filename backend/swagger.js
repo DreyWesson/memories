@@ -89,15 +89,27 @@ export default {
           properties: {
             title: {
               type: "string",
+              required: true,
             },
             message: {
               type: "string",
+              required: true,
             },
             tags: {
               type: "string",
+              required: true,
             },
             selectedFile: {
               type: "string",
+            },
+            creator: {
+              type: "string",
+            },
+            likes: {
+              type: "object",
+            },
+            createdAt: {
+              type: "object",
             },
           },
           xml: {
@@ -124,6 +136,20 @@ export default {
             name: "EditPost",
           },
         },
+        // LikePost: {
+        //   type: "object",
+        //   properties: {
+        //     id: {
+        //       type: "string",
+        //     },
+        //     post: {
+        //       type: "string",
+        //     },
+        //   },
+        //   xml: {
+        //     name: "LikePost",
+        //   },
+        // },
       },
     },
     paths: {
@@ -319,7 +345,7 @@ export default {
           ],
           tags: ["Posts"],
           summary: "Update post",
-          description: "Users can edit there old posts",
+          description: "Users can edit their old posts",
           operationId: "editPost",
           parameters: [
             {
@@ -353,6 +379,88 @@ export default {
             },
             description: "Edit post",
             required: true,
+          },
+        },
+        delete: {
+          security: [
+            {
+              Bearer: [],
+            },
+          ],
+          tags: ["Posts"],
+          summary: "Delete post",
+          description: "Users can delete their old posts",
+          operationId: "deletePost",
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              description: "ID of post to be deleted",
+              required: true,
+              schema: {
+                type: "string",
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: "successful operation",
+            },
+            400: {
+              description: "Invalid operation",
+            },
+            500: {
+              description: "Could not register user",
+            },
+          },
+          requestBody: {
+            description: "Delete post",
+          },
+        },
+      },
+      "/api/posts/{id}/likePost": {
+        patch: {
+          security: [
+            {
+              Bearer: [],
+            },
+          ],
+          tags: ["Posts"],
+          summary: "Like post",
+          description: "Users can like post",
+          operationId: "likePost",
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              description: "ID of post to like",
+              required: true,
+              schema: {
+                type: "string",
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: "successful operation",
+            },
+            400: {
+              description: "Invalid operation",
+            },
+            500: {
+              description: "Could not register user",
+            },
+          },
+          requestBody: {
+            // content: {
+            //   "application/json": {
+            //     schema: {
+            //       $ref: "#/components/schemas/LikePost",
+            //     },
+            //   },
+            // },
+            description: "Like post",
+            // required: true,
           },
         },
       },

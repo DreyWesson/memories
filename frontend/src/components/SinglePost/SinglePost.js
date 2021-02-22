@@ -24,10 +24,8 @@ import {
   setCurrentId,
 } from "../../../features/post/postsSlice";
 import { snackMessages } from "../../../snackMessages";
-import Zoom from "react-medium-image-zoom";
-import "react-medium-image-zoom/dist/styles.css";
 
-export const Post = ({ post }) => {
+export const SinglePost = ({ post }) => {
   const classes = useStyles(),
     dispatch = useDispatch(),
     user = JSON.parse(localStorage.getItem("profile"));
@@ -120,24 +118,14 @@ export const Post = ({ post }) => {
 
   return (
     <Card className={classes.card}>
-      <Zoom>
-        <img
-          style={{ maxWidth: "100%", maxHeight: "auto", overflowY: "hidden" }}
-          src={
-            post.selectedFile ||
-            "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
-          }
-          alt={post.title}
-        />
-      </Zoom>
-      {/* <CardMedia
+      <CardMedia
         className={classes.media}
         image={
           post.selectedFile ||
           "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
         }
         title={post.title}
-      /> */}
+      />
       <div className={classes.overlay}>
         <Typography variant="h2" className={classes.smallHeading}>
           {post.name}

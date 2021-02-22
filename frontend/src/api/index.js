@@ -12,6 +12,7 @@ axios.interceptors.request.use((req) => {
 
 // Posts APIs
 const fetchPosts = () => axios.get("/api/posts"),
+  getPost = (id) => axios.get(`/api/posts/${id}`),
   createPost = (newPost) => axios.post("/api/posts", newPost),
   updatePost = (id, updatedData) =>
     axios.patch(`/api/posts/${id}`, updatedData),
@@ -30,6 +31,7 @@ const signin = (formData) => axios.post("/api/users/signin", formData),
 
 export {
   fetchPosts,
+  getPost,
   createPost,
   updatePost,
   deletePost,

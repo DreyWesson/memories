@@ -5,6 +5,7 @@ import {
   updatePost,
   deletePost,
   likePost,
+  getPost,
 } from "../controllers/posts.controller.js";
 import { auth } from "../middleware/auth.middleware.js";
 
@@ -17,5 +18,5 @@ router.delete("/:id", auth, deletePost);
 router.patch("/:id/likePost", auth, likePost);
 
 // Could Implement getting a single post
-// router.get("/:id", getPost);
+router.get("/:id", getPost);
 export default router;

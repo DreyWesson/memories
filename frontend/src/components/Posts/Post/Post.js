@@ -31,11 +31,12 @@ export const Post = ({ post }) => {
   const classes = useStyles(),
     dispatch = useDispatch(),
     user = JSON.parse(localStorage.getItem("profile"));
+  // console.log(post);
 
   const postEdit = () => {
     const currentUserID = user?.result?.googleId || user?.result._id;
     if (user) {
-      if (post?.creator !== currentUserID) {
+      if (post?.userCreator._id !== currentUserID) {
         return dispatch(
           showSnack("unauthorized", {
             label: snackMessages.unauthorized,
@@ -58,7 +59,7 @@ export const Post = ({ post }) => {
   const currentUserDelActions = (action = "") => {
     const currentUserID = user?.result?.googleId || user?.result?._id;
     if (user) {
-      currentUserID === post?.creator
+      currentUserID === post?.userCreator._id
         ? action()
         : dispatch(
             showSnack("userUnauthorized", {

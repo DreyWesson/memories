@@ -19,7 +19,7 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(morgan("tiny"));
+app.use(morgan("dev"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());

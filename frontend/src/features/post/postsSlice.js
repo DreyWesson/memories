@@ -47,9 +47,6 @@ export const postsSlice = createSlice({
         post._id === payload._id ? payload : post
       );
     },
-    // favPost: ({ posts }, { payload }) => {
-    //   posts.forEach((post) => (post._id === payload._id ? payload : post));
-    // },
   },
 });
 

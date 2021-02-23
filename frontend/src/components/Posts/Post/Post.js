@@ -36,7 +36,7 @@ export const Post = ({ post }) => {
   const postEdit = () => {
     const currentUserID = user?.result?.googleId || user?.result._id;
     if (user) {
-      if (post?.creator._id !== currentUserID) {
+      if (post?.creator !== currentUserID) {
         return dispatch(
           showSnack("unauthorized", {
             label: snackMessages.unauthorized,
@@ -59,7 +59,7 @@ export const Post = ({ post }) => {
   const currentUserDelActions = (action = "") => {
     const currentUserID = user?.result?.googleId || user?.result?._id;
     if (user) {
-      currentUserID === post?.creator._id
+      currentUserID === post?.creator
         ? action()
         : dispatch(
             showSnack("userUnauthorized", {

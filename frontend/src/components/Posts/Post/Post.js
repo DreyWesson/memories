@@ -3,7 +3,7 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
+  // CardMedia,
   Button,
   Typography,
 } from "@material-ui/core/";
@@ -36,7 +36,7 @@ export const Post = ({ post }) => {
   const postEdit = () => {
     const currentUserID = user?.result?.googleId || user?.result._id;
     if (user) {
-      if (post?.userCreator._id !== currentUserID) {
+      if (post?.creator._id !== currentUserID) {
         return dispatch(
           showSnack("unauthorized", {
             label: snackMessages.unauthorized,
@@ -59,7 +59,7 @@ export const Post = ({ post }) => {
   const currentUserDelActions = (action = "") => {
     const currentUserID = user?.result?.googleId || user?.result?._id;
     if (user) {
-      currentUserID === post?.userCreator._id
+      currentUserID === post?.creator._id
         ? action()
         : dispatch(
             showSnack("userUnauthorized", {

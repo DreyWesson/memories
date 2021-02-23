@@ -10,7 +10,7 @@ const verifyID = (id, res) => {
 const getPosts = async (req, res, next) => {
     try {
       const posts = await Post.find().populate("creator").sort({ _id: -1 });
-      console.log("POPULATE: ", posts);
+      // console.log("POPULATE: ", posts);
       res.status(200).json(posts);
     } catch (error) {
       console.log(error);
@@ -19,7 +19,7 @@ const getPosts = async (req, res, next) => {
   },
   createPost = async (req, res, next) => {
     const post = req.body;
-    console.log("Request user ID from auth.middleware: ", req.userId);
+    // console.log("Request user ID from auth.middleware: ", req.userId);
 
     const newPost = new Post({
       ...post,
@@ -27,7 +27,7 @@ const getPosts = async (req, res, next) => {
       // creator: req.userId,
       createdAt: new Date().toISOString(),
     });
-    console.log("NEW POST: ", newPost);
+    // console.log("NEW POST: ", newPost);
     try {
       await newPost.save();
       res.status(200).json(newPost);

@@ -38,7 +38,6 @@ export const Form = ({
       : null,
     dispatch = useDispatch(),
     classes = useStyles();
-  console.log(postData);
 
   const user = JSON.parse(localStorage.getItem("profile"));
 

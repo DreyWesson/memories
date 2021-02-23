@@ -15,8 +15,8 @@ export const connectDB = () => {
     console.log("mongoDB connected");
     const changeStream = mongoose.connection.collection("posts").watch();
     changeStream.on("change", (change) => {
-      console.log("💪PUSHER CHANGE 👉", change, "👈");
-      console.log(change.operationType);
+      // console.log("💪PUSHER CHANGE 👉", change, "👈");
+      console.log("💪PUSHER OPERATION 👉", change.operationType);
       if (change.operationType === "insert") {
         // Get post details
         const {

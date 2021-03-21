@@ -55,7 +55,6 @@ export const ResetPassword = ({
       password: formData.password,
     };
     try {
-      console.log(match);
       dispatch(resetPassword({ passwordDetails, match, history }));
     } catch (error) {
       console.log(error);

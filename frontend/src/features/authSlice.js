@@ -29,8 +29,6 @@ export const authSlice = createSlice({
     //   state.forgotPassword = payload;
     // },
     resetPasswordReducer: (state, { payload }) => {
-      console.log(payload);
-      console.log(state);
       state.reset = payload;
     },
   },

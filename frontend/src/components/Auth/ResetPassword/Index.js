@@ -25,9 +25,7 @@ export const ResetForm = ({ match }) => {
       validationSchema={validationSchema}
       validateOnMount={true}
     >
-      {(props) => {
-        return <ResetPassword {...props} match={match} />;
-      }}
+      {(props) => <ResetPassword {...props} match={match} />}
     </Formik>
   );
 };

@@ -115,7 +115,6 @@ const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async ({ passwordDetails, match, history }, { dispatch }) => {
     try {
-      console.log(match);
       const { data } = await api.resetpassword(passwordDetails, match);
       dispatch(resetPasswordReducer(data));
       history.push("/auth");

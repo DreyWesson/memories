@@ -13,7 +13,7 @@ const validationSchema = Yup.object({
     .required("Please, Confirm your new password"),
 });
 
-export const ResetForm = () => {
+export const ResetForm = ({ match }) => {
   const values = {
     password: "",
     confirmPassword: "",
@@ -25,7 +25,9 @@ export const ResetForm = () => {
       validationSchema={validationSchema}
       validateOnMount={true}
     >
-      {(props) => <ResetPassword {...props} />}
+      {(props) => {
+        return <ResetPassword {...props} match={match} />;
+      }}
     </Formik>
   );
 };

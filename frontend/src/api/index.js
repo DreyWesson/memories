@@ -24,10 +24,8 @@ const signin = (formData) => axios.post("/api/users/signin", formData),
   signup = (formData) => axios.post("/api/users/signup", formData),
   forgotpassword = (formData) =>
     axios.post("/api/users/forgotpassword", formData),
-  resetpassword = (formData, match) => {
+  resetpassword = (formData, match) =>
     axios.put(`/api/users/resetpassword/${match.params.resetToken}`, formData);
-    console.log(match.params.resetToken);
-  };
 
 export {
   fetchPosts,

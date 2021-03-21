@@ -22,7 +22,7 @@ function App() {
           <Route path="/forgotpassword" exact component={ForgotPasswordForm} />
           <Route
             path="/resetpassword/:resetToken"
-            exact
+            // exact
             component={ResetForm}
           />
         </Switch>

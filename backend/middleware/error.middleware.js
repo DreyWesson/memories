@@ -2,7 +2,7 @@ import ErrorHandler from "../utils/errorHandler.utils.js";
 
 const errorResponse = (err, req, res, next) => {
   let error = { ...err };
-  // console.log(err);
+  console.log(err);
   error.message = err.message;
 
   if (err.code === 11000) {

@@ -5,14 +5,12 @@ import sendEmail from "../utils/sendEmail.utils.js";
 
 export const signup = async (req, res, next) => {
   const { lastName, firstName, email, password, confirmPassword } = req.body;
-
-  const existingUser = await User.findOne({ email }).select("password");
-  if (existingUser) return next(new ErrorHandler("User already exist", 400));
-
   if (password !== confirmPassword)
     return next(new ErrorHandler("Password doesn't match", 400));
 
   try {
+    const existingUser = await User.findOne({ email }).select("password");
+    if (existingUser) return next(new ErrorHandler("User already exist", 400));
     let user = await User.create({
       lastName,
       firstName,
@@ -27,19 +25,18 @@ export const signup = async (req, res, next) => {
 };
 
 export const signin = async (req, res, next) => {
+  console.log("💪SIGNIN 💪: ", req.body);
   const { email, password } = req.body;
-  if (!email || !password) {
+  if (!email || !password)
     return next(new ErrorHandler("Please provide Email and Password", 400));
-  }
+
   try {
     let existingUser = await User.findOne({ email }).select("+password");
-    if (!existingUser) {
-      return next(new ErrorHandler("User doesn't exist", 401));
-    }
+
+    if (!existingUser) return next(new ErrorHandler("User doesn't exist", 401));
+
     const matchPsw = await existingUser.matchPasswords(password);
-    if (!matchPsw) {
-      return next(new ErrorHandler("Invalid Credentials", 401));
-    }
+    if (!matchPsw) return next(new ErrorHandler("Invalid Credentials", 401));
 
     sendToken(existingUser, 200, res);
   } catch (error) {
@@ -53,14 +50,11 @@ export const signin = async (req, res, next) => {
 
 export const forgotPassword = async (req, res, next) => {
   const { email } = req.body;
-  console.log("Email", email);
-  console.log("Email", req.body);
   try {
     const user = await User.findOne({ email });
 
-    if (!user) {
-      return next(new ErrorHandler("Email could not be sent", 404));
-    }
+    if (!user) return next(new ErrorHandler("Email could not be sent", 404));
+
     const resetToken = user.getResetPasswordToken();
     console.log(resetToken);
 
@@ -86,7 +80,9 @@ export const forgotPassword = async (req, res, next) => {
       user.resetPasswordToken = undefined;
       user.resetPasswordExpire = undefined;
       console.log("ERROR OCCURRED HERE");
-      await user.save();
+      await user.save().catch((e) => {
+        console.log(e);
+      });
       return next(new ErrorHandler("Email could not be sent", 500));
     }
   } catch (error) {
@@ -113,7 +109,7 @@ export const resetPassword = async (req, res, next) => {
     user.password = req.body.password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
-    await user.save();
+    await user.save().catch;
 
     res.status(201).json({ success: true, data: "Password Reset Successful" });
   } catch (error) {

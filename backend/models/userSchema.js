@@ -34,10 +34,14 @@ const UserSchema = mongoose.Schema({
 
 // Hash password before saving and signing user up
 UserSchema.pre("save", async function (next) {
-  !this.isModified("password") && next();
-  const salt = await bcrypt.genSalt(12);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
+  try {
+    !this.isModified("password") && next();
+    const salt = await bcrypt.genSalt(12);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    console.log(error);
+  }
 });
 // Combine firstname and lastname
 UserSchema.virtual("name").get(function () {
@@ -45,7 +49,11 @@ UserSchema.virtual("name").get(function () {
 });
 // compare password before Signing in
 UserSchema.methods.matchPasswords = async function (password) {
-  return await bcrypt.compare(password, this.password);
+  try {
+    return await bcrypt.compare(password, this.password);
+  } catch (error) {
+    console.log(error);
+  }
 };
 // Store id information in the token
 UserSchema.methods.getSignedToken = function () {

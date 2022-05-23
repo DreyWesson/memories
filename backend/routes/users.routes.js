@@ -8,8 +8,8 @@ import {
 
 const router = express.Router();
 
-router.post("/signin", signin);
 router.post("/signup", signup);
+router.post("/signin", signin);
 router.post("/forgotpassword", forgotPassword);
 router.put("/resetpassword/:resetToken", resetPassword);
 
